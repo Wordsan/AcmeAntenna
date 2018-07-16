@@ -1,5 +1,14 @@
 #./src/main/resources/Entities.map
-#Sat Sep 23 12:30:14 CEST 2017
-userAccount3=6
-userAccount2=5
-userAccount1=4
+#Mon Jul 16 13:35:38 CEST 2018
+userAccount_user=16
+userAccount_admin=13
+userAccount_user3=18
+userAccount_user2=17
+administrator_admin=22
+user_user3=21
+user_user2=20
+userAccount_admin3=15
+userAccount_admin2=14
+administrator_admin3=24
+administrator_admin2=23
+user_user=19

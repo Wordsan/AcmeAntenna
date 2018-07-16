@@ -12,22 +12,30 @@
  
  <%-- Taglibs --%>
 
-<%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 
-<%-- Attributes --%> 
- 
+<%-- Attributes --%>
+
 <%@ attribute name="code" required="true" %>
-<%@ attribute name="url" required="true" %>
+<%@ attribute name="url" required="false" %>
 
 <%-- Definition --%>
 
-<button type="button" onclick="javascript: relativeRedir('${url}')" >
-	<spring:message code="${code}" />
-</button>
+<c:choose>
+    <c:when test="${url != null}">
+       	<c:set var="onclick" value="javascript: relativeRedir('${url}');" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="onclick" value="javascript: window.history.back();" />
+    </c:otherwise>
+</c:choose>
 
+<button type="button" onclick="${onclick}" >
+    <spring:message code="${code}" />
+</button>

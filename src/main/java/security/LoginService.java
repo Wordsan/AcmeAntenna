@@ -11,6 +11,7 @@
 package security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,6 +47,20 @@ public class LoginService implements UserDetailsService {
 		result.getAuthorities().size();
 
 		return result;
+	}
+
+	public static boolean isAuthenticated() {
+		SecurityContext context;
+		Authentication authentication;
+
+		context = SecurityContextHolder.getContext();
+		Assert.notNull(context);
+
+		authentication = context.getAuthentication();
+
+		return authentication != null
+			&& authentication.isAuthenticated()
+			&& !(authentication instanceof AnonymousAuthenticationToken);
 	}
 
 	public static UserAccount getPrincipal() {

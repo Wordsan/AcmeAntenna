@@ -14,10 +14,15 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.security.authentication.TestingAuthenticationToken;
@@ -29,6 +34,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import security.LoginService;
+import security.UserAccount;
 import utilities.internal.EclipseConsole;
 
 public abstract class AbstractTest {
@@ -45,7 +51,10 @@ public abstract class AbstractTest {
 	private final DefaultTransactionDefinition	transactionDefinition;
 	private TransactionStatus					currentTransaction;
 	private final Properties					entityMap;
+	
 
+	@PersistenceContext
+	protected EntityManager entityManager;
 
 	// Constructor ----------------------------------------
 
@@ -67,11 +76,40 @@ public abstract class AbstractTest {
 	// Set up and tear down -------------------------------
 
 	@Before
-	public void setUp() {
+	public void outerSetUp() {
+		startTransaction();
+		setUp();
 	}
+	public void setUp() {}
 
 	@After
-	public void tearDown() {
+	public void outerTearDown() {
+		tearDown();
+		try {
+			flushTransaction();
+		} finally {
+			try {
+				unauthenticate();
+			} finally {
+				rollbackTransaction();
+			}
+		}
+	}
+	public void tearDown() {}
+	
+	private static boolean hasPopulatedDatabase = false;
+	@BeforeClass
+	public static void setUpGlobal()
+	{
+		if (!hasPopulatedDatabase) {
+			hasPopulatedDatabase = true;
+
+			String skip = System.getenv("DNT_SKIP_POPULATE_DATABASE");
+			if (skip == null || !skip.equals("1")) {
+				PopulateDatabase.main(null);
+			}
+		}
+		
 	}
 
 	// Supporting methods ---------------------------------
@@ -86,10 +124,17 @@ public abstract class AbstractTest {
 		else {
 			userDetails = this.loginService.loadUserByUsername(username);
 			authenticationToken = new TestingAuthenticationToken(userDetails, null);
+			authenticationToken.setAuthenticated(true);
 		}
 
 		context = SecurityContextHolder.getContext();
 		context.setAuthentication(authenticationToken);
+
+		if (username != null) {
+			Assert.assertEquals(username, ((UserAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		} else {
+			Assert.assertNull(SecurityContextHolder.getContext().getAuthentication());
+		}
 	}
 
 	protected void unauthenticate() {
@@ -118,7 +163,11 @@ public abstract class AbstractTest {
 	}
 
 	protected void flushTransaction() {
-		this.currentTransaction.flush();
+		try {
+			this.currentTransaction.flush();
+		} finally {
+			entityManager.clear();
+		}
 	}
 
 	protected boolean existsEntity(final String beanName) {

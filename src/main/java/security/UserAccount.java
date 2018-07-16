@@ -42,6 +42,15 @@ public class UserAccount extends DomainEntity implements UserDetails {
 
 		this.authorities = new ArrayList<Authority>();
 	}
+	
+	public UserAccount(String username, String password, String authority) {
+		this();
+		setUsername(username);
+		setPassword(password);
+		Authority a = new Authority();
+		a.setAuthority(authority);
+		addAuthority(a);
+	}
 
 
 	// Attributes -------------------------------------------------------------
@@ -53,7 +62,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	private Collection<Authority>	authorities;
 
 
-	@Size(min = 5, max = 32)
+	@Size(min = 4, max = 32)
 	@Column(unique = true)
 	@Override
 	public String getUsername() {
@@ -64,7 +73,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		this.username = username;
 	}
 
-	@Size(min = 5, max = 32)
+	@Size(min = 4, max = 32)
 	@Override
 	public String getPassword() {
 		return this.password;

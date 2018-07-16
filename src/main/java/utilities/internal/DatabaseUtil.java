@@ -10,16 +10,20 @@
 
 package utilities.internal;
 
+import java.lang.annotation.Annotation;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -37,9 +41,17 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.internal.util.ReflectHelper;
 import org.hibernate.jdbc.Work;
 import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
+import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import utilities.DatabaseConfig;
 import domain.DomainEntity;
+import utilities.ReflectionUtils;
 
 public class DatabaseUtil {
 
@@ -250,4 +262,27 @@ public class DatabaseUtil {
 			System.out.println(String.format("%s=`%s'", entry.getKey(), entry.getValue()));
 	}
 
+	// -----------------------------------------------------------------------------------------------
+
+	public void recreateLuceneIndex()
+	{
+		boolean hasAnyIndexedEntity = false;
+		for (Class<?> entity : ReflectionUtils.findAllDomainEntityClasses()) {
+			if (entity.isAnnotationPresent(Indexed.class)) {
+				hasAnyIndexedEntity = true;
+				break;
+			}
+		}
+
+		// Check if there's any indexed entity before doing this to avoid a warning message.
+		if (hasAnyIndexedEntity) {
+			FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+
+			try {
+				fullTextEntityManager.createIndexer().startAndWait();
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
 }

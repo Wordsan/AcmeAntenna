@@ -31,8 +31,8 @@ public class EclipseConsole {
 				EclipseConsole.isFixed = true;
 				out = new EclipseStream(System.out);
 				err = new EclipseStream(System.err);
-				System.setOut(new PrintStream(out, true, "iso-8859-1"));
-				System.setErr(new PrintStream(err, true, "iso-8859-1"));
+				System.setOut(new PrintStream(out, true, "UTF-8"));
+				System.setErr(new PrintStream(err, true, "UTF-8"));
 			}
 		} catch (final Throwable oops) {
 			throw new RuntimeException(oops);

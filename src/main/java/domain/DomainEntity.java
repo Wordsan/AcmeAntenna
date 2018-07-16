@@ -74,7 +74,7 @@ public abstract class DomainEntity {
 			result = false;
 		else if (other instanceof Integer)
 			result = (this.getId() == (Integer) other);
-		else if (!this.getClass().isInstance(other))
+		else if (!this.getClass().isInstance(other) && !other.getClass().isInstance(this))
 			result = false;
 		else
 			result = (this.getId() == ((DomainEntity) other).getId());
