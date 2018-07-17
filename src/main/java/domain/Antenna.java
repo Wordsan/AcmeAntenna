@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -66,6 +67,17 @@ extends DomainEntity {
         return positionLatitude;
     }
 
+    @Transient
+    public String getPositionForDisplay()
+    {
+        return String.format("%.4f°%s %.4f°%s",
+                      Math.abs(getPositionLatitude()),
+                      getPositionLatitude() > 0 ? "N" : "S",
+                      Math.abs(getPositionLongitude()),
+                      getPositionLongitude() > 0 ? "E" : "W"
+                      );
+    }
+
     /**
      * Angle indicating the horizontal rotation of the satellite, with 0 pointing at north and increasing angles indicating clockwise rotation.
      */
@@ -92,6 +104,7 @@ extends DomainEntity {
 
     @Valid
     @ManyToOne(optional = false)
+    @NotNull
     public Satellite getSatellite()
     {
         return satellite;

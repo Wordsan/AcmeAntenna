@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import domain.Antenna;
 import security.Authority;
 import services.AntennaService;
+import services.SatelliteService;
 import utilities.ApplicationConfig;
 import utilities.CheckUtils;
 import utilities.ControllerUtils;
@@ -21,6 +22,7 @@ import utilities.ControllerUtils;
 @RequestMapping("/antennas")
 public class AntennaController extends AbstractController {
 	@Autowired AntennaService antennaService;
+	@Autowired SatelliteService satelliteService;
 
 	public AntennaController()
 	{
@@ -30,9 +32,8 @@ public class AntennaController extends AbstractController {
 	@RequestMapping("/new")
 	public ModelAndView new_()
 	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
-
 		Antenna antenna = new Antenna();
+		antenna.setUser(getPrincipalUser());
 		return newForm(antenna, null, false, null);
 	}
 
@@ -43,20 +44,21 @@ public class AntennaController extends AbstractController {
 			String message)
 	{
 		ModelAndView result = ControllerUtils.createViewWithBinding(
-				"antenna/new",
+				"antennas/new",
 				binding,
 				error,
 				message
 				);
 
 		result.addObject("antenna", antenna);
+		result.addObject("satellites", satelliteService.findAllSortedByName());
 
 		return result;
 	}
 
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public ModelAndView create(
-			@ModelAttribute("form") @Valid Antenna antenna,
+			@ModelAttribute("antenna") @Valid Antenna antenna,
 			BindingResult binding)
 	{
 		ModelAndView result;

@@ -1,5 +1,6 @@
 package services;
 
+import org.apache.lucene.search.vectorhighlight.FieldFragList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -23,6 +24,22 @@ public class AntennaService {
 
 	public Antenna create(Antenna submittedAntenna)
 	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+		CheckUtils.checkIsPrincipal(submittedAntenna.getUser());
+		CheckUtils.checkNotExists(submittedAntenna);
+
+		return repository.save(submittedAntenna);
+	}
+
+	public Antenna update(Antenna submittedAntenna)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+		CheckUtils.checkIsPrincipal(submittedAntenna.getUser());
+		CheckUtils.checkExists(submittedAntenna);
+
+		Antenna oldAntenna = repository.findOne(submittedAntenna.getId());
+		CheckUtils.checkIsPrincipal(oldAntenna.getUser());
+
 		return repository.save(submittedAntenna);
 	}
 }

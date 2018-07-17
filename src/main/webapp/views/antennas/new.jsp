@@ -8,11 +8,16 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="app" tagdir="/WEB-INF/tags" %>
 
-<form:form action="antennas/create.do" modelAttribute="form">
+<form:form action="antennas/create.do" modelAttribute="antenna">
     <form:hidden path="user" />
     <app:textbox path="serialNumber" code="antennas.serialNumber" />
     <app:textbox path="model" code="antennas.model" />
-    <app:textbox path="model" code="antennas.model" />
+    <app:textbox path="positionLongitude" code="antennas.positionLongitude" />
+    <app:textbox path="positionLatitude" code="antennas.positionLatitude" />
+    <app:textbox path="rotationAzimuth" code="antennas.rotationAzimuth" />
+    <app:textbox path="rotationElevation" code="antennas.rotationElevation" />
+    <app:textbox path="signalQuality" code="antennas.signalQuality" />
+    <app:select path="satellite" items="${satellites}" itemLabel="name" code="antennas.satellite" />
 
     <div>
         <app:submit name="submit" code="misc.actions.create" />

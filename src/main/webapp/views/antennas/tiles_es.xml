@@ -5,8 +5,8 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
-	<definition name="users/new" extends="master.page">
-		<put-attribute name="title" value="Nuevo usuario" />
-		<put-attribute name="body" value="/views/users/new.jsp" />
+	<definition name="antennas/new" extends="master.page">
+		<put-attribute name="title" value="Nueva antena" />
+		<put-attribute name="body" value="/views/antennas/new.jsp" />
 	</definition>
 </tiles-definitions>

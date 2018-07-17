@@ -41,6 +41,8 @@ public class UserService {
 	public User createAsNewUser(User user)
 	{
 		CheckUtils.checkUnauthenticated();
+		CheckUtils.checkNotExists(user);
+
 		user.setUserAccount(userAccountService.create(user.getUserAccount().getUsername(), user.getUserAccount().getPassword(), Authority.USER));
 
 		return repository.save(user);

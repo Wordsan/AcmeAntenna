@@ -15,15 +15,16 @@ public class ControllerUtils {
 	public static ModelAndView createViewWithBinding(
 			String viewName,
 			BindingResult binding,
-			boolean error, String message
+			boolean error,
+			String message
 	)
 	{
 		ModelAndView result = new ModelAndView(viewName);
 
 		if (binding != null) {
 			result.addObject("result", binding);
-			if (message == null
-			&& binding.getGlobalError() != null) {
+			if (message == null && binding.getGlobalError() != null) {
+				error = true;
 				message = binding
 					.getGlobalError()
 					.getDefaultMessage();
