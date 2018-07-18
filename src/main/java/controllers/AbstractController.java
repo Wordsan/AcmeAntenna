@@ -13,7 +13,6 @@ package controllers;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.stereotype.Controller;
@@ -23,10 +22,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import domain.Actor;
 import domain.User;
+import exceptions.ResourceNotFoundException;
 import security.LoginService;
 import services.ActorService;
 import services.UserService;
@@ -70,6 +69,9 @@ public class AbstractController {
 		if (oops instanceof AccessDeniedException) {
 			return handleAccessDeniedException(request);
 		}
+		if (oops instanceof ResourceNotFoundException) {
+			return handle404(request);
+		}
 
 		ModelAndView result;
 
@@ -79,6 +81,11 @@ public class AbstractController {
 		result.addObject("stackTrace", ExceptionUtils.getStackTrace(oops));
 
 		return result;
+	}
+
+	private ModelAndView handle404(HttpServletRequest request)
+	{
+		return new ModelAndView("misc/404");
 	}
 
 	private ModelAndView handleAccessDeniedException(HttpServletRequest request)

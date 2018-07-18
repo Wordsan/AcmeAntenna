@@ -1,5 +1,9 @@
 package domain;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -8,46 +12,40 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.URL;
-
 import security.UserAccount;
+import validators.NullOrNotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Actor
 extends DomainEntity {
-	private String name = "";
-	private String surname = "";
-	private String email = "";
-	private String pictureUrl = "";
-	private String phoneNumber = "";
-	private String postalAddress = "";
+	private String name;
+	private String surname;
+	private String email;
+	private String pictureUrl;
+	private String phoneNumber;
+	private String postalAddress;
 	private UserAccount userAccount;
 
 	@NotBlank
-	@NotNull
 	public String getName() { return name; }
 	@NotBlank
-	@NotNull
 	public String getSurname() { return surname; }
 	@NotBlank
-	@NotNull
 	@Email
 	public String getEmail() { return email; }
-	@NotNull
-	@Pattern(regexp = "^$|^\\+?\\d+$")
+	@Pattern(regexp = "^\\+?\\d+$")
+	@NullOrNotBlank
 	public String getPhoneNumber() { return phoneNumber; }
-	@NotNull
 	@URL
+	@NullOrNotBlank
 	public String getPictureUrl() { return pictureUrl; }
-	@NotNull
+	@NullOrNotBlank
 	public String getPostalAddress() { return postalAddress; }
 
 	@Valid
 	@OneToOne(optional = false)
+	@NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
 	public UserAccount getUserAccount()
 	{
 		return userAccount;

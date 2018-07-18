@@ -10,6 +10,10 @@
 
 package security;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.Assert;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -21,10 +25,6 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.Assert;
 
 import domain.DomainEntity;
 

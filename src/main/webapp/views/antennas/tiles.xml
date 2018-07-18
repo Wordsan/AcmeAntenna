@@ -5,8 +5,18 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
+	<definition name="antennas/index" extends="master.page">
+		<put-attribute name="title" value="My antennas" />
+		<put-attribute name="body" value="/views/antennas/index.jsp" />
+	</definition>
+
 	<definition name="antennas/new" extends="master.page">
 		<put-attribute name="title" value="New antenna" />
 		<put-attribute name="body" value="/views/antennas/new.jsp" />
+	</definition>
+
+	<definition name="antennas/edit" extends="master.page">
+		<put-attribute name="title" value="Edit antenna" />
+		<put-attribute name="body" value="/views/antennas/edit.jsp" />
 	</definition>
 </tiles-definitions>

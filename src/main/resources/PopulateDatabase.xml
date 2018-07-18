@@ -1,5 +1,196 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="domain.PlatformSubscription" id="platformSubscription_1">
+        <property name="user">
+            <ref bean="user_user"/>
+        </property>
+        <property name="platform">
+            <ref bean="platform_1"/>
+        </property>
+        <property name="startDate" value="2018/07/18"/>
+        <property name="endDate" value="2018/07/19"/>
+        <property name="creditCard" value="3566002020360505"/>
+        <property name="keyCode" value="12345678901234567890123456789012"/>
+    </bean>
+    <bean class="domain.PlatformSubscription" id="platformSubscription_2">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="platform">
+            <ref bean="platform_3"/>
+        </property>
+        <property name="startDate" value="2018/07/18"/>
+        <property name="endDate" value="2018/07/19"/>
+        <property name="creditCard" value="5105105105105100"/>
+        <property name="keyCode" value="22345678901234567890123456789012"/>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_1">
+        <property name="tutorial">
+            <ref bean="tutorial_1"/>
+        </property>
+        <property name="title" value="Comment 1"/>
+        <property name="text" value="This is comment 1 for tutorial 1"/>
+        <property name="creationTime" value="2018/07/18 13:25:52"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_2">
+        <property name="tutorial">
+            <ref bean="tutorial_3"/>
+        </property>
+        <property name="title" value="Comment 2"/>
+        <property name="text" value="This is comment 2 for tutorial 3"/>
+        <property name="creationTime" value="2018/07/18 13:25:52"/>
+        <property name="pictureUrls">
+            <list value-type="java.lang.String">
+                <value>https://i.imgur.com/dOG1iVb.png</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Platform" id="platform_1">
+        <property name="name" value="Platform 1"/>
+        <property name="description" value="This is platform 1"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_1"/>
+                <ref bean="satellite_2"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Platform" id="platform_2">
+        <property name="name" value="Platform 2"/>
+        <property name="description" value="This is platform 2"/>
+        <property name="satellites">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Platform" id="platform_3">
+        <property name="name" value="Platform 3"/>
+        <property name="description" value="This is platform 3"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_3"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Platform" id="platform_4">
+        <property name="name" value="Platform 4"/>
+        <property name="description" value="This is platform 4"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_4"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Platform" id="platform_5">
+        <property name="name" value="Platform 5"/>
+        <property name="description" value="This is platform 5"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_5"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Platform" id="platform_6">
+        <property name="name" value="Platform 6"/>
+        <property name="description" value="This is platform 6"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_6"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_1">
+        <property name="user">
+            <ref bean="user_user"/>
+        </property>
+        <property name="serialNumber" value="A001"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="50.0"/>
+        <property name="satellite">
+            <ref bean="satellite_1"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_2">
+        <property name="user">
+            <ref bean="user_user"/>
+        </property>
+        <property name="serialNumber" value="A002"/>
+        <property name="model" value="Model 2"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="50.0"/>
+        <property name="satellite">
+            <ref bean="satellite_2"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_3">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="serialNumber" value="A003"/>
+        <property name="model" value="Model 3"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="50.0"/>
+        <property name="satellite">
+            <ref bean="satellite_3"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_4">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="serialNumber" value="A004"/>
+        <property name="model" value="Model 4"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="50.0"/>
+        <property name="satellite">
+            <ref bean="satellite_4"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_5">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="serialNumber" value="A005"/>
+        <property name="model" value="Model 5"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="50.0"/>
+        <property name="satellite">
+            <ref bean="satellite_5"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_6">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="serialNumber" value="A006"/>
+        <property name="model" value="Model 6"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="50.0"/>
+        <property name="satellite">
+            <ref bean="satellite_6"/>
+        </property>
+    </bean>
     <bean class="security.UserAccount" id="userAccount_admin">
         <property name="username" value="admin"/>
         <property name="password" value="21232f297a57a5a743894a0e4a801fc3"/>
@@ -67,34 +258,64 @@
         </property>
     </bean>
     <bean class="domain.User" id="user_user">
+        <property name="antennas">
+            <list>
+                <ref bean="antenna_1"/>
+                <ref bean="antenna_2"/>
+            </list>
+        </property>
         <property name="name" value="User 1"/>
         <property name="surname" value="Suruser"/>
         <property name="email" value="user@users.com"/>
-        <property name="pictureUrl" value=""/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
         <property name="phoneNumber" value="+11611111111"/>
-        <property name="postalAddress" value=""/>
+        <property name="postalAddress">
+            <null/>
+        </property>
         <property name="userAccount">
             <ref bean="userAccount_user"/>
         </property>
     </bean>
     <bean class="domain.User" id="user_user2">
+        <property name="antennas">
+            <list>
+                <ref bean="antenna_3"/>
+                <ref bean="antenna_4"/>
+            </list>
+        </property>
         <property name="name" value="User 2"/>
         <property name="surname" value="Suruser"/>
         <property name="email" value="user2@users.com"/>
-        <property name="pictureUrl" value=""/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
         <property name="phoneNumber" value="+11622222222"/>
-        <property name="postalAddress" value=""/>
+        <property name="postalAddress">
+            <null/>
+        </property>
         <property name="userAccount">
             <ref bean="userAccount_user2"/>
         </property>
     </bean>
     <bean class="domain.User" id="user_user3">
+        <property name="antennas">
+            <list>
+                <ref bean="antenna_5"/>
+                <ref bean="antenna_6"/>
+            </list>
+        </property>
         <property name="name" value="User 3"/>
         <property name="surname" value="Suruser"/>
         <property name="email" value="user3@users.com"/>
-        <property name="pictureUrl" value=""/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
         <property name="phoneNumber" value="+11633333333"/>
-        <property name="postalAddress" value=""/>
+        <property name="postalAddress">
+            <null/>
+        </property>
         <property name="userAccount">
             <ref bean="userAccount_user3"/>
         </property>
@@ -103,9 +324,13 @@
         <property name="name" value="Admin 1"/>
         <property name="surname" value="Suradmin"/>
         <property name="email" value="admin@admin.com"/>
-        <property name="pictureUrl" value=""/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
         <property name="phoneNumber" value="+22611111111"/>
-        <property name="postalAddress" value=""/>
+        <property name="postalAddress">
+            <null/>
+        </property>
         <property name="userAccount">
             <ref bean="userAccount_admin"/>
         </property>
@@ -114,9 +339,13 @@
         <property name="name" value="Admin 2"/>
         <property name="surname" value="Suradmin"/>
         <property name="email" value="admin2@admin.com"/>
-        <property name="pictureUrl" value=""/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
         <property name="phoneNumber" value="+22622222222"/>
-        <property name="postalAddress" value=""/>
+        <property name="postalAddress">
+            <null/>
+        </property>
         <property name="userAccount">
             <ref bean="userAccount_admin2"/>
         </property>
@@ -125,11 +354,119 @@
         <property name="name" value="Admin 3"/>
         <property name="surname" value="Suradmin"/>
         <property name="email" value="admin3@admin.com"/>
-        <property name="pictureUrl" value=""/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
         <property name="phoneNumber" value="+22633333333"/>
-        <property name="postalAddress" value=""/>
+        <property name="postalAddress">
+            <null/>
+        </property>
         <property name="userAccount">
             <ref bean="userAccount_admin3"/>
+        </property>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_1">
+        <property name="name" value="SAT-1"/>
+        <property name="description" value="This is satellite 1"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_1"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_2">
+        <property name="name" value="SAT-2"/>
+        <property name="description" value="This is satellite 2"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_1"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_3">
+        <property name="name" value="SAT-3"/>
+        <property name="description" value="This is satellite 3"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_3"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_4">
+        <property name="name" value="SAT-4"/>
+        <property name="description" value="This is satellite 4"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_4"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_5">
+        <property name="name" value="SAT-5"/>
+        <property name="description" value="This is satellite 5"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_5"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_6">
+        <property name="name" value="SAT-6"/>
+        <property name="description" value="This is satellite 6"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_6"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_1">
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Tutorial 1"/>
+        <property name="text" value="This is tutorial 1"/>
+        <property name="pictureUrls">
+            <list value-type="java.lang.String">
+                <value>https://i.imgur.com/NF0s3b9.png</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_2">
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Tutorial 2"/>
+        <property name="text" value="This is tutorial 2"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_3">
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Tutorial 3"/>
+        <property name="text" value="This is tutorial 3"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_4">
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Tutorial 4"/>
+        <property name="text" value="This is tutorial 4"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_5">
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Tutorial 5"/>
+        <property name="text" value="This is tutorial 5"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_6">
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Tutorial 6"/>
+        <property name="text" value="This is tutorial 6"/>
+        <property name="pictureUrls">
+            <list/>
         </property>
     </bean>
 </beans>

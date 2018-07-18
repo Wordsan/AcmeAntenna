@@ -3,7 +3,6 @@ package domain;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -12,12 +11,12 @@ import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 import cz.jirutka.validator.collection.constraints.EachNotBlank;
-import cz.jirutka.validator.collection.constraints.EachNotEmpty;
 import cz.jirutka.validator.collection.constraints.EachNotNull;
 import cz.jirutka.validator.collection.constraints.EachURL;
 import validators.PastWithMargin;
@@ -27,27 +26,25 @@ import validators.PastWithMargin;
 public class TutorialComment
 extends DomainEntity {
     private Tutorial tutorial;
-    private String title = "";
-    private String text = "";
+    private String title;
+    private String text;
     private Date creationTime = new Date();
     private List<String> pictureUrls = new ArrayList<>();
 
     @Valid
-    @NotNull
     @ManyToOne(optional = false)
+    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public Tutorial getTutorial()
     {
         return tutorial;
     }
 
-    @NotNull
     @NotBlank
     public String getTitle()
     {
         return title;
     }
 
-    @NotNull
     @NotBlank
     public String getText()
     {
@@ -56,12 +53,15 @@ extends DomainEntity {
 
     @NotNull
     @PastWithMargin
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getCreationTime()
     {
         return creationTime;
     }
 
-    @EachNotEmpty
+    @NotNull
+    @EachNotNull
+    @EachNotBlank
     @EachURL
     @ElementCollection
     public List<String> getPictureUrls()

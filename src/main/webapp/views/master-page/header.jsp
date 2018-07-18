@@ -29,7 +29,9 @@
                     <spring:message code="master.page.antennas" />
                 </a>
             </li>
+        </security:authorize>
 
+        <security:authorize access="hasRole('USER')">
             <li>
                 <a class="fNiv">
                     <spring:message code="master.page.platforms" />
@@ -41,6 +43,19 @@
                 </ul>
             </li>
         </security:authorize>
+        <security:authorize access="!hasRole('USER')">
+            <li>
+                <a class="fNiv" href="platforms/index.do">
+                    <spring:message code="master.page.platforms" />
+                </a>
+            </li>
+        </security:authorize>
+
+        <li>
+            <a class="fNiv" href="satellites/index.do">
+                <spring:message code="master.page.satellites" />
+            </a>
+        </li>
 
         <security:authorize access="hasRole('ADMINISTRATOR')">
             <li><a class="fNiv" href="administrator_dashboards/dashboard.do"><spring:message code="master.page.administratorDashboard" /></a></li>

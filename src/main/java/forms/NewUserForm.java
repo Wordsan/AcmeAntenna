@@ -1,13 +1,10 @@
 package forms;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import domain.Actor;
 import domain.User;
 import security.Authority;
 import security.UserAccount;

@@ -20,7 +20,7 @@
 
     <div>
         <app:submit name="submit" code="misc.actions.create" />
-        <app:cancel code="misc.actions.cancel" />
+        <app:cancel-button code="misc.actions.cancel" />
     </div>
 
     <c:if test="${message == ''}">

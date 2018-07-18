@@ -15,6 +15,7 @@
 		<value>/views/master-page/messages</value>
 		<value>/views/misc/messages</value>
 		<value>/views/security/messages</value>
+		<value>/views/platforms/messages</value>
 		<value>/views/welcome/messages</value>
 	</util:list>
 

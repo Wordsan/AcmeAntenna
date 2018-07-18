@@ -28,10 +28,11 @@
 
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui.js"></script>
+<script type="text/javascript" src="scripts/jquery-redirect.js"></script>
 <script type="text/javascript" src="scripts/jmenu.js"></script>
 <script type="text/javascript" src="scripts/datepicker-${pageContext.response.locale}.js"></script>
 <script type="text/javascript" src="scripts/stringlist.js"></script>
-<script type="text/javascript" src="scripts/phonenumber.js"></script>
+<script type="text/javascript" src="scripts/functions.js"></script>
 
 <link rel="stylesheet" href="styles/common.css" type="text/css">
 <link rel="stylesheet" href="styles/jquery-ui.css" media="screen"
@@ -47,21 +48,6 @@
 		$("#jMenu").jMenu();
 		$(".date-picker").datepicker();
 	});
-
-	function askSubmission(msg, form) {
-		if (confirm(msg))
-			form.submit();
-	}
-	
-	function relativeRedir(loc) {	
-		var b = document.getElementsByTagName('base');
-		if (b && b[0] && b[0].href) {
-  			if (b[0].href.substr(b[0].href.length - 1) == '/' && loc.charAt(0) == '/')
-    		loc = loc.substr(1);
-  			loc = b[0].href + loc;
-		}
-		window.location.replace(loc);
-	}
 </script>
 
 </head>

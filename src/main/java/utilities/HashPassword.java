@@ -10,9 +10,9 @@
 
 package utilities;
 
-import java.io.IOException;
-
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+
+import java.io.IOException;
 
 import utilities.internal.ConsoleReader;
 import utilities.internal.ThrowablePrinter;

@@ -10,10 +10,11 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import cz.jirutka.validator.collection.constraints.EachNotBlank;
-import cz.jirutka.validator.collection.constraints.EachNotEmpty;
 import cz.jirutka.validator.collection.constraints.EachNotNull;
 import cz.jirutka.validator.collection.constraints.EachURL;
 import validators.PastWithMargin;
@@ -23,34 +24,35 @@ import validators.PastWithMargin;
 public class Tutorial
 extends DomainEntity {
     private Date lastUpdateTime = new Date();
-    private String title = "";
-    private String text = "";
+    private String title;
+    private String text;
     private List<String> pictureUrls = new ArrayList<>();
 
-    @PastWithMargin
     @NotNull
+    @PastWithMargin
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getLastUpdateTime()
     {
         return lastUpdateTime;
     }
 
-    @NotNull
     @NotBlank
     public String getTitle()
     {
         return title;
     }
 
-    @NotNull
     @NotBlank
     public String getText()
     {
         return text;
     }
 
-    @ElementCollection
-    @EachNotEmpty
+    @NotNull
+    @EachNotNull
+    @EachNotBlank
     @EachURL
+    @ElementCollection
     public List<String> getPictureUrls()
     {
         return pictureUrls;

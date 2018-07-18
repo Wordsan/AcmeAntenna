@@ -1,13 +1,9 @@
 package validators;
 
 import java.util.Date;
-import java.util.Set;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 public class PastWithMarginValidator implements ConstraintValidator<PastWithMargin, Date> {

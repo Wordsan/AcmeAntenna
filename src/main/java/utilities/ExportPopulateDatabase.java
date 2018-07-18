@@ -1,5 +1,16 @@
 package utilities;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.util.Assert;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import java.beans.Transient;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -40,17 +51,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.hibernate.jpa.HibernatePersistenceProvider;
-import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
-import org.springframework.core.type.filter.AnnotationTypeFilter;
-import org.springframework.util.Assert;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import domain.Actor;
 import domain.DomainEntity;
@@ -271,7 +271,7 @@ public class ExportPopulateDatabase {
 			result = value.toString();
 		} else if (Date.class.isAssignableFrom(type)) {
 			Date date = ((Date) value);
-			Assert.isTrue(getter.getAnnotation(Temporal.class) != null);
+			Assert.isTrue(getter.getAnnotation(Temporal.class) != null, getter.getDeclaringClass().getSimpleName() + "." + getter.getName() + " not using Temporal annotation");
 			
 			if (getter.getAnnotation(Temporal.class).value() == TemporalType.DATE) {
 				result = XML_DATE_FORMAT.format(date);

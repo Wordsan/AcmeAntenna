@@ -1,7 +1,6 @@
 package domain;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Date;
@@ -10,6 +9,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,6 +28,7 @@ extends DomainEntity {
 
     @Valid
     @ManyToOne(optional = false)
+    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public User getUser()
     {
         return user;
@@ -34,24 +36,26 @@ extends DomainEntity {
 
     @Valid
     @ManyToOne(optional = false)
+    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public Platform getPlatform()
     {
         return platform;
     }
 
     @NotNull
+    @Temporal(TemporalType.DATE)
     public Date getStartDate()
     {
         return startDate;
     }
 
     @NotNull
+    @Temporal(TemporalType.DATE)
     public Date getEndDate()
     {
         return endDate;
     }
 
-    @NotNull
     @NotBlank
     @CreditCardNumber
     public String getCreditCard()
@@ -59,7 +63,6 @@ extends DomainEntity {
         return creditCard;
     }
 
-    @NotNull
     @NotBlank
     @Size(min = 32, max = 32)
     public String getKeyCode()

@@ -1,9 +1,9 @@
 package converters;
 
 import org.springframework.core.convert.converter.Converter;
-import javax.transaction.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
 
 import domain.PlatformSubscription;
 

@@ -10,16 +10,13 @@
 
 package security;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.security.core.GrantedAuthority;
 
 @Embeddable
 @Access(AccessType.PROPERTY)

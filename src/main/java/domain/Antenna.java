@@ -25,20 +25,20 @@ extends DomainEntity {
     private double signalQuality;
     private Satellite satellite;
 
+    @Valid
     @ManyToOne(optional = false)
+    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public User getUser()
     {
         return user;
     }
 
-    @NotNull
     @NotBlank
     public String getSerialNumber()
     {
         return serialNumber;
     }
 
-    @NotNull
     @NotBlank
     public String getModel()
     {
@@ -104,7 +104,7 @@ extends DomainEntity {
 
     @Valid
     @ManyToOne(optional = false)
-    @NotNull
+    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public Satellite getSatellite()
     {
         return satellite;

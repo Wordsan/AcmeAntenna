@@ -1,26 +1,25 @@
 package services;
 
-import org.apache.lucene.search.vectorhighlight.FieldFragList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import domain.Antenna;
 import domain.User;
+import exceptions.ResourceNotFoundException;
 import repositories.AntennaRepository;
-import repositories.UserRepository;
 import security.Authority;
-import security.LoginService;
-import security.UserAccount;
-import security.UserAccountService;
 import utilities.CheckUtils;
 
 @Service
 @Transactional
 public class AntennaService {
 	@Autowired AntennaRepository repository;
+	@Autowired UserService userService;
 
 	public Antenna create(Antenna submittedAntenna)
 	{
@@ -41,5 +40,29 @@ public class AntennaService {
 		CheckUtils.checkIsPrincipal(oldAntenna.getUser());
 
 		return repository.save(submittedAntenna);
+	}
+
+	public Antenna getByIdForEdit(int id)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+		Antenna antenna = repository.findOne(id);
+		if (antenna == null) throw new ResourceNotFoundException();
+		CheckUtils.checkIsPrincipal(antenna.getUser());
+		return antenna;
+	}
+
+	public void delete(int id)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+		Antenna antenna = repository.findOne(id);
+		CheckUtils.checkIsPrincipal(antenna.getUser());
+		repository.delete(antenna);
+	}
+
+	public List<Antenna> findAllForUser()
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+		User user = userService.getPrincipal();
+		return repository.findAllByUserOrderBySerialNumberAsc(user);
 	}
 }

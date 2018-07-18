@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 
-import domain.Actor;
 import security.Authority;
 
 @Component

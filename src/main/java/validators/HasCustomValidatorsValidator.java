@@ -2,11 +2,9 @@ package validators;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Date;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import javax.validation.ValidatorFactory;
 
 public class HasCustomValidatorsValidator implements ConstraintValidator<HasCustomValidators, Object> {
     private HasCustomValidators constraintAnnotation;

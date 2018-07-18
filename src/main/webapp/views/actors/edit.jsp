@@ -12,8 +12,8 @@
 	<app:actor-editor />
 
     <div>
-        <app:submit name="submit" code="misc.actions.edit" />
-        <app:cancel code="misc.actions.cancel" />
+        <app:submit name="submit" code="misc.actions.update" />
+        <app:cancel-button code="misc.actions.cancel" />
     </div>
 </form:form>
 

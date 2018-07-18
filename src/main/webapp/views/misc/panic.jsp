@@ -29,6 +29,6 @@
 
 <h2><spring:message code="panic.stack.trace" /></h2>
 
-<p style="font-family: 'Courier New'">	
+<p style="font-family: 'Courier New'">
 	${stackTrace}
 </p>

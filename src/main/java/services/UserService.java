@@ -1,13 +1,11 @@
 package services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.UserDetailsAwareConfigurer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
 
-import domain.Actor;
 import domain.User;
 import repositories.UserRepository;
 import security.Authority;

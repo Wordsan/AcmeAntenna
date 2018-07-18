@@ -1,15 +1,15 @@
 package utilities;
 
+import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
-
-import org.springframework.validation.BindingResult;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 public class ControllerUtils {
 	public static ModelAndView createViewWithBinding(

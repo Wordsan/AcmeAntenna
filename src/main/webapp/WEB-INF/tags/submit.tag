@@ -22,8 +22,12 @@
 
 <%-- Attributes --%> 
 
-<%@ attribute name="name" required="true" %> 
+<%@ attribute name="name" required="false" %>
 <%@ attribute name="code" required="true" %>
+
+<c:if test="${name == null}">
+    <c:set var="name" value="submit" />
+</c:if>
 
 <%-- Definition --%>
 

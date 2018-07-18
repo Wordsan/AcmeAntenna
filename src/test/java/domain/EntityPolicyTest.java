@@ -1,5 +1,6 @@
 package domain;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,12 +9,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Date;
 
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import utilities.AbstractTest;
 import utilities.ReflectionUtils;
+import validators.NullOrNotBlank;
 
 @ContextConfiguration(locations = {
         "classpath:spring/junit.xml"
@@ -42,9 +52,31 @@ public class EntityPolicyTest extends AbstractTest {
     {
         boolean result = true;
 
-        if (method.getReturnType().equals(String.class) && !method.isAnnotationPresent(NotNull.class)) {
+        if (method.isAnnotationPresent(Transient.class)) return true;
+
+        if ((method.isAnnotationPresent(ManyToOne.class) || method.isAnnotationPresent(OneToOne.class) || method.isAnnotationPresent(ManyToMany.class) || method.isAnnotationPresent(OneToMany.class))) {
+            if (!method.isAnnotationPresent(Valid.class)) {
+                result = false;
+                System.err.println("Method for association " + entity.getSimpleName() + "." + method.getName() + " not using Valid.");
+            }
+        }
+        if (method.isAnnotationPresent(OneToOne.class) && !method.getAnnotation(OneToOne.class).optional() && !method.isAnnotationPresent(NotNull.class)) {
             result = false;
-            System.err.println("Method " + entity.getSimpleName() + "." + method.getName() + " returns String but it's not using NotNull.");
+            System.err.println("Method " + entity.getSimpleName() + "." + method.getName() + " using OneToOne(optional = false) but not using NotNull.");
+        }
+        if (method.isAnnotationPresent(ManyToOne.class) && !method.getAnnotation(ManyToOne.class).optional() && !method.isAnnotationPresent(NotNull.class)) {
+            result = false;
+            System.err.println("Method " + entity.getSimpleName() + "." + method.getName() + " using ManyToOne(optional = false) but not using NotNull.");
+        }
+
+        if (method.getReturnType().equals(String.class) && !method.isAnnotationPresent(NotBlank.class) && !method.isAnnotationPresent(NullOrNotBlank.class)) {
+            result = false;
+            System.err.println("Method " + entity.getSimpleName() + "." + method.getName() + " returns String but it's not using NotBlank or NullOrNotBlank.");
+        }
+
+        if (method.getReturnType().equals(Date.class) && !method.isAnnotationPresent(Temporal.class)) {
+            result = false;
+            System.err.println("Method " + entity.getSimpleName() + "." + method.getName() + " returns Date but it's not using Temporal.");
         }
 
         return result;

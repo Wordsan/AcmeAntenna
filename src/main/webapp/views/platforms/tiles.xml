@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="platforms/index" extends="master.page">
+		<put-attribute name="title" value="Platforms" />
+		<put-attribute name="body" value="/views/platforms/index.jsp" />
+	</definition>
+</tiles-definitions>

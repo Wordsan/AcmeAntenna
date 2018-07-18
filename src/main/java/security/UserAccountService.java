@@ -1,21 +1,14 @@
 package security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import exceptions.UsernameNotUniqueException;
 import utilities.CheckUtils;

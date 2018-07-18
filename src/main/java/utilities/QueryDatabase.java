@@ -10,11 +10,11 @@
 
 package utilities;
 
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
+
+import java.util.List;
 
 import utilities.internal.ConsoleReader;
 import utilities.internal.DatabaseUtil;

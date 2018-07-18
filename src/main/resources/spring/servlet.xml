@@ -30,7 +30,9 @@
 	<context:annotation-config />
 
 	<mvc:annotation-driven validator="validator"
-		conversion-service="conversionService" />
+		conversion-service="conversionService"
+	    ignore-default-model-on-redirect="true"
+	/>
 
 	<!-- Converters -->
 
@@ -124,5 +126,4 @@
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
 	</bean>
-
 </beans>

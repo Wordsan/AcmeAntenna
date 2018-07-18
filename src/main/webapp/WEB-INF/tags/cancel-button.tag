@@ -23,16 +23,16 @@
 <%-- Attributes --%>
 
 <%@ attribute name="code" required="true" %>
-<%@ attribute name="url" required="false" %>
+<%@ attribute name="action" required="false" %>
 
 <%-- Definition --%>
 
 <c:choose>
-    <c:when test="${url != null}">
-       	<c:set var="onclick" value="javascript: relativeRedir('${url}');" />
+    <c:when test="${action != null}">
+       	<c:set var="onclick" value='relativeRedir("<spring:escapeBody htmlEscape="false" javaScriptEscape="true">${action}</spring:escapeBody>)"' />
     </c:when>
     <c:otherwise>
-        <c:set var="onclick" value="javascript: window.history.back();" />
+        <c:set var="onclick" value="window.history.back()" />
     </c:otherwise>
 </c:choose>
 
