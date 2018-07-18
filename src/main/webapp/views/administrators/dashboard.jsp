@@ -27,7 +27,9 @@
 	<span class="content"><c:out value="${stdDevAntennaSignalQuality}" /></span>
 </div>
 
-<canvas id="antennaCountPerModelChart" width="400" height="200"></canvas>
+<h3><spring:message code="administrators.antennaCountPerModel" /></h3>
+
+<canvas id="antennaCountPerModelChart" width="600" height="400"></canvas>
 
 <h3><spring:message code="administrators.mostPopularAntennas" /></h3>
 
@@ -41,8 +43,16 @@
 </display:table>
 
 <script>
-    let antennaCountPerModelChartLabels = ['a'];
-    let antennaCountPerModelChartData = [1];
+    let antennaCountPerModelChartLabels = [
+    <c:forEach items="${antennaCountPerModel}" var="item">
+        "<spring:escapeBody htmlEscape="false" javaScriptEscape="true">${item[0]}</spring:escapeBody>",
+    </c:forEach>
+    ];
+    let antennaCountPerModelChartData = [
+        <c:forEach items="${antennaCountPerModel}" var="item">
+            "<spring:escapeBody htmlEscape="false" javaScriptEscape="true">${item[1]}</spring:escapeBody>",
+        </c:forEach>
+    ];
 
     let antennaCountPerModelChart = new Chart($("#antennaCountPerModelChart"), {
         type: 'bar',
@@ -55,6 +65,10 @@
             }],
         },
         options: {
+            responsive: false,
+            legend: {
+                display: false
+            },
             scales: {
                 yAxes: [{
                     ticks: {
