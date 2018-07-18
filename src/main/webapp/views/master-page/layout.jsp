@@ -29,6 +29,8 @@
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui.js"></script>
 <script type="text/javascript" src="scripts/jquery-redirect.js"></script>
+<script type="text/javascript" src="scripts/Chart.bundle.min.js"></script>
+<script type="text/javascript" src="scripts/pallete.js"></script>
 <script type="text/javascript" src="scripts/jmenu.js"></script>
 <script type="text/javascript" src="scripts/datepicker-${pageContext.response.locale}.js"></script>
 <script type="text/javascript" src="scripts/stringlist.js"></script>

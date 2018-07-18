@@ -17,6 +17,7 @@
 		<value>/views/security/messages</value>
 		<value>/views/satellites/messages</value>
 		<value>/views/platforms/messages</value>
+		<value>/views/administrators/messages</value>
 		<value>/views/platform_subscriptions/messages</value>
 		<value>/views/welcome/messages</value>
 	</util:list>
