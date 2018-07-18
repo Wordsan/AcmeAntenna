@@ -19,7 +19,7 @@ import utilities.ControllerUtils;
 @Controller
 @RequestMapping("/actors")
 public class ActorController extends AbstractController {
-	@Autowired ActorService actorService;
+	@Autowired private ActorService actorService;
 
 	public ActorController()
 	{

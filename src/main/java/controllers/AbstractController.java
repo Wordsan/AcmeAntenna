@@ -12,12 +12,15 @@ package controllers;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ClassUtils;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,7 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import domain.Actor;
 import domain.User;
 import exceptions.ResourceNotFoundException;
+import security.Authority;
 import security.LoginService;
+import security.UserAccount;
 import services.ActorService;
 import services.UserService;
 import utilities.ApplicationConfig;
@@ -43,9 +48,24 @@ public class AbstractController {
 	{
 		return actorService.getPrincipal();
 	}
+
 	protected User getPrincipalUser()
 	{
 		return userService.getPrincipal();
+	}
+
+	protected boolean hasAuthority(String authority)
+	{
+		if (!LoginService.isAuthenticated()) return false;
+
+		UserAccount account = LoginService.getPrincipal();
+		if (account == null) return false;
+
+		for (Authority accountAuthority : account.getAuthorities()) {
+			if (accountAuthority.getAuthority().equals(authority)) return true;
+		}
+
+		return false;
 	}
 
 	@ModelAttribute("locale")
@@ -60,7 +80,14 @@ public class AbstractController {
 		return ApplicationConfig.DISPLAYTAG_PAGE_SIZE;
 	}
 
-	// Panic handler ----------------------------------------------------------
+	@InitBinder
+	public void configEmptyStringAsNull(WebDataBinder binder )
+	{
+		// Tell spring to set empty values as null instead of empty string.
+		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	}
+
+		// Panic handler ----------------------------------------------------------
 
 	@ExceptionHandler(Throwable.class)
 	public ModelAndView panic(Throwable oops, HttpServletRequest request)

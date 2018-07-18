@@ -7,15 +7,22 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="app" tagdir="/WEB-INF/tags" %>
 
-<form:form method="GET" action="platforms/index.do" modelAttribute="searchForm">
-    <app:textbox path="terms" code="misc.searchTerms" />
-    <app:submit code="misc.actions.search" />
-</form:form>
+<div>
+	<span class="label"><spring:message code="satellites.name" />: </span>
+	<span class="content"><c:out value="${satellite.name}" /></span>
+</div>
+
+<div>
+	<span class="label"><spring:message code="satellites.description" />: </span>
+	<span class="content"><c:out value="${satellite.description}" /></span>
+</div>
+
+<h3><spring:message code="satellites.platforms" /></h3>
 
 <display:table name="platforms"
 	       id="platform"
 	       pagesize="${displayTagPageSize}"
-	       requestURI="platforms/index.do">
+	       requestURI="satellites/show.do?id=${platform.id}">
 
     <display:column property="name" titleKey="platforms.name" escapeXml="true" sortable="true" href="platforms/show.do" paramId="id" paramProperty="id" />
     <display:column property="description" titleKey="platforms.description" escapeXml="true" sortable="true" />

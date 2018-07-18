@@ -16,8 +16,8 @@ import utilities.CheckUtils;
 @Service
 @Transactional
 public class ActorService {
-	@Autowired ActorRepository repository;
-	@Autowired UserAccountService userAccountService;
+	@Autowired private ActorRepository repository;
+	@Autowired private UserAccountService userAccountService;
 
 	public Actor findPrincipal()
 	{

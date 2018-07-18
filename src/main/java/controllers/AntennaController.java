@@ -23,8 +23,8 @@ import utilities.ControllerUtils;
 @Controller
 @RequestMapping("/antennas")
 public class AntennaController extends AbstractController {
-	@Autowired AntennaService antennaService;
-	@Autowired SatelliteService satelliteService;
+	@Autowired private AntennaService antennaService;
+	@Autowired private SatelliteService satelliteService;
 
 	@RequestMapping("/index")
 	public ModelAndView index()
@@ -57,7 +57,7 @@ public class AntennaController extends AbstractController {
 				);
 
 		result.addObject("antenna", antenna);
-		result.addObject("satellites", satelliteService.findAllSortedByName());
+		result.addObject("satellites", satelliteService.findAll());
 
 		return result;
 	}
@@ -108,7 +108,7 @@ public class AntennaController extends AbstractController {
 		);
 
 		result.addObject("antenna", antenna);
-		result.addObject("satellites", satelliteService.findAllSortedByName());
+		result.addObject("satellites", satelliteService.findAll());
 
 		return result;
 	}

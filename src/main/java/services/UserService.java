@@ -17,8 +17,8 @@ import utilities.CheckUtils;
 @Service
 @Transactional
 public class UserService {
-	@Autowired UserRepository repository;
-	@Autowired UserAccountService userAccountService;
+	@Autowired private UserRepository repository;
+	@Autowired private UserAccountService userAccountService;
 
 	public User findPrincipal()
 	{

@@ -18,8 +18,8 @@ import utilities.CheckUtils;
 @Service
 @Transactional
 public class AntennaService {
-	@Autowired AntennaRepository repository;
-	@Autowired UserService userService;
+	@Autowired private AntennaRepository repository;
+	@Autowired private UserService userService;
 
 	public Antenna create(Antenna submittedAntenna)
 	{

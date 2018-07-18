@@ -22,7 +22,7 @@ import utilities.UserAccountUtils;
 @Controller
 @RequestMapping("/users")
 public class UserController extends AbstractController {
-	@Autowired UserService userService;
+	@Autowired private UserService userService;
 
 	public UserController()
 	{

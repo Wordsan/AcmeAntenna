@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="platform_subscriptions/index" extends="master.page">
+		<put-attribute name="title" value="Mis subscripciones" />
+		<put-attribute name="body" value="/views/platform_subscriptions/index.jsp" />
+	</definition>
+
+	<definition name="platform_subscriptions/new" extends="master.page">
+		<put-attribute name="title" value="Nueva subscripción" />
+		<put-attribute name="body" value="/views/platform_subscriptions/new.jsp" />
+	</definition>
+</tiles-definitions>

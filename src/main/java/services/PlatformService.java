@@ -28,16 +28,15 @@ import utilities.CheckUtils;
 @Service
 @Transactional
 public class PlatformService {
-    @Autowired PlatformRepository repository;
-    @Autowired UserService userService;
-
-    @PersistenceContext EntityManager entityManager; // For Lucene.
+    @Autowired private PlatformRepository repository;
+    @PersistenceContext private EntityManager entityManager; // For Lucene.
 
     public List<Platform> findAll()
     {
         return repository.findAllByOrderByNameAsc();
     }
 
+    @SuppressWarnings("unchecked")
     public List<Platform> search(String searchTerms)
     {
         if (searchTerms != null && !searchTerms.trim().isEmpty()) {
@@ -46,7 +45,6 @@ public class PlatformService {
                 QueryBuilder qb = ftem.getSearchFactory().buildQueryBuilder().forEntity(Platform.class).get();
                 Query query = qb.keyword().onFields("name", "description").matching(searchTerms).createQuery();
 
-                //noinspection unchecked
                 return (List<Platform>) ftem.createFullTextQuery(query, Platform.class).getResultList();
             } catch (EmptyQueryException ex) {
                 // This happens if you search by a very common word that Lucene rejects for being too common.
@@ -55,5 +53,12 @@ public class PlatformService {
             }
         }
         return findAll();
+    }
+
+    public Platform getById(int id)
+    {
+        Platform result = repository.findOne(id);
+        if (result == null) throw new ResourceNotFoundException();
+        return result;
     }
 }

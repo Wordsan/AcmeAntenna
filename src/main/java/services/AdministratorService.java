@@ -14,7 +14,7 @@ import security.UserAccount;
 @Service
 @Transactional
 public class AdministratorService {
-	@Autowired AdministratorRepository repository;
+	@Autowired private AdministratorRepository repository;
 
 	public Administrator findPrincipal()
 	{

@@ -1,8 +1,13 @@
 package domain;
 
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.solr.common.util.DateUtil;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -11,14 +16,23 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import validators.CustomValidator;
+import validators.HasCustomValidators;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@HasCustomValidators
 public class PlatformSubscription
 extends DomainEntity {
+    public static final String KEYCODE_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final int KEYCODE_LENGTH = 32;
+
     private User user;
     private Platform platform;
     private Date startDate;
@@ -44,6 +58,7 @@ extends DomainEntity {
 
     @NotNull
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     public Date getStartDate()
     {
         return startDate;
@@ -51,10 +66,22 @@ extends DomainEntity {
 
     @NotNull
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     public Date getEndDate()
     {
         return endDate;
     }
+
+    @CustomValidator(message = "{platform_subscriptions.error.startDateMustBeBeforeEndDate}", applyOn = {"startDate", "endDate"})
+    @Transient
+    public boolean isValidStartDateBeforeEndDate()
+    {
+        if (startDate == null || endDate == null) return true;
+        Date tmpStart = DateUtils.truncate(startDate, Calendar.DAY_OF_MONTH);
+        Date tmpEnd = DateUtils.truncate(endDate, Calendar.DAY_OF_MONTH);
+        return tmpStart.before(tmpEnd) || tmpStart.equals(tmpEnd);
+    }
+
 
     @NotBlank
     @CreditCardNumber
@@ -63,8 +90,19 @@ extends DomainEntity {
         return creditCard;
     }
 
+    @Transient
+    public String getObscuredCreditCard()
+    {
+        String tmp = creditCard.replaceAll("[^0-9]", "");
+        if (tmp.length() > 4) {
+            return StringUtils.repeat("*", tmp.length() - 4) + tmp.substring(tmp.length() - 4);
+        } else {
+            return StringUtils.repeat("*", tmp.length());
+        }
+    }
+
     @NotBlank
-    @Size(min = 32, max = 32)
+    @Pattern(regexp = "[0-9A-Z]{32}")
     public String getKeyCode()
     {
         return keyCode;

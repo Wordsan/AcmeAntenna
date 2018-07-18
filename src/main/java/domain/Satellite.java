@@ -1,5 +1,7 @@
 package domain;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Indexed
 public class Satellite
 extends DomainEntity {
     private String name = "";
@@ -20,12 +23,14 @@ extends DomainEntity {
     private List<Platform> platforms = new ArrayList<>();
 
     @NotBlank
+    @Field
     public String getName()
     {
         return name;
     }
 
     @NotBlank
+    @Field
     public String getDescription()
     {
         return description;
