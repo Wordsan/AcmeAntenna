@@ -31,8 +31,7 @@ public class LoginService implements UserDetailsService {
 	@Autowired
 	UserAccountRepository	userRepository;
 
-
-	// Business methods -------------------------------------------------------
+    // Business methods -------------------------------------------------------
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
@@ -89,4 +88,17 @@ public class LoginService implements UserDetailsService {
 		return result;
 	}
 
+	public static boolean hasAuthority(String authority)
+	{
+		if (!isAuthenticated()) return false;
+
+		UserAccount account = getPrincipal();
+		if (account == null) return false;
+
+		for (Authority accountAuthority : account.getAuthorities()) {
+			if (accountAuthority.getAuthority().equals(authority)) return true;
+		}
+
+		return false;
+	}
 }

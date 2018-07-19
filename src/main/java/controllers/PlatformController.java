@@ -12,9 +12,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import domain.Platform;
-import domain.User;
 import forms.SearchForm;
 import security.Authority;
+import security.LoginService;
 import services.PlatformService;
 import services.PlatformSubscriptionService;
 
@@ -42,7 +42,7 @@ public class PlatformController extends AbstractController {
 		ModelAndView result = new ModelAndView("platforms/show");
 		result.addObject("platform", platform);
 		result.addObject("satellites", platform.getSatellites());
-		if (hasAuthority(Authority.USER)) {
+		if (LoginService.hasAuthority(Authority.USER)) {
 			result.addObject("platformSubscriptions", platformSubscriptionService.findAllForPrincipalAndPlatform(platform));
 		}
 		return result;

@@ -8,6 +8,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -31,6 +32,14 @@ extends DomainEntity {
 	public String getName() { return name; }
 	@NotBlank
 	public String getSurname() { return surname; }
+
+	@Transient
+	public String getFullName()
+	{
+		if (getName() == null || getSurname() == null) return null;
+		return getName().trim() + " " + getSurname().trim();
+	}
+
 	@NotBlank
 	@Email
 	public String getEmail() { return email; }

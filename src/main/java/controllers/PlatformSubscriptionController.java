@@ -16,6 +16,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import domain.PlatformSubscription;
+import domain.User;
 import exceptions.OverlappingPlatformSubscriptionException;
 import services.PlatformService;
 import services.PlatformSubscriptionService;
@@ -41,7 +42,7 @@ public class PlatformSubscriptionController extends AbstractController {
     public ModelAndView new_(@RequestParam(value = "platformId", required = false) Integer platformId)
     {
         PlatformSubscription platformSubscription = new PlatformSubscription();
-        platformSubscription.setUser(getPrincipalUser());
+        platformSubscription.setUser((User) getPrincipal());
         if (platformId != null) {
             platformSubscription.setPlatform(platformService.getById(platformId));
         }

@@ -11,6 +11,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,11 +27,20 @@ import validators.PastWithMargin;
 @Access(AccessType.PROPERTY)
 public class TutorialComment
 extends DomainEntity {
+    private User user;
     private Tutorial tutorial;
     private String title;
     private String text;
-    private Date creationTime = new Date();
+    private Date creationTime;
     private List<String> pictureUrls = new ArrayList<>();
+
+    @Valid
+    @ManyToOne(optional = false)
+    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+    public User getUser()
+    {
+        return user;
+    }
 
     @Valid
     @ManyToOne(optional = false)
@@ -47,6 +57,7 @@ extends DomainEntity {
     }
 
     @NotBlank
+    @Lob
     public String getText()
     {
         return text;
@@ -69,6 +80,11 @@ extends DomainEntity {
     public List<String> getPictureUrls()
     {
         return pictureUrls;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
     }
 
     public void setTutorial(Tutorial tutorial)

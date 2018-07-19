@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 
 import domain.Actor;
+import domain.Administrator;
 import domain.User;
 import exceptions.ResourceNotFoundException;
 import security.Authority;
@@ -40,32 +41,20 @@ import utilities.ControllerUtils;
 @Controller
 public class AbstractController {
 	private @Autowired ActorService actorService;
-	private @Autowired UserService userService;
 
 	private HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
 
+	@ModelAttribute("principal")
+	public Actor findPrincipal()
+	{
+		Actor principal = actorService.findPrincipal();
+		return principal;
+	}
+
 	protected Actor getPrincipal()
 	{
-		return actorService.getPrincipal();
-	}
-
-	protected User getPrincipalUser()
-	{
-		return userService.getPrincipal();
-	}
-
-	protected boolean hasAuthority(String authority)
-	{
-		if (!LoginService.isAuthenticated()) return false;
-
-		UserAccount account = LoginService.getPrincipal();
-		if (account == null) return false;
-
-		for (Authority accountAuthority : account.getAuthorities()) {
-			if (accountAuthority.getAuthority().equals(authority)) return true;
-		}
-
-		return false;
+		Actor principal = actorService.getPrincipal();
+		return principal;
 	}
 
 	@ModelAttribute("locale")
@@ -107,6 +96,8 @@ public class AbstractController {
 		result.addObject("exception", oops.getMessage());
 		result.addObject("stackTrace", ExceptionUtils.getStackTrace(oops));
 
+		if (ApplicationConfig.DEBUG) oops.printStackTrace();
+
 		return result;
 	}
 
@@ -120,7 +111,10 @@ public class AbstractController {
 		if (!LoginService.isAuthenticated()) {
 			// If we are not authenticated, redirect to login page, and save the current request
 			// so that Spring will replay it on authentication success.
-			requestCache.saveRequest(request, null);
+			// Only save the request if it's a GET request. Otherwise the user must do it again.
+			if (request.getMethod().equalsIgnoreCase("GET")) {
+				requestCache.saveRequest(request, null);
+			}
 			return ControllerUtils.redirect("/security/login.do");
 		} else {
 			// Else the user just doesn't have permissions to do this.

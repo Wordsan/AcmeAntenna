@@ -15,6 +15,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import domain.Antenna;
+import domain.User;
 import services.AntennaService;
 import services.SatelliteService;
 import utilities.ApplicationConfig;
@@ -39,7 +40,7 @@ public class AntennaController extends AbstractController {
 	public ModelAndView new_()
 	{
 		Antenna antenna = new Antenna();
-		antenna.setUser(getPrincipalUser());
+		antenna.setUser((User) getPrincipal());
 		return newForm(antenna, null, false, null);
 	}
 

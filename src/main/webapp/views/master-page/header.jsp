@@ -57,6 +57,12 @@
             </a>
         </li>
 
+        <li>
+            <a class="fNiv" href="tutorials/index.do">
+                <spring:message code="master.page.tutorials" />
+            </a>
+        </li>
+
         <security:authorize access="hasRole('ADMINISTRATOR')">
             <li><a class="fNiv" href="administrators/dashboard.do"><spring:message code="master.page.administratorDashboard" /></a></li>
         </security:authorize>

@@ -17,3 +17,98 @@
 	color: red;
 	font-weight: bolder;
 }
+
+.multiline {
+    white-space: pre-wrap;
+}
+
+/* Pagination */
+.pagination {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.pagination li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ddd;
+    float: left;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination .page-item.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination .page-item.disabled {
+    background-color: #888;
+}
+
+.pagination .page-item:hover:not(.active):not(.disabled) {background-color: #ddd;}
+
+.pagination .page-item:first-child {
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+}
+
+.pagination .page-item:last-child {
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* Comments */
+.tutorial-comment-inner {
+    border: 1px solid black;
+    margin-bottom: 0.3rem;
+    display: inline-block;
+}
+
+.tutorial-comment-header {
+    background: #eee;
+}
+
+.tutorial-comment-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.tutorial-comment-meta {
+    font-size: 0.75em;
+}
+.tutorial-comment-meta span:after {
+    content: ' - ';
+}
+.tutorial-comment-meta span:last-child:after {
+    content: '';
+}
+.tutorial-comment-pictures {
+    margin-top: 1rem;
+}
+.tutorial-pictures img, .tutorial-comment-pictures img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border: 1px solid black;
+}

@@ -9,6 +9,7 @@
 <%@taglib prefix="app" tagdir="/WEB-INF/tags" %>
 
 <%@attribute name="path" required="true" %>
+<%@attribute name="items" type="java.util.List" required="true" %>
 <%@attribute name="code" required="true" %>
 
 <div class="stringlist">
@@ -18,9 +19,9 @@
 
     <div class="stringlist-items">
 	<spring:bind path="${path}">
-        <c:forEach var="item" items="${status.value}" varStatus="loop">
+        <c:forEach var="item" items="${items}" varStatus="loop">
             <div class="stringlist-item">
-                <input type="text" name="${path}[${loop.index}]" value="${item}" />
+                <input type="text" name="<c:out value="${path}[${loop.index}]" />" value="<c:out value="${item != null ? item : ''}" />" />
                 <button type="button" onclick="javascript: stringlist_delete_item(this);">-</button>
             </div>
         </c:forEach>

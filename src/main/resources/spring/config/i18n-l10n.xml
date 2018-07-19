@@ -12,6 +12,7 @@
 		<value>/views/actors/messages</value>
 		<value>/views/antennas/messages</value>
 		<value>/views/users/messages</value>
+		<value>/views/tutorials/messages</value>
 		<value>/views/master-page/messages</value>
 		<value>/views/misc/messages</value>
 		<value>/views/security/messages</value>

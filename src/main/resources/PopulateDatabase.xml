@@ -25,6 +25,9 @@
         <property name="keyCode" value="22345678901234567890123456789012"/>
     </bean>
     <bean class="domain.TutorialComment" id="tutorialComment_1">
+        <property name="user">
+            <ref bean="user_user"/>
+        </property>
         <property name="tutorial">
             <ref bean="tutorial_1"/>
         </property>
@@ -36,6 +39,9 @@
         </property>
     </bean>
     <bean class="domain.TutorialComment" id="tutorialComment_2">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
         <property name="tutorial">
             <ref bean="tutorial_3"/>
         </property>
@@ -420,6 +426,9 @@
         </property>
     </bean>
     <bean class="domain.Tutorial" id="tutorial_1">
+        <property name="user">
+            <ref bean="user_user"/>
+        </property>
         <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
         <property name="title" value="Tutorial 1"/>
         <property name="text" value="This is tutorial 1"/>
@@ -430,6 +439,9 @@
         </property>
     </bean>
     <bean class="domain.Tutorial" id="tutorial_2">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
         <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
         <property name="title" value="Tutorial 2"/>
         <property name="text" value="This is tutorial 2"/>
@@ -438,6 +450,9 @@
         </property>
     </bean>
     <bean class="domain.Tutorial" id="tutorial_3">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
         <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
         <property name="title" value="Tutorial 3"/>
         <property name="text" value="This is tutorial 3"/>
@@ -446,6 +461,9 @@
         </property>
     </bean>
     <bean class="domain.Tutorial" id="tutorial_4">
+        <property name="user">
+            <ref bean="user_user"/>
+        </property>
         <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
         <property name="title" value="Tutorial 4"/>
         <property name="text" value="This is tutorial 4"/>
@@ -454,6 +472,9 @@
         </property>
     </bean>
     <bean class="domain.Tutorial" id="tutorial_5">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
         <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
         <property name="title" value="Tutorial 5"/>
         <property name="text" value="This is tutorial 5"/>
@@ -462,6 +483,9 @@
         </property>
     </bean>
     <bean class="domain.Tutorial" id="tutorial_6">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
         <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
         <property name="title" value="Tutorial 6"/>
         <property name="text" value="This is tutorial 6"/>

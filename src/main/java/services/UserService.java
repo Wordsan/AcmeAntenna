@@ -6,6 +6,8 @@ import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
 
+import domain.Actor;
+import domain.Administrator;
 import domain.User;
 import repositories.UserRepository;
 import security.Authority;
@@ -20,21 +22,23 @@ public class UserService {
 	@Autowired private UserRepository repository;
 	@Autowired private UserAccountService userAccountService;
 
+	@Autowired private ActorService actorService;
+
 	public User findPrincipal()
 	{
-		UserAccount userAccount = LoginService.getPrincipal();
-		if (userAccount == null) return null;
-
-		return repository.findByUserAccount(userAccount);
+		Actor principal = actorService.findPrincipal();
+		if (principal instanceof User) {
+			return (User) principal;
+		}
+		return null;
 	}
 
 	public User getPrincipal()
 	{
-		User principal = findPrincipal();
-		Assert.notNull(principal);
-		return principal;
+		Actor principal = actorService.findPrincipal();
+		Assert.isTrue(principal instanceof User);
+		return (User) principal;
 	}
-
 
 	public User createAsNewUser(User user)
 	{

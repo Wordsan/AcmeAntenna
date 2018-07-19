@@ -21,6 +21,8 @@ public class ActorService {
 
 	public Actor findPrincipal()
 	{
+		if (!LoginService.isAuthenticated()) return null;
+
 		UserAccount userAccount = LoginService.getPrincipal();
 		if (userAccount == null) return null;
 

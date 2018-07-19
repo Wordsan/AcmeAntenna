@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import domain.Actor;
 import domain.Administrator;
 import repositories.AdministratorRepository;
 import security.Authority;
@@ -21,20 +22,22 @@ import utilities.CheckUtils;
 @Transactional
 public class AdministratorService {
 	@Autowired private AdministratorRepository repository;
+	@Autowired private ActorService actorService;
 
 	public Administrator findPrincipal()
 	{
-		UserAccount userAccount = LoginService.getPrincipal();
-		if (userAccount == null) return null;
-
-		return repository.findByUserAccount(userAccount);
+		Actor principal = actorService.findPrincipal();
+		if (principal instanceof Administrator) {
+			return (Administrator) principal;
+		}
+		return null;
 	}
 
 	public Administrator getPrincipal()
 	{
-		Administrator principal = findPrincipal();
-		Assert.notNull(principal);
-		return principal;
+		Actor principal = actorService.findPrincipal();
+		Assert.isTrue(principal instanceof Administrator);
+		return (Administrator) principal;
 	}
 
 	public double findAvgAntennaCountPerUser()

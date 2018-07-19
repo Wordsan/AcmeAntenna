@@ -22,6 +22,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import cz.jirutka.validator.collection.constraints.EachNotBlank;
+import cz.jirutka.validator.collection.constraints.EachNotNull;
 import utilities.AbstractTest;
 import utilities.ReflectionUtils;
 import validators.NullOrNotBlank;
@@ -83,6 +85,10 @@ public class EntityPolicyTest extends AbstractTest {
         if (method.getReturnType().equals(Date.class) && !method.isAnnotationPresent(DateTimeFormat.class)) {
             result = false;
             System.err.println("Method " + entity.getSimpleName() + "." + method.getName() + " returns Date but it's not using DateTimeFormat.");
+        }
+        if (method.isAnnotationPresent(EachNotBlank.class) && !method.isAnnotationPresent(EachNotNull.class)) {
+            result = false;
+            System.err.println("Method " + entity.getSimpleName() + "." + method.getName() + " using EachNotBlank but not using EachNotNull. (unlike NotBlank, EachNotBlank does NOT enforce the not-null constraint)");
         }
 
         return result;

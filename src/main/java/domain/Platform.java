@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.validation.Valid;
 
@@ -31,6 +32,7 @@ extends DomainEntity
 
     @NotBlank
     @Field
+    @Lob
     public String getDescription()
     {
         return description;
