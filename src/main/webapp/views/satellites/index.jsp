@@ -15,6 +15,7 @@
 <display:table name="satellites"
 	       id="satellite"
 	       pagesize="${displayTagPageSize}"
+	       sort="list"
 	       requestURI="satellites/index.do">
 
     <display:column property="name" titleKey="satellites.name" escapeXml="true" sortable="true" href="satellites/show.do" paramId="id" paramProperty="id" />

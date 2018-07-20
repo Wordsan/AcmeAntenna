@@ -13,6 +13,7 @@
 <display:table name="tutorials"
 	       id="tutorial"
 	       pagesize="${displayTagPageSize}"
+	       sort="list"
 	       requestURI="tutorials/index.do">
 
     <display:column property="title" titleKey="tutorials.title" escapeXml="true" sortable="true" href="tutorials/show.do" paramId="id" paramProperty="id" />

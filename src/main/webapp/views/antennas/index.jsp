@@ -11,6 +11,7 @@
 <display:table name="antennas"
 	       id="antenna"
 	       pagesize="${displayTagPageSize}"
+	       sort="list"
 	       requestURI="antennas/index.do">
 
     <display:column property="serialNumber" titleKey="antennas.serialNumber" escapeXml="true" sortable="true" />

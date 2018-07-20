@@ -12,6 +12,7 @@
 <display:table name="platformSubscriptions"
 	       id="platformSubscription"
 	       pagesize="${displayTagPageSize}"
+	       sort="list"
 	       requestURI="platform_subscriptions/index.do">
 
     <display:column property="platform.name" titleKey="platform_subscriptions.platform" escapeXml="true" sortable="true" href="platforms/show.do" paramId="id" paramProperty="platform.id" />

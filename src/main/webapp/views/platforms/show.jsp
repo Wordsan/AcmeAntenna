@@ -23,6 +23,7 @@
 <display:table name="satellites"
 	       id="satellite"
 	       pagesize="${displayTagPageSize}"
+	       sort="list"
 	       requestURI="platforms/show.do?id=${platform.id}">
 
     <display:column property="name" titleKey="satellites.name" escapeXml="true" sortable="true" href="satellites/show.do" paramId="id" paramProperty="id" />
@@ -38,6 +39,7 @@
     <display:table name="platformSubscriptions"
                id="platformSubscription"
                pagesize="${displayTagPageSize}"
+	           sort="list"
                requestURI="platforms/show.do?id=${platform.id}">
 
         <display:column property="startDate" titleKey="platform_subscriptions.startDate" sortable="true" format="{0,date,dd/MM/yyyy}" />

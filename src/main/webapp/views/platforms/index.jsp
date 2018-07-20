@@ -15,6 +15,7 @@
 <display:table name="platforms"
 	       id="platform"
 	       pagesize="${displayTagPageSize}"
+	       sort="list"
 	       requestURI="platforms/index.do">
 
     <display:column property="name" titleKey="platforms.name" escapeXml="true" sortable="true" href="platforms/show.do" paramId="id" paramProperty="id" />

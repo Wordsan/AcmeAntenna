@@ -63,6 +63,7 @@
 <display:table name="mostPopularAntennas"
 	       id="antenna"
 	       pagesize="${displayTagPageSize}"
+	       sort="list"
 	       requestURI="administrators/dashboard.do">
 
     <display:column value="${antenna[0]}" titleKey="antennas.model" escapeXml="true" sortable="true" />
@@ -76,6 +77,7 @@
 <display:table name="topTutorialContributors"
 	       id="user"
 	       pagesize="${displayTagPageSize}"
+	       sort="list"
 	       requestURI="administrators/dashboard.do">
 
     <display:column property="fullName" titleKey="actors.name" escapeXml="true" sortable="true" />
