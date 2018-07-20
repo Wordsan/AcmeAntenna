@@ -135,7 +135,7 @@ public class ActorController extends AbstractController {
                 result = ControllerUtils.redirect("/welcome/index.do");
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
             } catch (OldPasswordDoesntMatchException oops) {
-                binding.addError(new FieldError("form", "oldPassword", form.getRepeatNewPassword(), false, new String[]{"actors.error.oldPasswordDoesntMatch"}, null, null));
+                binding.addError(new FieldError("form", "oldPassword", form.getOldPassword(), false, new String[]{"actors.error.oldPasswordDoesntMatch"}, null, null));
                 result = editOwnPasswordForm(form,
                                              binding,
                                              null
