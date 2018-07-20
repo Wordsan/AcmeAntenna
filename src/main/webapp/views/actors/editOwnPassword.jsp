@@ -7,9 +7,10 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="app" tagdir="/WEB-INF/tags" %>
 
-<form:form action="actors/update.do" modelAttribute="actor">
-    <app:model-editor />
-	<app:actor-editor />
+<form:form action="actors/updateOwnPassword.do" modelAttribute="form">
+    <app:password path="oldPassword" code="actors.oldPassword" />
+    <app:password path="newPassword" code="actors.newPassword" />
+    <app:password path="repeatNewPassword" code="actors.repeatNewPassword" />
 
     <div>
         <app:submit name="submit" code="misc.actions.update" />

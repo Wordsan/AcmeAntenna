@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 
 import domain.Actor;
 import domain.Administrator;
+import domain.User;
 import repositories.AdministratorRepository;
 import security.Authority;
 import security.LoginService;
@@ -75,4 +76,35 @@ public class AdministratorService {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 		return repository.findStdDevAntennaSignalQuality();
 	}
+
+	public double findAvgTutorialCountPerUser()
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+		return repository.findAvgTutorialCountPerUser();
+	}
+
+	public double findStdDevTutorialCountPerUser()
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+		return repository.findStdDevTutorialCountPerUser();
+	}
+
+	public double findAvgCommentCountPerTutorial()
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+		return repository.findAvgCommentCountPerTutorial();
+	}
+
+	public double findStdDevCommentCountPerTutorial()
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+		return repository.findStdDevCommentCountPerTutorial();
+	}
+
+	public List<User> findTopTutorialContributors()
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+		return repository.findTopTutorialContributors();
+	}
+
 }

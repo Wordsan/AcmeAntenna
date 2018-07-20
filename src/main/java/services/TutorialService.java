@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.net.ResponseCache;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -39,5 +40,33 @@ public class TutorialService {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 		repository.delete(id);
+	}
+
+	public Tutorial create(Tutorial tutorial)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+		CheckUtils.checkIsPrincipal(tutorial.getUser());
+		CheckUtils.checkNotExists(tutorial);
+
+		tutorial.setLastUpdateTime(new Date());
+		return repository.save(tutorial);
+	}
+
+	public Tutorial update(Tutorial tutorial)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+		CheckUtils.checkIsPrincipal(tutorial.getUser());
+		CheckUtils.checkExists(tutorial);
+
+		tutorial.setLastUpdateTime(new Date());
+		return repository.save(tutorial);
+	}
+
+	public Tutorial getByIdForEdit(int id)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+		Tutorial tutorial = getById(id);
+		CheckUtils.checkIsPrincipal(tutorial.getUser());
+		return tutorial;
 	}
 }

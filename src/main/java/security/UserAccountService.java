@@ -1,7 +1,9 @@
 package security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -16,8 +18,7 @@ import utilities.CheckUtils;
 @Service
 @Transactional
 public class UserAccountService {
-	@Autowired
-	UserAccountRepository repository;
+	@Autowired UserAccountRepository repository;
 
 	public UserAccount findOne(int id)
 	{
@@ -27,11 +28,6 @@ public class UserAccountService {
 	public UserAccount findByName(String username)
 	{
 		return repository.findByUsername(username);
-	}
-
-	public Collection<UserAccount> findAll()
-	{
-		return repository.findAll();
 	}
 
 	public UserAccount create(String username,
@@ -58,7 +54,6 @@ public class UserAccountService {
 		return account;
 	}
 
-
 	public UserAccount updatePassword(UserAccount userAccount, String password)
 	{
 		CheckUtils.checkExists(userAccount);
@@ -69,8 +64,8 @@ public class UserAccountService {
 		return repository.save(currentAccount);
 	}
 
-	public void destroy(int id)
+	public boolean passwordMatchesAccount(UserAccount account, String password)
 	{
-		repository.delete(id);
+		return new Md5PasswordEncoder().isPasswordValid(account.getPassword(), password, null);
 	}
 }

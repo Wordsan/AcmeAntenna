@@ -7,6 +7,7 @@ import org.springframework.util.Assert;
 import javax.transaction.Transactional;
 
 import domain.Actor;
+import exceptions.OldPasswordDoesntMatchException;
 import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
@@ -31,6 +32,7 @@ public class ActorService {
 
 	public Actor getPrincipal()
 	{
+		CheckUtils.checkAuthenticated();
 		Actor principal = findPrincipal();
 		Assert.notNull(principal);
 		return principal;
@@ -43,6 +45,7 @@ public class ActorService {
 
 	public Actor updateOwnProfile(Actor submittedActor)
 	{
+		CheckUtils.checkAuthenticated();
 		Actor currentActor = getPrincipal();
 		CheckUtils.checkEquals(currentActor, submittedActor);
 		CheckUtils.checkSameVersion(submittedActor, currentActor);
@@ -57,13 +60,18 @@ public class ActorService {
 		return repository.save(currentActor);
 	}
 
-	public Actor updateOwnPassword(Actor actor, String password)
+	public Actor updateOwnPassword(Actor actor, String oldPassword, String newPassword) throws OldPasswordDoesntMatchException
 	{
+		CheckUtils.checkAuthenticated();
 		Actor currentActor = getPrincipal();
 		CheckUtils.checkEquals(currentActor, actor);
 		CheckUtils.checkSameVersion(actor, currentActor);
 
-		currentActor.setUserAccount(userAccountService.updatePassword(currentActor.getUserAccount(), password));
+		if (!userAccountService.passwordMatchesAccount(actor.getUserAccount(), oldPassword)) {
+			throw new OldPasswordDoesntMatchException();
+		}
+
+		currentActor.setUserAccount(userAccountService.updatePassword(currentActor.getUserAccount(), newPassword));
 		return repository.save(currentActor);
 	}
 }

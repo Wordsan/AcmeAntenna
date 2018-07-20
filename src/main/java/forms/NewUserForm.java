@@ -29,12 +29,10 @@ public class NewUserForm {
     {
         return user;
     }
-
     public void setUser(User user)
     {
         this.user = user;
     }
-
 
     @CustomValidator(message = "{misc.error.passwordDoesNotMatch}", applyOn = "repeatPassword")
     public boolean isValidPasswordsMatch()
@@ -48,7 +46,6 @@ public class NewUserForm {
     {
         return repeatPassword;
     }
-
     public void setRepeatPassword(String repeatPassword)
     {
         this.repeatPassword = repeatPassword;

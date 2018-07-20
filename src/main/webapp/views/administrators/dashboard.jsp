@@ -6,6 +6,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
@@ -30,20 +31,57 @@
 	<span class="content"><c:out value="${stdDevAntennaSignalQuality}" /></span>
 </div>
 
+<div>
+	<span class="label"><spring:message code="administrators.avgTutorialCountPerUser" />: </span>
+	<span class="content"><c:out value="${avgTutorialCountPerUser}" /></span>
+</div>
+
+<div>
+	<span class="label"><spring:message code="administrators.stdDevTutorialCountPerUser" />: </span>
+	<span class="content"><c:out value="${stdDevTutorialCountPerUser}" /></span>
+</div>
+
+<div>
+	<span class="label"><spring:message code="administrators.avgCommentCountPerTutorial" />: </span>
+	<span class="content"><c:out value="${avgCommentCountPerTutorial}" /></span>
+</div>
+
+<div>
+	<span class="label"><spring:message code="administrators.stdDevCommentCountPerTutorial" />: </span>
+	<span class="content"><c:out value="${stdDevCommentCountPerTutorial}" /></span>
+</div>
+
 <h3><spring:message code="administrators.antennaCountPerModel" /></h3>
 
+<div>
 <canvas id="antennaCountPerModelChart" width="600" height="400"></canvas>
+</div>
 
 <h3><spring:message code="administrators.mostPopularAntennas" /></h3>
 
+<div>
 <display:table name="mostPopularAntennas"
 	       id="antenna"
 	       pagesize="${displayTagPageSize}"
-	       requestURI="antennas/index.do">
+	       requestURI="administrators/dashboard.do">
 
     <display:column value="${antenna[0]}" titleKey="antennas.model" escapeXml="true" sortable="true" />
     <display:column value="${antenna[1]}" titleKey="administrators.antennaCount" escapeXml="true" sortable="true" />
 </display:table>
+</div>
+
+<h3><spring:message code="administrators.topTutorialContributors" /></h3>
+
+<div>
+<display:table name="topTutorialContributors"
+	       id="user"
+	       pagesize="${displayTagPageSize}"
+	       requestURI="administrators/dashboard.do">
+
+    <display:column property="fullName" titleKey="actors.name" escapeXml="true" sortable="true" />
+    <display:column value="${fn:length(user.tutorials)}" titleKey="administrators.tutorialCount" escapeXml="true" sortable="true" />
+</display:table>
+</div>
 
 <script>
     let antennaCountPerModelChartLabels = [

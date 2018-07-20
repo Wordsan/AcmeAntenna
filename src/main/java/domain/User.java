@@ -13,6 +13,7 @@ import javax.validation.Valid;
 public class User
 extends Actor {
 	private List<Antenna> antennas;
+    private List<Tutorial> tutorials;
 
 	@Valid
     @OneToMany(mappedBy = "user")
@@ -20,9 +21,19 @@ extends Actor {
     {
         return antennas;
     }
-
     public void setAntennas(List<Antenna> antennas)
     {
         this.antennas = antennas;
+    }
+
+    @Valid
+    @OneToMany(mappedBy = "user")
+    public List<Tutorial> getTutorials()
+    {
+        return tutorials;
+    }
+    public void setTutorials(List<Tutorial> tutorials)
+    {
+        this.tutorials = tutorials;
     }
 }

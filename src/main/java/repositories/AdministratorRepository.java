@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import domain.Administrator;
+import domain.User;
 import security.UserAccount;
 
 @Repository
@@ -27,5 +28,14 @@ extends JpaRepository<Administrator, Integer> {
     double findAvgAntennaSignalQuality();
     @Query("select stddev(a.signalQuality) from Antenna a")
     double findStdDevAntennaSignalQuality();
-
+    @Query("select avg(u.tutorials.size) from User u")
+    double findAvgTutorialCountPerUser();
+    @Query("select stddev(u.tutorials.size) from User u")
+    double findStdDevTutorialCountPerUser();
+    @Query("select avg(u.tutorialComments.size) from Tutorial u")
+    double findAvgCommentCountPerTutorial();
+    @Query("select stddev(u.tutorialComments.size) from Tutorial u")
+    double findStdDevCommentCountPerTutorial();
+    @Query("select u from User u where u.tutorials.size > (select avg(u.tutorials.size) + stddev(u.tutorials.size) from User u) order by u.tutorials.size desc")
+    List<User> findTopTutorialContributors();
 }

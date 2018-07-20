@@ -16,9 +16,11 @@ import javax.validation.Valid;
 
 import domain.Antenna;
 import domain.User;
+import security.Authority;
 import services.AntennaService;
 import services.SatelliteService;
 import utilities.ApplicationConfig;
+import utilities.CheckUtils;
 import utilities.ControllerUtils;
 
 @Controller
@@ -30,6 +32,8 @@ public class AntennaController extends AbstractController {
 	@RequestMapping("/index")
 	public ModelAndView index()
 	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+
 		List<Antenna> antennas = antennaService.findAllForUser();
 		ModelAndView result = new ModelAndView("antennas/index");
 		result.addObject("antennas", antennas);
@@ -39,22 +43,23 @@ public class AntennaController extends AbstractController {
 	@RequestMapping("/new")
 	public ModelAndView new_()
 	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+
 		Antenna antenna = new Antenna();
 		antenna.setUser((User) getPrincipal());
-		return newForm(antenna, null, false, null);
+		return newForm(antenna, null, null);
 	}
 
 	public ModelAndView newForm(
 			Antenna antenna,
 			BindingResult binding,
-			boolean error,
-			String message)
+			String globalErrorMessage
+	)
 	{
 		ModelAndView result = ControllerUtils.createViewWithBinding(
 				"antennas/new",
 				binding,
-				error,
-				message
+				globalErrorMessage
 				);
 
 		result.addObject("antenna", antenna);
@@ -68,9 +73,11 @@ public class AntennaController extends AbstractController {
 			@ModelAttribute("antenna") @Valid Antenna antenna,
 			BindingResult binding)
 	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+
 		ModelAndView result;
 		if (binding.hasErrors()) {
-			result = newForm(antenna, binding, true, null);
+			result = newForm(antenna, binding, null);
 		} else {
 			try {
 				antenna = antennaService.create(antenna);
@@ -80,7 +87,6 @@ public class AntennaController extends AbstractController {
 
 				result = newForm(antenna,
 								 binding,
-								 true,
 								 "misc.commit.error");
 			}
 		}
@@ -91,21 +97,23 @@ public class AntennaController extends AbstractController {
 	@RequestMapping("/edit")
 	public ModelAndView edit(@RequestParam("id") int id)
 	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+
+
 		Antenna antenna = antennaService.getByIdForEdit(id);
-		return editForm(antenna, null, false, null);
+		return editForm(antenna, null, null);
 	}
 
 	public ModelAndView editForm(
 			Antenna antenna,
 			BindingResult binding,
-			boolean error,
-			String message)
+			String globalErrorMessage
+	)
 	{
 		ModelAndView result = ControllerUtils.createViewWithBinding(
 				"antennas/edit",
 				binding,
-				error,
-				message
+				globalErrorMessage
 		);
 
 		result.addObject("antenna", antenna);
@@ -119,19 +127,21 @@ public class AntennaController extends AbstractController {
 			@ModelAttribute("antenna") @Valid Antenna antenna,
 			BindingResult binding, RedirectAttributes redir)
 	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+
 		ModelAndView result;
 		if (binding.hasErrors()) {
-			result = editForm(antenna, binding, true, null);
+			result = editForm(antenna, binding, null);
 		} else {
 			try {
 				antenna = antennaService.update(antenna);
 				result = ControllerUtils.redirect("/antennas/index.do");
+				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 			} catch(Throwable oops) {
 				if (ApplicationConfig.DEBUG) oops.printStackTrace();
 
 				result = newForm(antenna,
 								 binding,
-								 true,
 								 "misc.commit.error");
 			}
 		}
@@ -140,10 +150,14 @@ public class AntennaController extends AbstractController {
 	}
 
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public ModelAndView delete(@ModelAttribute("id") int id)
+	public ModelAndView delete(@ModelAttribute("id") int id, RedirectAttributes redir)
 	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+
 		antennaService.delete(id);
-		return ControllerUtils.redirect("/antennas/index.do");
+		ModelAndView result = ControllerUtils.redirect("/antennas/index.do");
+		redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+		return result;
 	}
 
 }

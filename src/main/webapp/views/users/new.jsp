@@ -23,8 +23,8 @@
         <app:cancel-button code="misc.actions.cancel" />
     </div>
 
-    <c:if test="${message == ''}">
-        <span class="error"><spring:message code="${message}" /></span>
-    </c:if>
+    <br/>
+
+    <div class="multiline"><spring:message code="users.termsAndConditions" /></div>
 </form:form>
 

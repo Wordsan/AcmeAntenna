@@ -42,7 +42,7 @@ public class TutorialCommentService {
 		return repository.save(tutorialComment);
 	}
 
-	public TutorialComment getById(int id)
+	public TutorialComment getByIdForDelete(int id)
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 		TutorialComment result = repository.findOne(id);

@@ -14,4 +14,14 @@
 		<put-attribute name="title" value="Ver tutorial" />
 		<put-attribute name="body" value="/views/tutorials/show.jsp" />
 	</definition>
+
+	<definition name="tutorials/new" extends="master.page">
+		<put-attribute name="title" value="Nuevo tutorial" />
+		<put-attribute name="body" value="/views/tutorials/new.jsp" />
+	</definition>
+
+	<definition name="tutorials/edit" extends="master.page">
+		<put-attribute name="title" value="Editar tutorial" />
+		<put-attribute name="body" value="/views/tutorials/edit.jsp" />
+	</definition>
 </tiles-definitions>

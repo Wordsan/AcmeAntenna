@@ -17,6 +17,7 @@ import security.Authority;
 import security.LoginService;
 import services.PlatformService;
 import services.PlatformSubscriptionService;
+import utilities.CheckUtils;
 
 @Controller
 @RequestMapping("/platforms")

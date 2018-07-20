@@ -1,7 +1,5 @@
 package controllers;
 
-import com.sun.tracing.dtrace.ModuleAttributes;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -25,6 +23,7 @@ import security.LoginService;
 import services.TutorialCommentService;
 import services.TutorialService;
 import utilities.ApplicationConfig;
+import utilities.CheckUtils;
 import utilities.ControllerUtils;
 
 @Controller
@@ -38,6 +37,117 @@ public class TutorialController extends AbstractController {
     {
         ModelAndView result = new ModelAndView("tutorials/index");
         result.addObject("tutorials", service.findAll());
+        return result;
+    }
+
+    @RequestMapping("/new")
+    public ModelAndView new_()
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
+
+        Tutorial tutorial = new Tutorial();
+        tutorial.setUser((User) getPrincipal());
+        tutorial.setLastUpdateTime(new Date());
+        return newForm(tutorial, null, null);
+    }
+
+    public ModelAndView newForm(
+            Tutorial tutorial,
+            BindingResult binding,
+            String globalErrorMessage
+    )
+    {
+        ModelAndView result = ControllerUtils.createViewWithBinding(
+                "tutorials/new",
+                binding,
+                globalErrorMessage
+        );
+
+        result.addObject("tutorial", tutorial);
+
+        return result;
+    }
+
+    @RequestMapping(value="/create", method=RequestMethod.POST)
+    public ModelAndView create(
+            @ModelAttribute("tutorial") @Valid Tutorial tutorial,
+            BindingResult binding,
+            RedirectAttributes redir)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
+
+        ModelAndView result;
+        if (binding.hasErrors()) {
+            result = newForm(tutorial, binding, null);
+        } else {
+            try {
+                tutorial = service.create(tutorial);
+                result = ControllerUtils.redirect("/tutorials/show.do");
+                redir.addAttribute("id", tutorial.getId());
+                redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+            } catch(Throwable oops) {
+                if (ApplicationConfig.DEBUG) oops.printStackTrace();
+
+                result = newForm(tutorial,
+                                 binding,
+                                 "misc.commit.error");
+            }
+        }
+
+        return result;
+    }
+
+    @RequestMapping("/edit")
+    public ModelAndView edit(@RequestParam("id") int id)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
+
+        Tutorial tutorial = service.getByIdForEdit(id);
+        return editForm(tutorial, null, null);
+    }
+
+    public ModelAndView editForm(
+            Tutorial tutorial,
+            BindingResult binding,
+            String globalErrorMessage
+    )
+    {
+        ModelAndView result = ControllerUtils.createViewWithBinding(
+                "tutorials/edit",
+                binding,
+                globalErrorMessage
+        );
+
+        result.addObject("tutorial", tutorial);
+
+        return result;
+    }
+
+    @RequestMapping(value="/update", method=RequestMethod.POST)
+    public ModelAndView update(
+            @ModelAttribute("tutorial") @Valid Tutorial tutorial,
+            BindingResult binding, RedirectAttributes redir)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
+
+        ModelAndView result;
+        if (binding.hasErrors()) {
+            result = editForm(tutorial, binding, null);
+        } else {
+            try {
+                tutorial = service.update(tutorial);
+                result = ControllerUtils.redirect("/tutorials/show.do");
+                redir.addAttribute("id", tutorial.getId());
+                redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+            } catch(Throwable oops) {
+                if (ApplicationConfig.DEBUG) oops.printStackTrace();
+
+                result = newForm(tutorial,
+                                 binding,
+                                 "misc.commit.error");
+            }
+        }
+
         return result;
     }
 
@@ -64,14 +174,17 @@ public class TutorialController extends AbstractController {
     @RequestMapping(value="/createComment", method= RequestMethod.POST)
     public ModelAndView createComment(@ModelAttribute("tutorialComment") @Valid TutorialComment tutorialComment, BindingResult binding, RedirectAttributes redir)
     {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
+
         ModelAndView result;
         if (binding.hasErrors()) {
             result = show(tutorialComment.getTutorial().getId(), null, tutorialComment);
             result.addObject("result", binding);
         } else {
             tutorialCommentService.create(tutorialComment);
-            redir.addAttribute("id", tutorialComment.getTutorial().getId());
             result = ControllerUtils.redirect("/tutorials/show.do");
+            redir.addAttribute("id", tutorialComment.getTutorial().getId());
+            redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
         }
 
         return result;
@@ -80,19 +193,28 @@ public class TutorialController extends AbstractController {
     @RequestMapping(value="/deleteComment", method=RequestMethod.POST)
     public ModelAndView deleteComment(@RequestParam("id") int id, RedirectAttributes redir)
     {
-        TutorialComment comment = tutorialCommentService.getById(id);
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+
+        TutorialComment comment = tutorialCommentService.getByIdForDelete(id);
 
         Tutorial tutorial = comment.getTutorial();
         tutorialCommentService.delete(id);
 
+        ModelAndView result = ControllerUtils.redirect("/tutorials/show.do");
         redir.addAttribute("id", tutorial.getId());
-        return ControllerUtils.redirect("/tutorials/show.do");
+        redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+        return result;
     }
 
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public ModelAndView delete(@RequestParam("id") int id, RedirectAttributes redir)
     {
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+
         service.delete(id);
-        return ControllerUtils.redirect("/tutorials/index.do");
+
+        ModelAndView result = ControllerUtils.redirect("/tutorials/index.do");
+        redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+        return result;
     }
 }

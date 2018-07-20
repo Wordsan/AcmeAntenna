@@ -8,13 +8,15 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="app" tagdir="/WEB-INF/tags" %>
 
-<form:form action="platform_subscriptions/create.do" modelAttribute="platformSubscription">
+<form:form action="tutorials/create.do" modelAttribute="tutorial">
+    <app:model-editor />
+
     <form:hidden path="user" />
-    <form:hidden path="keyCode" />
-    <app:select path="platform" items="${platforms}" itemLabel="name" code="platform_subscriptions.platform" />
-    <app:datepicker path="startDate" code="platform_subscriptions.startDate" />
-    <app:datepicker path="endDate" code="platform_subscriptions.endDate" />
-    <app:textbox path="creditCard" code="platform_subscriptions.creditCard" />
+    <form:hidden path="lastUpdateTime" />
+
+    <app:textbox path="title" code="tutorials.title" />
+    <app:textarea path="text" code="tutorials.text" />
+    <app:stringlist path="pictureUrls" items="${tutorial.pictureUrls}" code="tutorials.pictureUrls" />
 
     <div>
         <app:submit name="submit" code="misc.actions.create" />

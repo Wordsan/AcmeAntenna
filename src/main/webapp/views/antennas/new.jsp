@@ -23,9 +23,5 @@
         <app:submit name="submit" code="misc.actions.create" />
         <app:cancel-button code="misc.actions.cancel" />
     </div>
-
-    <c:if test="${message == ''}">
-        <span class="error"><spring:message code="${message}" /></span>
-    </c:if>
 </form:form>
 

@@ -19,6 +19,7 @@
 
 <h3><spring:message code="platforms.satellites" /></h3>
 
+<div>
 <display:table name="satellites"
 	       id="satellite"
 	       pagesize="${displayTagPageSize}"
@@ -27,8 +28,11 @@
     <display:column property="name" titleKey="satellites.name" escapeXml="true" sortable="true" href="satellites/show.do" paramId="id" paramProperty="id" />
     <display:column property="description" titleKey="satellites.description" escapeXml="true" sortable="true" />
 </display:table>
+</div>
 
 <security:authorize access="hasRole('USER')">
+    <br/>
+    <app:redir-button code="platforms.subscribe" action="platform_subscriptions/new.do?platformId=${platform.id}" />
     <h3><spring:message code="platforms.platform_subscription.history" /></h3>
 
     <display:table name="platformSubscriptions"

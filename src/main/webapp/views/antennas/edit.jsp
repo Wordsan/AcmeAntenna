@@ -25,9 +25,5 @@
         <app:delete-button id="${antenna.id}" action="antennas/delete.do" code="misc.actions.delete" />
         <app:cancel-button code="misc.actions.cancel" />
     </div>
-
-    <c:if test="${message == ''}">
-        <span class="error"><spring:message code="${message}" /></span>
-    </c:if>
 </form:form>
 
