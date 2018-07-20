@@ -162,6 +162,244 @@
             </list>
         </property>
     </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_10">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 9"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_11">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 41"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_12">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 77"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_13">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 61"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_14">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 77"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_15">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 2"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_16">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 78"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_17">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 86"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_18">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 93"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_19">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 10"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_20">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 71"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_21">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 24"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_22">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 8"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_23">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 69"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_24">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 19"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_25">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 88"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.TutorialComment" id="tutorialComment_26">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="tutorial">
+            <ref bean="tutorial_2"/>
+        </property>
+        <property name="title" value="Many comments"/>
+        <property name="text" value="Many comments 68"/>
+        <property name="creationTime" value="2018/07/20 14:41:39"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+    </bean>
     <bean class="domain.Platform" id="platform_1">
         <property name="name" value="CNN"/>
         <property name="description" value="This is platform 1"/>
@@ -637,6 +875,23 @@
         <property name="tutorialComments">
             <list>
                 <ref bean="tutorialComment_5"/>
+                <ref bean="tutorialComment_10"/>
+                <ref bean="tutorialComment_11"/>
+                <ref bean="tutorialComment_12"/>
+                <ref bean="tutorialComment_13"/>
+                <ref bean="tutorialComment_14"/>
+                <ref bean="tutorialComment_15"/>
+                <ref bean="tutorialComment_16"/>
+                <ref bean="tutorialComment_17"/>
+                <ref bean="tutorialComment_18"/>
+                <ref bean="tutorialComment_19"/>
+                <ref bean="tutorialComment_20"/>
+                <ref bean="tutorialComment_21"/>
+                <ref bean="tutorialComment_22"/>
+                <ref bean="tutorialComment_23"/>
+                <ref bean="tutorialComment_24"/>
+                <ref bean="tutorialComment_25"/>
+                <ref bean="tutorialComment_26"/>
             </list>
         </property>
     </bean>
