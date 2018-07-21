@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -24,6 +25,7 @@ extends DomainEntity {
     private List<Platform> platforms = new ArrayList<>();
 
     @NotBlank
+    @NotNull
     @Field
     public String getName()
     {
@@ -31,6 +33,7 @@ extends DomainEntity {
     }
 
     @NotBlank
+    @NotNull
     @Field
     @Lob
     public String getDescription()

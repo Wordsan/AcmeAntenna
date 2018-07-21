@@ -55,12 +55,14 @@ extends DomainEntity {
     }
 
     @NotBlank
+    @NotNull
     public String getTitle()
     {
         return title;
     }
 
     @NotBlank
+    @NotNull
     @Lob
     public String getText()
     {
@@ -77,6 +79,7 @@ extends DomainEntity {
         return pictureUrls;
     }
 
+    @Valid
     @OneToMany(mappedBy = "tutorial")
     @Cascade(CascadeType.DELETE)
     public List<TutorialComment> getTutorialComments()

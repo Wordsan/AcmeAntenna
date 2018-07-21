@@ -84,6 +84,7 @@ extends DomainEntity {
 
 
     @NotBlank
+    @NotNull
     @CreditCardNumber
     public String getCreditCard()
     {
@@ -102,6 +103,7 @@ extends DomainEntity {
     }
 
     @NotBlank
+    @NotNull
     @Pattern(regexp = "[0-9A-Z]{32}")
     public String getKeyCode()
     {

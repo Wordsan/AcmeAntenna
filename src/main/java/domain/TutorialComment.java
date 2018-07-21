@@ -51,12 +51,14 @@ extends DomainEntity {
     }
 
     @NotBlank
+    @NotNull
     public String getTitle()
     {
         return title;
     }
 
     @NotBlank
+    @NotNull
     @Lob
     public String getText()
     {
