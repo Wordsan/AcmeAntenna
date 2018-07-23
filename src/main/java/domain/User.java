@@ -14,8 +14,9 @@ public class User
 extends Actor {
 	private List<Antenna> antennas;
     private List<Tutorial> tutorials;
+    private List<PlatformSubscription> platformSubscriptions;
 
-	@Valid
+    @Valid
     @OneToMany(mappedBy = "user")
     public List<Antenna> getAntennas()
     {
@@ -35,5 +36,16 @@ extends Actor {
     public void setTutorials(List<Tutorial> tutorials)
     {
         this.tutorials = tutorials;
+    }
+
+    @Valid
+    @OneToMany(mappedBy = "user")
+    public List<PlatformSubscription> getPlatformSubscriptions()
+    {
+        return platformSubscriptions;
+    }
+    public void setPlatformSubscriptions(List<PlatformSubscription> platformSubscriptions)
+    {
+        this.platformSubscriptions = platformSubscriptions;
     }
 }

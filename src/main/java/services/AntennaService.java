@@ -37,6 +37,7 @@ public class AntennaService {
 		CheckUtils.checkExists(submittedAntenna);
 
 		Antenna oldAntenna = repository.findOne(submittedAntenna.getId());
+		CheckUtils.checkExists(oldAntenna);
 		CheckUtils.checkIsPrincipal(oldAntenna.getUser());
 
 		return repository.save(submittedAntenna);
@@ -55,11 +56,12 @@ public class AntennaService {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 		Antenna antenna = repository.findOne(id);
+		if (antenna == null) throw new ResourceNotFoundException();
 		CheckUtils.checkIsPrincipal(antenna.getUser());
 		repository.delete(antenna);
 	}
 
-	public List<Antenna> findAllForUser()
+	public List<Antenna> findAllForPrincipal()
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 		User user = userService.getPrincipal();

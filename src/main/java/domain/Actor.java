@@ -1,5 +1,7 @@
 package domain;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
@@ -18,7 +20,7 @@ import validators.NullOrNotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Actor
+public abstract class Actor
 extends DomainEntity {
 	private String name;
 	private String surname;
@@ -58,6 +60,7 @@ extends DomainEntity {
 	@Valid
 	@OneToOne(optional = false)
 	@NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+	@Cascade(CascadeType.DELETE)
 	public UserAccount getUserAccount()
 	{
 		return userAccount;

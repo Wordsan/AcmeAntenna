@@ -622,8 +622,8 @@
         </property>
     </bean>
     <bean class="security.UserAccount" id="userAccount_user">
-        <property name="username" value="user"/>
-        <property name="password" value="ee11cbb19052e40b07aac0ca060c23ee"/>
+        <property name="username" value="user1"/>
+        <property name="password" value="24c9e15e52afc47c225b757e7bee1f9d"/>
         <property name="authorities">
             <list value-type="security.Authority">
                 <bean class="security.Authority">

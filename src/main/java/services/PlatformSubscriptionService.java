@@ -27,7 +27,7 @@ public class PlatformSubscriptionService {
 	public List<PlatformSubscription> findAllForPrincipal()
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
-		return repository.findAllByUserOrderByIdDesc(userService.getPrincipal());
+		return userService.getPrincipal().getPlatformSubscriptions();
 	}
 
 	public List<PlatformSubscription> findAllForPrincipalAndPlatform(Platform platform)

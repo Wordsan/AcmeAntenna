@@ -16,6 +16,11 @@
 </div>
 
 <div>
+	<span class="label"><spring:message code="tutorials.lastUpdateTime" />: </span>
+	<span class="content"><c:out value="${tutorial.lastUpdateTime}" /></span>
+</div>
+
+<div>
 	<span class="label"><spring:message code="tutorials.user" />: </span>
 	<span class="content"><c:out value="${tutorial.user.fullName}" /></span>
 </div>

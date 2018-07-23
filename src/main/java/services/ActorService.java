@@ -38,9 +38,15 @@ public class ActorService {
 		return principal;
 	}
 
-	Actor findByUsername(String username)
+	public Actor findByUsername(String username)
 	{
 		return repository.findByUsername(username);
+	}
+	public Actor getByUsername(String username)
+	{
+		Actor actor = findByUsername(username);
+		Assert.notNull(actor);
+		return actor;
 	}
 
 	public Actor updateOwnProfile(Actor submittedActor)

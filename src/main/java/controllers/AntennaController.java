@@ -34,7 +34,7 @@ public class AntennaController extends AbstractController {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		List<Antenna> antennas = antennaService.findAllForUser();
+		List<Antenna> antennas = antennaService.findAllForPrincipal();
 		ModelAndView result = new ModelAndView("antennas/index");
 		result.addObject("antennas", antennas);
 		return result;

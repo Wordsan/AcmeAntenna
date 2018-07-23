@@ -33,10 +33,22 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import domain.Actor;
 import security.LoginService;
 import security.UserAccount;
+import services.ActorService;
 import utilities.internal.EclipseConsole;
 
+/*
+Prepend all tests with this:
+
+@ContextConfiguration(locations = {
+        "classpath:spring/junit.xml"
+})
+@RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
+
+ */
 public abstract class AbstractTest {
 
 	// Supporting services --------------------------------
@@ -45,6 +57,8 @@ public abstract class AbstractTest {
 	private LoginService						loginService;
 	@Autowired
 	private JpaTransactionManager				transactionManager;
+	@Autowired
+	private ActorService						actorService;
 
 	// Internal state -------------------------------------
 
@@ -193,4 +207,13 @@ public abstract class AbstractTest {
 		return result;
 	}
 
+	protected Actor getPrincipal()
+	{
+		return actorService.getPrincipal();
+	}
+
+	protected Actor getActor(String username)
+	{
+		return actorService.getByUsername(username);
+	}
 }
