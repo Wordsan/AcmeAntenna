@@ -8,8 +8,9 @@
 <%@taglib prefix="app" tagdir="/WEB-INF/tags" %>
 
 <security:authorize access="hasRole('USER')">
-<app:redir-button action="tutorials/new.do" code="misc.actions.new" />
+    <app:redir-button action="tutorials/new.do" code="misc.actions.new" />
 </security:authorize>
+
 <display:table name="tutorials"
 	       id="tutorial"
 	       pagesize="${displayTagPageSize}"

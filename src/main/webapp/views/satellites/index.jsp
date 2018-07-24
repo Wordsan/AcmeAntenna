@@ -12,6 +12,10 @@
     <app:submit code="misc.actions.search" />
 </form:form>
 
+<security:authorize access="hasRole('ADMINISTRATOR')">
+    <app:redir-button action="satellites/new.do" code="misc.actions.new" />
+</security:authorize>
+
 <display:table name="satellites"
 	       id="satellite"
 	       pagesize="${displayTagPageSize}"
@@ -20,4 +24,10 @@
 
     <display:column property="name" titleKey="satellites.name" escapeXml="true" sortable="true" href="satellites/show.do" paramId="id" paramProperty="id" />
     <display:column property="description" titleKey="satellites.description" escapeXml="true" sortable="true" />
+    <security:authorize access="hasRole('ADMINISTRATOR')">
+        <display:column titleKey="misc.actions">
+            <app:redir-button code="misc.actions.edit" action="satellites/edit.do?id=${satellite.id}" />
+            <app:delete-button code="misc.actions.delete" action="satellites/delete.do" id="${satellite.id}" />
+        </display:column>
+    </security:authorize>
 </display:table>

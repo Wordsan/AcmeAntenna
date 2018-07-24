@@ -68,7 +68,7 @@ public class PlatformSubscriptionController extends AbstractController {
         );
 
         result.addObject("platformSubscription", platformSubscription);
-        result.addObject("platforms", platformService.findAll());
+        result.addObject("platforms", platformService.findAllForIndex());
 
         return result;
     }

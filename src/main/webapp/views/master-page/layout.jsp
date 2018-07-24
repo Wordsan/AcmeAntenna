@@ -40,6 +40,7 @@
 <script type="text/javascript" src="scripts/jmenu.js"></script>
 <script type="text/javascript" src="scripts/datepicker-${pageContext.response.locale}.js"></script>
 <script type="text/javascript" src="scripts/stringlist.js"></script>
+<script type="text/javascript" src="scripts/multi-select.js"></script>
 <script type="text/javascript" src="scripts/functions.js"></script>
 
 <link rel="stylesheet" href="styles/common.css" type="text/css">

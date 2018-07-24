@@ -14,4 +14,14 @@
 		<put-attribute name="title" value="Ver satélite" />
 		<put-attribute name="body" value="/views/satellites/show.jsp" />
 	</definition>
+
+	<definition name="satellites/new" extends="master.page">
+		<put-attribute name="title" value="Nuevo satelite" />
+		<put-attribute name="body" value="/views/satellites/new.jsp" />
+	</definition>
+
+	<definition name="satellites/edit" extends="master.page">
+		<put-attribute name="title" value="Editar satelite" />
+		<put-attribute name="body" value="/views/satellites/edit.jsp" />
+	</definition>
 </tiles-definitions>

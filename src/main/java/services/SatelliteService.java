@@ -18,6 +18,8 @@ import domain.Platform;
 import domain.Satellite;
 import exceptions.ResourceNotFoundException;
 import repositories.SatelliteRepository;
+import security.Authority;
+import utilities.CheckUtils;
 
 @Service
 @Transactional
@@ -25,9 +27,9 @@ public class SatelliteService {
 	@Autowired private SatelliteRepository repository;
 	@PersistenceContext private EntityManager entityManager; // For Lucene.
 
-	public List<Satellite> findAll()
+	public List<Satellite> findAllForIndex()
 	{
-		return repository.findAllByOrderByNameAsc();
+		return repository.findAllForIndex();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -46,7 +48,7 @@ public class SatelliteService {
 				// It's okay, just fall through to returning everything.
 			}
 		}
-		return findAll();
+		return findAllForIndex();
 	}
 
 	public Satellite getById(int id)
@@ -54,5 +56,50 @@ public class SatelliteService {
 		Satellite result = repository.findOne(id);
 		if (result == null) throw new ResourceNotFoundException();
 		return result;
+	}
+
+	public Satellite getByIdForEdit(int id)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+		return getById(id);
+	}
+
+	public Satellite create(Satellite satellite)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+		CheckUtils.checkNotExists(satellite);
+
+		return repository.save(satellite);
+	}
+	public Satellite update(Satellite satellite)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+		CheckUtils.checkFalse(satellite.getDeleted());
+		CheckUtils.checkExists(satellite);
+
+		return repository.save(satellite);
+	}
+
+	public void delete(int id)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+
+		Satellite satellite = repository.findOne(id);
+		CheckUtils.checkFalse(satellite.getDeleted());
+
+		satellite.setDeleted(true);
+
+		// We are the owner side of this relationship.
+		satellite.getPlatforms().clear();
+
+		repository.save(satellite);
+	}
+
+	// For use in PlatformService only, which is why it is package-private and has no access checks.
+	void unlinkPlatform(Satellite satellite, Platform platform)
+	{
+		if (satellite.getPlatforms().remove(platform)) {
+			repository.save(satellite);
+		}
 	}
 }

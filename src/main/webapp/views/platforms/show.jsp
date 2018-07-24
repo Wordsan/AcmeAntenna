@@ -20,7 +20,7 @@
 <h3><spring:message code="platforms.satellites" /></h3>
 
 <div>
-<display:table name="satellites"
+<display:table name="platform.satellites"
 	       id="satellite"
 	       pagesize="${displayTagPageSize}"
 	       sort="list"

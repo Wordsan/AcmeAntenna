@@ -63,7 +63,7 @@ public class AntennaController extends AbstractController {
 				);
 
 		result.addObject("antenna", antenna);
-		result.addObject("satellites", satelliteService.findAll());
+		result.addObject("satellites", satelliteService.findAllForIndex());
 
 		return result;
 	}
@@ -71,7 +71,8 @@ public class AntennaController extends AbstractController {
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public ModelAndView create(
 			@ModelAttribute("antenna") @Valid Antenna antenna,
-			BindingResult binding)
+			BindingResult binding,
+			RedirectAttributes redir)
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 
@@ -82,6 +83,7 @@ public class AntennaController extends AbstractController {
 			try {
 				antenna = antennaService.create(antenna);
 				result = ControllerUtils.redirect("/antennas/index.do");
+				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 			} catch(Throwable oops) {
 				if (ApplicationConfig.DEBUG) oops.printStackTrace();
 
@@ -117,7 +119,7 @@ public class AntennaController extends AbstractController {
 		);
 
 		result.addObject("antenna", antenna);
-		result.addObject("satellites", satelliteService.findAll());
+		result.addObject("satellites", satelliteService.findAllForIndex());
 
 		return result;
 	}

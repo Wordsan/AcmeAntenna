@@ -12,6 +12,10 @@
     <app:submit code="misc.actions.search" />
 </form:form>
 
+<security:authorize access="hasRole('ADMINISTRATOR')">
+    <app:redir-button action="platforms/new.do" code="misc.actions.new" />
+</security:authorize>
+
 <display:table name="platforms"
 	       id="platform"
 	       pagesize="${displayTagPageSize}"
@@ -20,4 +24,11 @@
 
     <display:column property="name" titleKey="platforms.name" escapeXml="true" sortable="true" href="platforms/show.do" paramId="id" paramProperty="id" />
     <display:column property="description" titleKey="platforms.description" escapeXml="true" sortable="true" />
+
+    <security:authorize access="hasRole('ADMINISTRATOR')">
+        <display:column titleKey="misc.actions">
+            <app:redir-button code="misc.actions.edit" action="platforms/edit.do?id=${platform.id}" />
+            <app:delete-button code="misc.actions.delete" action="platforms/delete.do" id="${platform.id}" />
+        </display:column>
+    </security:authorize>
 </display:table>

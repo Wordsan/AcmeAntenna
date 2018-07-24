@@ -14,9 +14,6 @@ import domain.Actor;
 import domain.Antenna;
 import domain.User;
 import repositories.AntennaRepository;
-import services.ActorService;
-import services.AntennaService;
-import services.SatelliteService;
 import utilities.AbstractTest;
 
 /**
@@ -50,7 +47,7 @@ public class AntennaServiceTest extends AbstractTest {
         antenna.setRotationAzimuth(10);
         antenna.setRotationElevation(10);
         antenna.setSignalQuality(100);
-        antenna.setSatellite(satelliteService.findAll().get(0));
+        antenna.setSatellite(satelliteService.findAllForIndex().get(0));
         antennaService.create(antenna);
     }
 
@@ -69,7 +66,7 @@ public class AntennaServiceTest extends AbstractTest {
         antenna.setRotationAzimuth(10);
         antenna.setRotationElevation(10);
         antenna.setSignalQuality(100);
-        antenna.setSatellite(satelliteService.findAll().get(0));
+        antenna.setSatellite(satelliteService.findAllForIndex().get(0));
         antennaService.create(antenna);
     }
 
@@ -162,7 +159,7 @@ public class AntennaServiceTest extends AbstractTest {
         antenna.setRotationAzimuth(10);
         antenna.setRotationElevation(10);
         antenna.setSignalQuality(100);
-        antenna.setSatellite(satelliteService.findAll().get(0));
+        antenna.setSatellite(satelliteService.findAllForIndex().get(0));
 
         // Attempt to save new antenna as if we were updating it.
         antennaService.update(antenna);

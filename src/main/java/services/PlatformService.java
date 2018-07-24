@@ -7,20 +7,16 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import domain.Antenna;
 import domain.Platform;
-import domain.User;
+import domain.Satellite;
 import exceptions.ResourceNotFoundException;
-import repositories.AntennaRepository;
 import repositories.PlatformRepository;
 import security.Authority;
 import utilities.CheckUtils;
@@ -29,11 +25,12 @@ import utilities.CheckUtils;
 @Transactional
 public class PlatformService {
     @Autowired private PlatformRepository repository;
+    @Autowired private SatelliteService satelliteService;
     @PersistenceContext private EntityManager entityManager; // For Lucene.
 
-    public List<Platform> findAll()
+    public List<Platform> findAllForIndex()
     {
-        return repository.findAllByOrderByNameAsc();
+        return repository.findAllForIndex();
     }
 
     @SuppressWarnings("unchecked")
@@ -52,7 +49,8 @@ public class PlatformService {
                 // It's okay, just fall through to returning everything.
             }
         }
-        return findAll();
+
+        return findAllForIndex();
     }
 
     public Platform getById(int id)
@@ -60,5 +58,41 @@ public class PlatformService {
         Platform result = repository.findOne(id);
         if (result == null) throw new ResourceNotFoundException();
         return result;
+    }
+
+    public Platform create(Platform platform)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+        CheckUtils.checkNotExists(platform);
+
+        return repository.save(platform);
+    }
+    public Platform update(Platform platform)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+        CheckUtils.checkFalse(platform.getDeleted());
+        CheckUtils.checkExists(platform);
+
+        return repository.save(platform);
+    }
+
+    public void delete(int id)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+
+        Platform platform = repository.findOne(id);
+        CheckUtils.checkFalse(platform.getDeleted());
+
+        platform.setDeleted(true);
+        for (Satellite satellite : platform.getSatellites()) {
+            satelliteService.unlinkPlatform(satellite, platform);
+        }
+        repository.save(platform);
+    }
+
+    public Platform getByIdForEdit(int id)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+        return getById(id);
     }
 }

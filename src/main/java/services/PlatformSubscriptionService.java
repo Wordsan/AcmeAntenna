@@ -65,4 +65,5 @@ public class PlatformSubscriptionService {
 
 		platformSubscription.setKeyCode(sb.toString());
 	}
+
 }
