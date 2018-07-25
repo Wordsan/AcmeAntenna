@@ -28,7 +28,6 @@ extends DomainEntity {
     private boolean deleted;
 
     @NotBlank
-    @NotNull
     @Field
     public String getName()
     {
@@ -36,7 +35,6 @@ extends DomainEntity {
     }
 
     @NotBlank
-    @NotNull
     @Field
     @Lob
     public String getDescription()
@@ -68,6 +66,7 @@ extends DomainEntity {
 
     public void setPlatforms(List<Platform> platforms)
     {
+        if (platforms == null) platforms = new ArrayList<>();
         this.platforms = platforms;
     }
 

@@ -20,7 +20,7 @@ import validators.NullOrNotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public abstract class Actor
+public class Actor
 extends DomainEntity {
 	private String name;
 	private String surname;
@@ -31,10 +31,8 @@ extends DomainEntity {
 	private UserAccount userAccount;
 
 	@NotBlank
-	@NotNull
 	public String getName() { return name; }
 	@NotBlank
-	@NotNull
 	public String getSurname() { return surname; }
 
 	@Transient
@@ -46,7 +44,6 @@ extends DomainEntity {
 
 	@NotBlank
 	@Email
-	@NotNull
 	public String getEmail() { return email; }
 	@Pattern(regexp = "^\\+?\\d+$")
 	@NullOrNotBlank

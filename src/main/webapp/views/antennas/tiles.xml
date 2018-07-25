@@ -10,9 +10,14 @@
 		<put-attribute name="body" value="/views/antennas/index.jsp" />
 	</definition>
 
+	<definition name="antennas/show" extends="master.page">
+		<put-attribute name="title" value="Show antenna" />
+		<put-attribute name="body" value="/views/antennas/show.jsp" />
+	</definition>
+
 	<definition name="antennas/new" extends="master.page">
 		<put-attribute name="title" value="New antenna" />
-		<put-attribute name="body" value="/views/antennas/new.jsp" />
+		<put-attribute name="body" value="/views/antennas/edit.jsp" />
 	</definition>
 
 	<definition name="antennas/edit" extends="master.page">

@@ -35,15 +35,10 @@ public class UserController extends AbstractController {
 	{
 		CheckUtils.checkUnauthenticated();
 
-		NewUserForm form = new NewUserForm();
-		return newForm(form, null, null);
+		return createEditModelAndView(null, null, new NewUserForm());
 	}
 
-	public ModelAndView newForm(
-			NewUserForm form,
-			BindingResult binding,
-			String globalErrorMessage
-	)
+	public ModelAndView createEditModelAndView(String globalErrorMessage, BindingResult binding, NewUserForm form)
 	{
 		ModelAndView result = ControllerUtils.createViewWithBinding(
 				"users/new",
@@ -63,32 +58,24 @@ public class UserController extends AbstractController {
 	{
 		CheckUtils.checkUnauthenticated();
 
-		ModelAndView result;
-		if (binding.hasErrors()) {
-			// Go back to edit form.
-			result = newForm(form, binding, null);
-		} else {
+		String globalErrorMessage = null;
+
+		if (!binding.hasErrors()) {
 			try {
-				// Commit to DB.
 				User user = userService.createAsNewUser(form.getUser());
 				UserAccountUtils.setSessionAccount(user.getUserAccount());
 
-				result = ControllerUtils.redirect("/welcome/index.do");
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+				return ControllerUtils.redirect("/welcome/index.do");
 			} catch(UsernameNotUniqueException ex) {
-				result = newForm(form,
-								 binding,
-								 "misc.error.usernameNotUnique");
+				globalErrorMessage = "misc.error.usernameNotUnique";
 			} catch(Throwable oops) {
 				if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-				result = newForm(form,
-								 binding,
-								 "misc.commit.error");
+				globalErrorMessage = "misc.commit.error";
 			}
 		}
 
-		return result;
+		return createEditModelAndView(globalErrorMessage, binding, form);
 	}
 
 }

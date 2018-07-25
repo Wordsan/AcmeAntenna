@@ -1,8 +1,455 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="security.UserAccount" id="userAccount_admin">
+        <property name="username" value="admin"/>
+        <property name="password" value="21232f297a57a5a743894a0e4a801fc3"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="ADMINISTRATOR"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <bean class="security.UserAccount" id="userAccount_admin2">
+        <property name="username" value="admin2"/>
+        <property name="password" value="c84258e9c39059a89ab77d846ddab909"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="ADMINISTRATOR"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <bean class="security.UserAccount" id="userAccount_admin3">
+        <property name="username" value="admin3"/>
+        <property name="password" value="32cacb2f994f6b42183a1300d9a3e8d6"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="ADMINISTRATOR"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <bean class="security.UserAccount" id="userAccount_user1">
+        <property name="username" value="user1"/>
+        <property name="password" value="24c9e15e52afc47c225b757e7bee1f9d"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="USER"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <bean class="security.UserAccount" id="userAccount_user2">
+        <property name="username" value="user2"/>
+        <property name="password" value="7e58d63b60197ceb55a1c487989a3720"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="USER"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <bean class="security.UserAccount" id="userAccount_user3">
+        <property name="username" value="user3"/>
+        <property name="password" value="92877af70a45fd6a2ed7fe81e1236b78"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="USER"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_1">
+        <property name="name" value="METEOSAT"/>
+        <property name="description" value="This is satellite 1"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_1"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_2">
+        <property name="name" value="RUS-SAT"/>
+        <property name="description" value="This is satellite 2"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_1"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_3">
+        <property name="name" value="EUROSAT"/>
+        <property name="description" value="This is satellite 3"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_3"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_4">
+        <property name="name" value="ENGLAND-SAT"/>
+        <property name="description" value="This is satellite 4"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_4"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_5">
+        <property name="name" value="AMERICA-SAT1"/>
+        <property name="description" value="This is satellite 5"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_5"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_6">
+        <property name="name" value="DELETED-SAT"/>
+        <property name="description" value="This is satellite 6"/>
+        <property name="platforms">
+            <list/>
+        </property>
+        <property name="deleted" value="true"/>
+    </bean>
+    <bean class="domain.User" id="user_user1">
+        <property name="antennas">
+            <list>
+                <ref bean="antenna_1"/>
+                <ref bean="antenna_2"/>
+                <ref bean="antenna_7"/>
+                <ref bean="antenna_8"/>
+            </list>
+        </property>
+        <property name="tutorials">
+            <list>
+                <ref bean="tutorial_1"/>
+                <ref bean="tutorial_2"/>
+                <ref bean="tutorial_3"/>
+            </list>
+        </property>
+        <property name="platformSubscriptions">
+            <list>
+                <ref bean="platformSubscription_1"/>
+            </list>
+        </property>
+        <property name="name" value="User 1"/>
+        <property name="surname" value="SurnameUser1"/>
+        <property name="email" value="user@users.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+11611111111"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_user1"/>
+        </property>
+    </bean>
+    <bean class="domain.User" id="user_user2">
+        <property name="antennas">
+            <list>
+                <ref bean="antenna_3"/>
+                <ref bean="antenna_4"/>
+            </list>
+        </property>
+        <property name="tutorials">
+            <list>
+                <ref bean="tutorial_4"/>
+                <ref bean="tutorial_5"/>
+            </list>
+        </property>
+        <property name="platformSubscriptions">
+            <list>
+                <ref bean="platformSubscription_2"/>
+            </list>
+        </property>
+        <property name="name" value="User 2"/>
+        <property name="surname" value="SurnameUser2"/>
+        <property name="email" value="user2@users.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+11622222222"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_user2"/>
+        </property>
+    </bean>
+    <bean class="domain.User" id="user_user3">
+        <property name="antennas">
+            <list>
+                <ref bean="antenna_5"/>
+                <ref bean="antenna_6"/>
+                <ref bean="antenna_9"/>
+            </list>
+        </property>
+        <property name="tutorials">
+            <list>
+                <ref bean="tutorial_6"/>
+            </list>
+        </property>
+        <property name="platformSubscriptions">
+            <list/>
+        </property>
+        <property name="name" value="User 3"/>
+        <property name="surname" value="SurnameUser3"/>
+        <property name="email" value="user3@users.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+11633333333"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_user3"/>
+        </property>
+    </bean>
+    <bean class="domain.Administrator" id="administrator_admin">
+        <property name="name" value="Admin 1"/>
+        <property name="surname" value="SurnameAdmin1"/>
+        <property name="email" value="admin@admin.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+22611111111"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_admin"/>
+        </property>
+    </bean>
+    <bean class="domain.Administrator" id="administrator_admin2">
+        <property name="name" value="Admin 2"/>
+        <property name="surname" value="SurnameAdmin2"/>
+        <property name="email" value="admin2@admin.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+22622222222"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_admin2"/>
+        </property>
+    </bean>
+    <bean class="domain.Administrator" id="administrator_admin3">
+        <property name="name" value="Admin 3"/>
+        <property name="surname" value="SurnameAdmin3"/>
+        <property name="email" value="admin3@admin.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+22633333333"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_admin3"/>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_1">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="lastUpdateTime" value="2018/07/20 15:00:52"/>
+        <property name="title" value="(READ!) A beginner guide to Lorem Ipsum"/>
+        <property name="text" value="What is Lorem Ipsum?&#13;&#10;Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&#13;&#10;&#13;&#10;Why do we use it?&#13;&#10;It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).&#13;&#10;&#13;&#10;&#13;&#10;Where does it come from?&#13;&#10;Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.&#13;&#10;&#13;&#10;The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from &quot;de Finibus Bonorum et Malorum&quot; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.&#13;&#10;&#13;&#10;Where can I get some?&#13;&#10;There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."/>
+        <property name="pictureUrls">
+            <list value-type="java.lang.String">
+                <value>https://i.imgur.com/NF0s3b9.png</value>
+                <value>https://i.imgur.com/OIkzVSi.png</value>
+            </list>
+        </property>
+        <property name="tutorialComments">
+            <list>
+                <ref bean="tutorialComment_6"/>
+                <ref bean="tutorialComment_7"/>
+                <ref bean="tutorialComment_8"/>
+                <ref bean="tutorialComment_9"/>
+                <ref bean="tutorialComment_2"/>
+                <ref bean="tutorialComment_3"/>
+                <ref bean="tutorialComment_4"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_2">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Dorture: Theoretical Unification of I/O Automata and Flip-Flop Gates"/>
+        <property name="text" value="This is tutorial 2"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+        <property name="tutorialComments">
+            <list>
+                <ref bean="tutorialComment_5"/>
+                <ref bean="tutorialComment_10"/>
+                <ref bean="tutorialComment_11"/>
+                <ref bean="tutorialComment_12"/>
+                <ref bean="tutorialComment_13"/>
+                <ref bean="tutorialComment_14"/>
+                <ref bean="tutorialComment_15"/>
+                <ref bean="tutorialComment_16"/>
+                <ref bean="tutorialComment_17"/>
+                <ref bean="tutorialComment_18"/>
+                <ref bean="tutorialComment_19"/>
+                <ref bean="tutorialComment_20"/>
+                <ref bean="tutorialComment_21"/>
+                <ref bean="tutorialComment_22"/>
+                <ref bean="tutorialComment_23"/>
+                <ref bean="tutorialComment_24"/>
+                <ref bean="tutorialComment_25"/>
+                <ref bean="tutorialComment_26"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_3">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Contrasting Sensor Networks and I/O Automata with Sault"/>
+        <property name="text" value="This is tutorial 3"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+        <property name="tutorialComments">
+            <list>
+                <ref bean="tutorialComment_1"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_4">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Read-Write Information for Multi-Processors"/>
+        <property name="text" value="This is tutorial 4"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+        <property name="tutorialComments">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_5">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Digital-to-Analog Converters Considered Harmful"/>
+        <property name="text" value="This is tutorial 5"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+        <property name="tutorialComments">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Tutorial" id="tutorial_6">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
+        <property name="title" value="Constructing Forward-Error Correction and Courseware with Hotel"/>
+        <property name="text" value="This is tutorial 6"/>
+        <property name="pictureUrls">
+            <list/>
+        </property>
+        <property name="tutorialComments">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Platform" id="platform_1">
+        <property name="name" value="CNN"/>
+        <property name="description" value="This is platform 1"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_1"/>
+                <ref bean="satellite_2"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_2">
+        <property name="name" value="C-SPAN"/>
+        <property name="description" value="This is platform 2"/>
+        <property name="satellites">
+            <list/>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_3">
+        <property name="name" value="Mediaset"/>
+        <property name="description" value="This is platform 3"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_3"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_4">
+        <property name="name" value="Atresmedia"/>
+        <property name="description" value="This is platform 4"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_4"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_5">
+        <property name="name" value="Cartoon Network"/>
+        <property name="description" value="This is platform 5"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_5"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_6">
+        <property name="name" value="Discovery Channel Network"/>
+        <property name="description" value="This is platform 6"/>
+        <property name="satellites">
+            <list/>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_7">
+        <property name="name" value="DELETED-PLATFORM"/>
+        <property name="description" value="Deleted platform description"/>
+        <property name="satellites">
+            <list/>
+        </property>
+        <property name="deleted" value="true"/>
+    </bean>
     <bean class="domain.PlatformSubscription" id="platformSubscription_1">
         <property name="user">
-            <ref bean="user_user"/>
+            <ref bean="user_user1"/>
         </property>
         <property name="platform">
             <ref bean="platform_1"/>
@@ -400,62 +847,9 @@
             <list/>
         </property>
     </bean>
-    <bean class="domain.Platform" id="platform_1">
-        <property name="name" value="CNN"/>
-        <property name="description" value="This is platform 1"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_1"/>
-                <ref bean="satellite_2"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Platform" id="platform_2">
-        <property name="name" value="C-SPAN"/>
-        <property name="description" value="This is platform 2"/>
-        <property name="satellites">
-            <list/>
-        </property>
-    </bean>
-    <bean class="domain.Platform" id="platform_3">
-        <property name="name" value="Mediaset"/>
-        <property name="description" value="This is platform 3"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_3"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Platform" id="platform_4">
-        <property name="name" value="Atresmedia"/>
-        <property name="description" value="This is platform 4"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_4"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Platform" id="platform_5">
-        <property name="name" value="Cartoon Network"/>
-        <property name="description" value="This is platform 5"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_5"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Platform" id="platform_6">
-        <property name="name" value="Discovery Channel Network"/>
-        <property name="description" value="This is platform 6"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_6"/>
-            </list>
-        </property>
-    </bean>
     <bean class="domain.Antenna" id="antenna_1">
         <property name="user">
-            <ref bean="user_user"/>
+            <ref bean="user_user1"/>
         </property>
         <property name="serialNumber" value="A001"/>
         <property name="model" value="Model 1"/>
@@ -470,7 +864,7 @@
     </bean>
     <bean class="domain.Antenna" id="antenna_2">
         <property name="user">
-            <ref bean="user_user"/>
+            <ref bean="user_user1"/>
         </property>
         <property name="serialNumber" value="A002"/>
         <property name="model" value="Model 1"/>
@@ -545,9 +939,9 @@
     </bean>
     <bean class="domain.Antenna" id="antenna_7">
         <property name="user">
-            <ref bean="user_user"/>
+            <ref bean="user_user1"/>
         </property>
-        <property name="serialNumber" value="A003"/>
+        <property name="serialNumber" value="D001"/>
         <property name="model" value="Model 1"/>
         <property name="positionLongitude" value="-12.0"/>
         <property name="positionLatitude" value="-90.0"/>
@@ -560,7 +954,7 @@
     </bean>
     <bean class="domain.Antenna" id="antenna_8">
         <property name="user">
-            <ref bean="user_user"/>
+            <ref bean="user_user1"/>
         </property>
         <property name="serialNumber" value="A004"/>
         <property name="model" value="Model 1"/>
@@ -586,371 +980,6 @@
         <property name="signalQuality" value="1.0"/>
         <property name="satellite">
             <ref bean="satellite_4"/>
-        </property>
-    </bean>
-    <bean class="security.UserAccount" id="userAccount_admin">
-        <property name="username" value="admin"/>
-        <property name="password" value="21232f297a57a5a743894a0e4a801fc3"/>
-        <property name="authorities">
-            <list value-type="security.Authority">
-                <bean class="security.Authority">
-                    <property name="authority" value="ADMINISTRATOR"/>
-                </bean>
-            </list>
-        </property>
-    </bean>
-    <bean class="security.UserAccount" id="userAccount_admin2">
-        <property name="username" value="admin2"/>
-        <property name="password" value="c84258e9c39059a89ab77d846ddab909"/>
-        <property name="authorities">
-            <list value-type="security.Authority">
-                <bean class="security.Authority">
-                    <property name="authority" value="ADMINISTRATOR"/>
-                </bean>
-            </list>
-        </property>
-    </bean>
-    <bean class="security.UserAccount" id="userAccount_admin3">
-        <property name="username" value="admin3"/>
-        <property name="password" value="32cacb2f994f6b42183a1300d9a3e8d6"/>
-        <property name="authorities">
-            <list value-type="security.Authority">
-                <bean class="security.Authority">
-                    <property name="authority" value="ADMINISTRATOR"/>
-                </bean>
-            </list>
-        </property>
-    </bean>
-    <bean class="security.UserAccount" id="userAccount_user">
-        <property name="username" value="user1"/>
-        <property name="password" value="24c9e15e52afc47c225b757e7bee1f9d"/>
-        <property name="authorities">
-            <list value-type="security.Authority">
-                <bean class="security.Authority">
-                    <property name="authority" value="USER"/>
-                </bean>
-            </list>
-        </property>
-    </bean>
-    <bean class="security.UserAccount" id="userAccount_user2">
-        <property name="username" value="user2"/>
-        <property name="password" value="7e58d63b60197ceb55a1c487989a3720"/>
-        <property name="authorities">
-            <list value-type="security.Authority">
-                <bean class="security.Authority">
-                    <property name="authority" value="USER"/>
-                </bean>
-            </list>
-        </property>
-    </bean>
-    <bean class="security.UserAccount" id="userAccount_user3">
-        <property name="username" value="user3"/>
-        <property name="password" value="92877af70a45fd6a2ed7fe81e1236b78"/>
-        <property name="authorities">
-            <list value-type="security.Authority">
-                <bean class="security.Authority">
-                    <property name="authority" value="USER"/>
-                </bean>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.User" id="user_user">
-        <property name="antennas">
-            <list>
-                <ref bean="antenna_1"/>
-                <ref bean="antenna_2"/>
-                <ref bean="antenna_7"/>
-                <ref bean="antenna_8"/>
-            </list>
-        </property>
-        <property name="tutorials">
-            <list>
-                <ref bean="tutorial_1"/>
-                <ref bean="tutorial_2"/>
-                <ref bean="tutorial_3"/>
-            </list>
-        </property>
-        <property name="name" value="User 1"/>
-        <property name="surname" value="SurnameUser1"/>
-        <property name="email" value="user@users.com"/>
-        <property name="pictureUrl">
-            <null/>
-        </property>
-        <property name="phoneNumber" value="+11611111111"/>
-        <property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount">
-            <ref bean="userAccount_user"/>
-        </property>
-    </bean>
-    <bean class="domain.User" id="user_user2">
-        <property name="antennas">
-            <list>
-                <ref bean="antenna_3"/>
-                <ref bean="antenna_4"/>
-            </list>
-        </property>
-        <property name="tutorials">
-            <list>
-                <ref bean="tutorial_4"/>
-                <ref bean="tutorial_5"/>
-            </list>
-        </property>
-        <property name="name" value="User 2"/>
-        <property name="surname" value="SurnameUser2"/>
-        <property name="email" value="user2@users.com"/>
-        <property name="pictureUrl">
-            <null/>
-        </property>
-        <property name="phoneNumber" value="+11622222222"/>
-        <property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount">
-            <ref bean="userAccount_user2"/>
-        </property>
-    </bean>
-    <bean class="domain.User" id="user_user3">
-        <property name="antennas">
-            <list>
-                <ref bean="antenna_5"/>
-                <ref bean="antenna_6"/>
-                <ref bean="antenna_9"/>
-            </list>
-        </property>
-        <property name="tutorials">
-            <list>
-                <ref bean="tutorial_6"/>
-            </list>
-        </property>
-        <property name="name" value="User 3"/>
-        <property name="surname" value="SurnameUser3"/>
-        <property name="email" value="user3@users.com"/>
-        <property name="pictureUrl">
-            <null/>
-        </property>
-        <property name="phoneNumber" value="+11633333333"/>
-        <property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount">
-            <ref bean="userAccount_user3"/>
-        </property>
-    </bean>
-    <bean class="domain.Administrator" id="administrator_admin">
-        <property name="name" value="Admin 1"/>
-        <property name="surname" value="SurnameAdmin1"/>
-        <property name="email" value="admin@admin.com"/>
-        <property name="pictureUrl">
-            <null/>
-        </property>
-        <property name="phoneNumber" value="+22611111111"/>
-        <property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount">
-            <ref bean="userAccount_admin"/>
-        </property>
-    </bean>
-    <bean class="domain.Administrator" id="administrator_admin2">
-        <property name="name" value="Admin 2"/>
-        <property name="surname" value="SurnameAdmin2"/>
-        <property name="email" value="admin2@admin.com"/>
-        <property name="pictureUrl">
-            <null/>
-        </property>
-        <property name="phoneNumber" value="+22622222222"/>
-        <property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount">
-            <ref bean="userAccount_admin2"/>
-        </property>
-    </bean>
-    <bean class="domain.Administrator" id="administrator_admin3">
-        <property name="name" value="Admin 3"/>
-        <property name="surname" value="SurnameAdmin3"/>
-        <property name="email" value="admin3@admin.com"/>
-        <property name="pictureUrl">
-            <null/>
-        </property>
-        <property name="phoneNumber" value="+22633333333"/>
-        <property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount">
-            <ref bean="userAccount_admin3"/>
-        </property>
-    </bean>
-    <bean class="domain.Satellite" id="satellite_1">
-        <property name="name" value="METEOSAT"/>
-        <property name="description" value="This is satellite 1"/>
-        <property name="platforms">
-            <list>
-                <ref bean="platform_1"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Satellite" id="satellite_2">
-        <property name="name" value="RUS-SAT"/>
-        <property name="description" value="This is satellite 2"/>
-        <property name="platforms">
-            <list>
-                <ref bean="platform_1"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Satellite" id="satellite_3">
-        <property name="name" value="EUROSAT"/>
-        <property name="description" value="This is satellite 3"/>
-        <property name="platforms">
-            <list>
-                <ref bean="platform_3"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Satellite" id="satellite_4">
-        <property name="name" value="ENGLAND-SAT"/>
-        <property name="description" value="This is satellite 4"/>
-        <property name="platforms">
-            <list>
-                <ref bean="platform_4"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Satellite" id="satellite_5">
-        <property name="name" value="AMERICA-SAT1"/>
-        <property name="description" value="This is satellite 5"/>
-        <property name="platforms">
-            <list>
-                <ref bean="platform_5"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Satellite" id="satellite_6">
-        <property name="name" value="AMERICA-SAT2"/>
-        <property name="description" value="This is satellite 6"/>
-        <property name="platforms">
-            <list>
-                <ref bean="platform_6"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Tutorial" id="tutorial_1">
-        <property name="user">
-            <ref bean="user_user"/>
-        </property>
-        <property name="lastUpdateTime" value="2018/07/20 15:00:52"/>
-        <property name="title" value="(READ!) A beginner guide to Lorem Ipsum"/>
-        <property name="text" value="What is Lorem Ipsum?&#13;&#10;Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&#13;&#10;&#13;&#10;Why do we use it?&#13;&#10;It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).&#13;&#10;&#13;&#10;&#13;&#10;Where does it come from?&#13;&#10;Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.&#13;&#10;&#13;&#10;The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from &quot;de Finibus Bonorum et Malorum&quot; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.&#13;&#10;&#13;&#10;Where can I get some?&#13;&#10;There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."/>
-        <property name="pictureUrls">
-            <list value-type="java.lang.String">
-                <value>https://i.imgur.com/NF0s3b9.png</value>
-                <value>https://i.imgur.com/OIkzVSi.png</value>
-            </list>
-        </property>
-        <property name="tutorialComments">
-            <list>
-                <ref bean="tutorialComment_2"/>
-                <ref bean="tutorialComment_3"/>
-                <ref bean="tutorialComment_4"/>
-                <ref bean="tutorialComment_6"/>
-                <ref bean="tutorialComment_7"/>
-                <ref bean="tutorialComment_8"/>
-                <ref bean="tutorialComment_9"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Tutorial" id="tutorial_2">
-        <property name="user">
-            <ref bean="user_user"/>
-        </property>
-        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
-        <property name="title" value="Dorture: Theoretical Unification of I/O Automata and Flip-Flop Gates"/>
-        <property name="text" value="This is tutorial 2"/>
-        <property name="pictureUrls">
-            <list/>
-        </property>
-        <property name="tutorialComments">
-            <list>
-                <ref bean="tutorialComment_5"/>
-                <ref bean="tutorialComment_10"/>
-                <ref bean="tutorialComment_11"/>
-                <ref bean="tutorialComment_12"/>
-                <ref bean="tutorialComment_13"/>
-                <ref bean="tutorialComment_14"/>
-                <ref bean="tutorialComment_15"/>
-                <ref bean="tutorialComment_16"/>
-                <ref bean="tutorialComment_17"/>
-                <ref bean="tutorialComment_18"/>
-                <ref bean="tutorialComment_19"/>
-                <ref bean="tutorialComment_20"/>
-                <ref bean="tutorialComment_21"/>
-                <ref bean="tutorialComment_22"/>
-                <ref bean="tutorialComment_23"/>
-                <ref bean="tutorialComment_24"/>
-                <ref bean="tutorialComment_25"/>
-                <ref bean="tutorialComment_26"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Tutorial" id="tutorial_3">
-        <property name="user">
-            <ref bean="user_user"/>
-        </property>
-        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
-        <property name="title" value="Contrasting Sensor Networks and I/O Automata with Sault"/>
-        <property name="text" value="This is tutorial 3"/>
-        <property name="pictureUrls">
-            <list/>
-        </property>
-        <property name="tutorialComments">
-            <list>
-                <ref bean="tutorialComment_1"/>
-            </list>
-        </property>
-    </bean>
-    <bean class="domain.Tutorial" id="tutorial_4">
-        <property name="user">
-            <ref bean="user_user2"/>
-        </property>
-        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
-        <property name="title" value="Read-Write Information for Multi-Processors"/>
-        <property name="text" value="This is tutorial 4"/>
-        <property name="pictureUrls">
-            <list/>
-        </property>
-        <property name="tutorialComments">
-            <list/>
-        </property>
-    </bean>
-    <bean class="domain.Tutorial" id="tutorial_5">
-        <property name="user">
-            <ref bean="user_user2"/>
-        </property>
-        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
-        <property name="title" value="Digital-to-Analog Converters Considered Harmful"/>
-        <property name="text" value="This is tutorial 5"/>
-        <property name="pictureUrls">
-            <list/>
-        </property>
-        <property name="tutorialComments">
-            <list/>
-        </property>
-    </bean>
-    <bean class="domain.Tutorial" id="tutorial_6">
-        <property name="user">
-            <ref bean="user_user3"/>
-        </property>
-        <property name="lastUpdateTime" value="2018/07/18 13:24:36"/>
-        <property name="title" value="Constructing Forward-Error Correction and Courseware with Hotel"/>
-        <property name="text" value="This is tutorial 6"/>
-        <property name="pictureUrls">
-            <list/>
-        </property>
-        <property name="tutorialComments">
-            <list/>
         </property>
     </bean>
 </beans>

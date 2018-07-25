@@ -17,7 +17,7 @@
 
 	<definition name="platforms/new" extends="master.page">
 		<put-attribute name="title" value="New platform" />
-		<put-attribute name="body" value="/views/platforms/new.jsp" />
+		<put-attribute name="body" value="/views/platforms/edit.jsp" />
 	</definition>
 
 	<definition name="platforms/edit" extends="master.page">

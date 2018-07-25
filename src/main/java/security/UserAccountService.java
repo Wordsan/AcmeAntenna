@@ -1,9 +1,7 @@
 package security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -32,7 +30,7 @@ public class UserAccountService {
 
 	public UserAccount create(String username,
 			String password,
-			String authority)
+			String authority) throws UsernameNotUniqueException
 	{
 		if (findByName(username) != null) {
 			throw new UsernameNotUniqueException();

@@ -22,6 +22,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +69,20 @@ public class AbstractController {
 	{
 		return ApplicationConfig.DISPLAYTAG_PAGE_SIZE;
 	}
+
+	@ModelAttribute("currentRelativeUrl")
+	public String getCurrentRelativeUrl(HttpServletRequest request)
+	{
+		String relativePath = request.getServletPath();
+		if (relativePath.startsWith("/")) relativePath = relativePath.substring(1);
+		String queryString = request.getQueryString();
+		if (queryString == null) queryString = "";
+		if (!queryString.isEmpty()) {
+			relativePath += "?" + queryString;
+		}
+		return relativePath;
+	}
+
 
 	@InitBinder
 	public void configEmptyStringAsNull(WebDataBinder binder )

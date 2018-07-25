@@ -14,4 +14,8 @@ public interface SatelliteRepository
 extends JpaRepository<Satellite, Integer> {
     @Query("select s from Satellite s where s.deleted = false order by s.name asc")
     List<Satellite> findAllForIndex();
+
+
+    // For tests:
+    Satellite findByName(String name);
 }

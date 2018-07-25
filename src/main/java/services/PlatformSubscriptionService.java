@@ -27,13 +27,13 @@ public class PlatformSubscriptionService {
 	public List<PlatformSubscription> findAllForPrincipal()
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
-		return userService.getPrincipal().getPlatformSubscriptions();
+		return repository.findAllByUserOrderByStartDateDesc(userService.getPrincipal());
 	}
 
 	public List<PlatformSubscription> findAllForPrincipalAndPlatform(Platform platform)
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
-		return repository.findAllByUserAndPlatformOrderByIdDesc(userService.getPrincipal(), platform);
+		return repository.findAllByUserAndPlatformOrderByStartDateDesc(userService.getPrincipal(), platform);
 	}
 
 	public PlatformSubscription create(PlatformSubscription platformSubscription) throws OverlappingPlatformSubscriptionException

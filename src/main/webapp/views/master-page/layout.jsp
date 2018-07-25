@@ -16,8 +16,8 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
@@ -40,7 +40,7 @@
 <script type="text/javascript" src="scripts/jmenu.js"></script>
 <script type="text/javascript" src="scripts/datepicker-${pageContext.response.locale}.js"></script>
 <script type="text/javascript" src="scripts/stringlist.js"></script>
-<script type="text/javascript" src="scripts/multi-select.js"></script>
+<script type="text/javascript" src="scripts/multiple-select.js"></script>
 <script type="text/javascript" src="scripts/functions.js"></script>
 
 <link rel="stylesheet" href="styles/common.css" type="text/css">
@@ -49,6 +49,7 @@
 <link rel="stylesheet" href="styles/jmenu.css" media="screen"
 	type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
+<link rel="stylesheet" href="styles/multiple-select.css" type="text/css">
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
@@ -56,6 +57,7 @@
 	$(document).ready(function() {
 		$("#jMenu").jMenu();
 		$(".date-picker").datepicker();
+		$("select[multiple=multiple]").multipleSelect();
 	});
 </script>
 

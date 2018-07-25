@@ -13,4 +13,7 @@ public interface PlatformRepository
 extends JpaRepository<Platform, Integer> {
     @Query("select p from Platform p where p.deleted = false order by p.name asc")
     List<Platform> findAllForIndex();
+
+    // For test use:
+    Platform findByName(String name);
 }

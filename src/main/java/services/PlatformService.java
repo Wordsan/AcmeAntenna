@@ -1,18 +1,22 @@
 package services;
 
 import org.apache.lucene.search.Query;
+import org.hibernate.Hibernate;
 import org.hibernate.search.errors.EmptyQueryException;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.validation.constraints.AssertTrue;
 
 import domain.Platform;
 import domain.Satellite;
@@ -26,7 +30,7 @@ import utilities.CheckUtils;
 public class PlatformService {
     @Autowired private PlatformRepository repository;
     @Autowired private SatelliteService satelliteService;
-    @PersistenceContext private EntityManager entityManager; // For Lucene.
+    @PersistenceContext private EntityManager entityManager;
 
     public List<Platform> findAllForIndex()
     {
@@ -65,14 +69,29 @@ public class PlatformService {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
         CheckUtils.checkNotExists(platform);
 
-        return repository.save(platform);
+        CheckUtils.checkFalse(platform.getDeleted());
+
+        Platform result = repository.save(platform);
+        satelliteService.updatePlatformRelation(result, new ArrayList<Satellite>());
+        return result;
     }
     public Platform update(Platform platform)
     {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-        CheckUtils.checkFalse(platform.getDeleted());
         CheckUtils.checkExists(platform);
 
+        CheckUtils.checkFalse(platform.getDeleted());
+
+        // Ensure we get the old one and not the one we just submitted.
+        Hibernate.initialize(platform.getSatellites());
+        entityManager.detach(platform);
+        Platform oldPlatform = repository.findOne(platform.getId());
+        Assert.isTrue(platform != oldPlatform);
+
+        CheckUtils.checkExists(oldPlatform);
+
+        // We are the inverse side of the platform-satellite relationship, so we must delegate updating that relationship to SatelliteService.
+        satelliteService.updatePlatformRelation(platform, oldPlatform.getSatellites());
         return repository.save(platform);
     }
 
@@ -84,9 +103,9 @@ public class PlatformService {
         CheckUtils.checkFalse(platform.getDeleted());
 
         platform.setDeleted(true);
-        for (Satellite satellite : platform.getSatellites()) {
-            satelliteService.unlinkPlatform(satellite, platform);
-        }
+        List<Satellite> previousSatellites = new ArrayList<>(platform.getSatellites());
+        platform.getSatellites().clear();
+        satelliteService.updatePlatformRelation(platform, previousSatellites);
         repository.save(platform);
     }
 

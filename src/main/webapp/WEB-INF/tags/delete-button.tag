@@ -18,18 +18,22 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <%-- Attributes --%>
 
-<%@ attribute name="code" required="true" %>
+<%@ attribute name="code" required="false" %>
 <%@ attribute name="action" required="true" %>
-<%@ attribute name="id" required="true" %>
+
+<c:if test="${code == null}">
+    <c:set var="code" value="misc.actions.delete" />
+</c:if>
 
 <%-- Definition --%>
 
-<button type="button" onclick='if (confirm("<spring:message code="misc.actions.confirmDelete" />")) { $.redirect("${appfn:escapeJs(action)}", { id: "${appfn:escapeJs(id)}" }, "POST") }' >
+<button type="button" onclick='if (confirm("<spring:message code="misc.actions.confirmDelete" />")) { $.redirect("${appfn:escapeJs(action)}", {}, "POST") }' >
     <spring:message code="${code}" />
 </button>

@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import domain.Actor;
 import domain.Administrator;
 import domain.User;
+import exceptions.UsernameNotUniqueException;
 import repositories.UserRepository;
 import security.Authority;
 import security.LoginService;
@@ -40,7 +41,7 @@ public class UserService {
 		return (User) principal;
 	}
 
-	public User createAsNewUser(User user)
+	public User createAsNewUser(User user) throws UsernameNotUniqueException
 	{
 		CheckUtils.checkUnauthenticated();
 		CheckUtils.checkNotExists(user);

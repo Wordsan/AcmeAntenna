@@ -51,14 +51,12 @@ extends DomainEntity {
     }
 
     @NotBlank
-    @NotNull
     public String getTitle()
     {
         return title;
     }
 
     @NotBlank
-    @NotNull
     @Lob
     public String getText()
     {
@@ -111,6 +109,7 @@ extends DomainEntity {
 
     public void setPictureUrls(List<String> pictureUrls)
     {
+        if (pictureUrls == null) pictureUrls = new ArrayList<>();
         this.pictureUrls = pictureUrls;
     }
 }

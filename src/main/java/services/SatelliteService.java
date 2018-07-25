@@ -7,8 +7,11 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -68,14 +71,23 @@ public class SatelliteService {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 		CheckUtils.checkNotExists(satellite);
+		CheckUtils.checkFalse(satellite.getDeleted());
+
+		for (Platform platform : satellite.getPlatforms()) {
+			CheckUtils.checkFalse(platform.getDeleted());
+		}
 
 		return repository.save(satellite);
 	}
 	public Satellite update(Satellite satellite)
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		CheckUtils.checkFalse(satellite.getDeleted());
 		CheckUtils.checkExists(satellite);
+		CheckUtils.checkFalse(satellite.getDeleted());
+
+		for (Platform platform : satellite.getPlatforms()) {
+			CheckUtils.checkFalse(platform.getDeleted());
+		}
 
 		return repository.save(satellite);
 	}
@@ -95,10 +107,35 @@ public class SatelliteService {
 		repository.save(satellite);
 	}
 
-	// For use in PlatformService only, which is why it is package-private and has no access checks.
-	void unlinkPlatform(Satellite satellite, Platform platform)
+	// For use from PlatformService only.
+	void updatePlatformRelation(Platform platform, List<Satellite> previousSatellites)
 	{
-		if (satellite.getPlatforms().remove(platform)) {
+		Set<Satellite> before = new HashSet<>(previousSatellites);
+		Set<Satellite> after = new HashSet<>(platform.getSatellites());
+
+		// Deleted platforms should be empty!
+		CheckUtils.checkTrue(after.isEmpty() || !platform.getDeleted());
+
+		// Deleted satellites cannot be associated with platforms!
+		for (Satellite satellite : after) {
+			CheckUtils.checkFalse(satellite.getDeleted());
+		}
+
+		Set<Satellite> added = new HashSet<>();
+		added.addAll(after);
+		added.removeAll(before);
+
+		Set<Satellite> removed = new HashSet<>();
+		removed.addAll(before);
+		removed.removeAll(after);
+
+		for (Satellite satellite : added) {
+			if (!satellite.getPlatforms().contains(platform)) satellite.getPlatforms().add(platform);
+			repository.save(satellite);
+		}
+
+		for (Satellite satellite : removed) {
+			satellite.getPlatforms().remove(platform);
 			repository.save(satellite);
 		}
 	}

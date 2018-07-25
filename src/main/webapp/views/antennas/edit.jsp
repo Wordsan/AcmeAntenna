@@ -1,14 +1,17 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
-<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<%@taglib prefix="app" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
-<form:form action="antennas/update.do" modelAttribute="antenna">
+<form:form action="${formAction}" modelAttribute="antenna">
     <app:model-editor />
     <form:hidden path="user" />
     <app:textbox path="serialNumber" code="antennas.serialNumber" />
@@ -21,9 +24,11 @@
     <app:select path="satellite" items="${satellites}" itemLabel="name" code="antennas.satellite" />
 
     <div>
-        <app:submit name="submit" code="misc.actions.update" />
-        <app:delete-button id="${antenna.id}" action="antennas/delete.do" code="misc.actions.delete" />
-        <app:cancel-button code="misc.actions.cancel" />
+        <app:submit entity="${antenna}" />
+        <c:if test="${antenna.id != 0}">
+            <app:delete-button code="misc.actions.delete" action="antennas/delete.do?id=${antenna.id}" />
+        </c:if>
+        <app:cancel-button />
     </div>
 </form:form>
 

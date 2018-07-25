@@ -50,23 +50,21 @@ public class PlatformSubscriptionController extends AbstractController {
         if (platformId != null) {
             platformSubscription.setPlatform(platformService.getById(platformId));
         }
-        // Set a dummy key-code. Lame, but easier than disabling validation just for that field.
+        // Set a dummy key-code. Lame, but easier than finding out how to disable validation just for that field.
         platformSubscription.setKeyCode(StringUtils.repeat(PlatformSubscription.KEYCODE_ALPHABET.charAt(0), PlatformSubscription.KEYCODE_LENGTH));
-        return newForm(platformSubscription, null, null);
+
+        return createEditModelAndView("platform_subscriptions/new", "platform_subscriptions/create.do", null, null, platformSubscription);
     }
 
-    public ModelAndView newForm(
-            PlatformSubscription platformSubscription,
-            BindingResult binding,
-            String globalErrorMessage
-    )
+    public ModelAndView createEditModelAndView(String viewName, String formAction, String globalErrorMessage, BindingResult binding, PlatformSubscription platformSubscription)
     {
         ModelAndView result = ControllerUtils.createViewWithBinding(
-                "platform_subscriptions/new",
+                viewName,
                 binding,
                 globalErrorMessage
         );
 
+        result.addObject("formAction", formAction);
         result.addObject("platformSubscription", platformSubscription);
         result.addObject("platforms", platformService.findAllForIndex());
 
@@ -80,27 +78,21 @@ public class PlatformSubscriptionController extends AbstractController {
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-        ModelAndView result;
-        if (binding.hasErrors()) {
-            result = newForm(platformSubscription, binding, null);
-        } else {
+        String globalErrorMessage = null;
+        if (!binding.hasErrors()) {
             try {
                 platformSubscription = service.create(platformSubscription);
-                result = ControllerUtils.redirect("/platform_subscriptions/index.do");
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+                return ControllerUtils.redirect("/platform_subscriptions/index.do");
             } catch(OverlappingPlatformSubscriptionException ex) {
-                result = newForm(platformSubscription,
-                                 binding,
-                                 "platform_subscription.error.overlapping");
+                globalErrorMessage = "platform_subscription.error.overlapping";
             } catch(Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-                result = newForm(platformSubscription,
-                                 binding,
-                                 "misc.commit.error");
+                globalErrorMessage = "misc.commit.error";
             }
         }
 
-        return result;
+
+        return createEditModelAndView("platform_subscriptions/new", "platform_subscriptions/create.do", globalErrorMessage, binding, platformSubscription);
     }
 }

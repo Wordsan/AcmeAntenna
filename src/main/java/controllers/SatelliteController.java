@@ -15,6 +15,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import domain.Antenna;
+import domain.Platform;
 import domain.Satellite;
 import domain.User;
 import forms.SearchForm;
@@ -58,21 +59,18 @@ public class SatelliteController extends AbstractController {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
 		Satellite satellite = new Satellite();
-		return newForm(satellite, null, null);
+		return createEditModelAndView("satellites/new", "satellites/create.do", null, null, satellite);
 	}
 
-	private ModelAndView newForm(
-			Satellite satellite,
-			BindingResult binding,
-			String globalErrorMessage
-	)
+	private ModelAndView createEditModelAndView(String viewName, String formAction, String globalErrorMessage, BindingResult binding, Satellite satellite)
 	{
 		ModelAndView result = ControllerUtils.createViewWithBinding(
-				"satellites/new",
+				viewName,
 				binding,
 				globalErrorMessage
 		);
 
+		result.addObject("formAction", formAction);
 		result.addObject("satellite", satellite);
 		result.addObject("platforms", platformService.findAllForIndex());
 
@@ -87,24 +85,20 @@ public class SatelliteController extends AbstractController {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-		ModelAndView result;
-		if (binding.hasErrors()) {
-			result = newForm(satellite, binding, null);
-		} else {
+		String globalErrorMessage = null;
+		if (!binding.hasErrors()) {
 			try {
 				satellite = satelliteService.create(satellite);
-				result = ControllerUtils.redirect("/satellites/index.do");
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+
+				return ControllerUtils.redirect("/satellites/index.do");
 			} catch(Throwable oops) {
 				if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-				result = newForm(satellite,
-								 binding,
-								 "misc.commit.error");
+				globalErrorMessage = "misc.commit.error";
 			}
 		}
 
-		return result;
+		return createEditModelAndView("satellites/new", "satellites/create.do", globalErrorMessage, binding, satellite);
 	}
 
 	@RequestMapping("/edit")
@@ -113,52 +107,30 @@ public class SatelliteController extends AbstractController {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
 		Satellite satellite = satelliteService.getByIdForEdit(id);
-		return editForm(satellite, null, null);
+		return createEditModelAndView("satellites/edit", "satellites/update.do", null, null, satellite);
 	}
 
-	private ModelAndView editForm(
-			Satellite satellite,
-			BindingResult binding,
-			String globalErrorMessage
-	)
-	{
-		ModelAndView result = ControllerUtils.createViewWithBinding(
-				"satellites/edit",
-				binding,
-				globalErrorMessage
-		);
 
-		result.addObject("satellite", satellite);
-		result.addObject("platforms", platformService.findAllForIndex());
-
-		return result;
-	}
-
-	@RequestMapping(value="/update", method=RequestMethod.POST)
+	@RequestMapping(value="/update", method= RequestMethod.POST)
 	public ModelAndView update(
 			@ModelAttribute("satellite") @Valid Satellite satellite,
 			BindingResult binding, RedirectAttributes redir)
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-		ModelAndView result;
-		if (binding.hasErrors()) {
-			result = editForm(satellite, binding, null);
-		} else {
+		String globalErrorMessage = null;
+		if (!binding.hasErrors()) {
 			try {
 				satellite = satelliteService.update(satellite);
-				result = ControllerUtils.redirect("/satellites/index.do");
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+				return ControllerUtils.redirect("/satellites/index.do");
 			} catch(Throwable oops) {
 				if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-				result = newForm(satellite,
-								 binding,
-								 "misc.commit.error");
+				globalErrorMessage = "misc.commit.error";
 			}
 		}
 
-		return result;
+		return createEditModelAndView("satellites/edit", "satellites/update.do", globalErrorMessage, binding, satellite);
 	}
 
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
@@ -166,9 +138,14 @@ public class SatelliteController extends AbstractController {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-		satelliteService.delete(id);
 		ModelAndView result = ControllerUtils.redirect("/satellites/index.do");
-		redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+		try {
+			satelliteService.delete(id);
+			redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+		} catch (Throwable oops) {
+			if (ApplicationConfig.DEBUG) oops.printStackTrace();
+			redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
+		}
 		return result;
 	}
 }

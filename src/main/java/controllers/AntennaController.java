@@ -40,6 +40,17 @@ public class AntennaController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping("/show")
+	public ModelAndView show(int id)
+	{
+		CheckUtils.checkPrincipalAuthority(Authority.USER);
+
+		Antenna antenna = antennaService.getByIdForShow(id);
+		ModelAndView result = new ModelAndView("antennas/show");
+		result.addObject("antenna", antenna);
+		return result;
+	}
+
 	@RequestMapping("/new")
 	public ModelAndView new_()
 	{
@@ -47,21 +58,20 @@ public class AntennaController extends AbstractController {
 
 		Antenna antenna = new Antenna();
 		antenna.setUser((User) getPrincipal());
-		return newForm(antenna, null, null);
+		return createEditModelAndView("antennas/new", "antennas/create.do", null, null, antenna);
 	}
 
-	public ModelAndView newForm(
-			Antenna antenna,
-			BindingResult binding,
-			String globalErrorMessage
+	public ModelAndView createEditModelAndView(
+			String viewName, String formAction, BindingResult binding, String globalErrorMessage, Antenna antenna
 	)
 	{
 		ModelAndView result = ControllerUtils.createViewWithBinding(
-				"antennas/new",
+				viewName,
 				binding,
 				globalErrorMessage
 				);
 
+		result.addObject("formAction", formAction);
 		result.addObject("antenna", antenna);
 		result.addObject("satellites", satelliteService.findAllForIndex());
 
@@ -76,24 +86,20 @@ public class AntennaController extends AbstractController {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		ModelAndView result;
-		if (binding.hasErrors()) {
-			result = newForm(antenna, binding, null);
-		} else {
+		String globalErrorMessage = null;
+
+		if (!binding.hasErrors()) {
 			try {
 				antenna = antennaService.create(antenna);
-				result = ControllerUtils.redirect("/antennas/index.do");
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+				return ControllerUtils.redirect("/antennas/index.do");
 			} catch(Throwable oops) {
 				if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-				result = newForm(antenna,
-								 binding,
-								 "misc.commit.error");
+				globalErrorMessage = "misc.commit.error";
 			}
 		}
 
-		return result;
+		return createEditModelAndView("antennas/new", "antennas/create.do", binding, globalErrorMessage, antenna);
 	}
 
 	@RequestMapping("/edit")
@@ -101,27 +107,8 @@ public class AntennaController extends AbstractController {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-
 		Antenna antenna = antennaService.getByIdForEdit(id);
-		return editForm(antenna, null, null);
-	}
-
-	public ModelAndView editForm(
-			Antenna antenna,
-			BindingResult binding,
-			String globalErrorMessage
-	)
-	{
-		ModelAndView result = ControllerUtils.createViewWithBinding(
-				"antennas/edit",
-				binding,
-				globalErrorMessage
-		);
-
-		result.addObject("antenna", antenna);
-		result.addObject("satellites", satelliteService.findAllForIndex());
-
-		return result;
+		return createEditModelAndView("antennas/edit", "antennas/update.do", null, null, antenna);
 	}
 
 	@RequestMapping(value="/update", method=RequestMethod.POST)
@@ -131,24 +118,20 @@ public class AntennaController extends AbstractController {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		ModelAndView result;
-		if (binding.hasErrors()) {
-			result = editForm(antenna, binding, null);
-		} else {
+		String globalErrorMessage = null;
+		if (!binding.hasErrors()) {
 			try {
 				antenna = antennaService.update(antenna);
-				result = ControllerUtils.redirect("/antennas/index.do");
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+
+				return ControllerUtils.redirect("/antennas/index.do");
 			} catch(Throwable oops) {
 				if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-				result = newForm(antenna,
-								 binding,
-								 "misc.commit.error");
+				globalErrorMessage = "misc.commit.error";
 			}
 		}
 
-		return result;
+		return createEditModelAndView("antennas/edit", "antennas/update.do", binding, globalErrorMessage, antenna);
 	}
 
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
@@ -156,10 +139,14 @@ public class AntennaController extends AbstractController {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		antennaService.delete(id);
-		ModelAndView result = ControllerUtils.redirect("/antennas/index.do");
-		redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-		return result;
+		try {
+			antennaService.delete(id);
+			redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+		} catch (Throwable oops) {
+			if (ApplicationConfig.DEBUG) oops.printStackTrace();
+			redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
+		}
+		return ControllerUtils.redirect("/antennas/index.do");
 	}
 
 }

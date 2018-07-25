@@ -1,11 +1,16 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
-<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<%@taglib prefix="app" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
+
 
 <div>
 	<span class="label"><spring:message code="platforms.name" />: </span>
@@ -14,8 +19,15 @@
 
 <div>
 	<span class="label"><spring:message code="platforms.description" />: </span>
-	<span class="content"><c:out value="${platform.description}" /></span>
+	<span class="content multiline"><c:out value="${platform.description}" /></span>
 </div>
+
+<c:if test="${not platform.deleted}">
+<security:authorize access="hasRole('ADMINISTRATOR')">
+    <app:redir-button code="misc.actions.edit" action="platforms/edit.do?id=${platform.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
+    <app:delete-button code="misc.actions.delete" action="platforms/delete.do?id=${platform.id}" />
+</security:authorize>
+</c:if>
 
 <h3><spring:message code="platforms.satellites" /></h3>
 
@@ -33,7 +45,7 @@
 
 <security:authorize access="hasRole('USER')">
     <br/>
-    <app:redir-button code="platforms.subscribe" action="platform_subscriptions/new.do?platformId=${platform.id}" />
+    <app:redir-button code="platforms.subscribe" action="platform_subscriptions/new.do?platformId=${platform.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
     <h3><spring:message code="platforms.platform_subscription.history" /></h3>
 
     <display:table name="platformSubscriptions"

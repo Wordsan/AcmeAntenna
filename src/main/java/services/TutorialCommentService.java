@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -25,6 +26,7 @@ public class TutorialCommentService {
 
 	public Page<TutorialComment> findAllForTutorial(Tutorial tutorial, Pageable pageable)
 	{
+		CheckUtils.checkAuthenticated();
 		return repository.findAllByTutorialOrderByCreationTimeDesc(tutorial, pageable);
 	}
 
@@ -39,6 +41,9 @@ public class TutorialCommentService {
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 		CheckUtils.checkIsPrincipal(tutorialComment.getUser());
 		CheckUtils.checkNotExists(tutorialComment);
+
+		tutorialComment.setCreationTime(new Date());
+
 		return repository.save(tutorialComment);
 	}
 

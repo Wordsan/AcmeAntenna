@@ -48,21 +48,20 @@ public class TutorialController extends AbstractController {
         Tutorial tutorial = new Tutorial();
         tutorial.setUser((User) getPrincipal());
         tutorial.setLastUpdateTime(new Date());
-        return newForm(tutorial, null, null);
+        return createEditModelAndView("tutorials/new", "tutorials/create.do", null, null, tutorial);
     }
 
-    public ModelAndView newForm(
-            Tutorial tutorial,
-            BindingResult binding,
-            String globalErrorMessage
+    private ModelAndView createEditModelAndView(
+            String viewName, String formAction, BindingResult binding, String globalErrorMessage, Tutorial tutorial
     )
     {
         ModelAndView result = ControllerUtils.createViewWithBinding(
-                "tutorials/new",
+                viewName,
                 binding,
                 globalErrorMessage
         );
 
+        result.addObject("formAction", formAction);
         result.addObject("tutorial", tutorial);
 
         return result;
@@ -76,25 +75,23 @@ public class TutorialController extends AbstractController {
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-        ModelAndView result;
-        if (binding.hasErrors()) {
-            result = newForm(tutorial, binding, null);
-        } else {
+        String globalErrorMessage = null;
+
+        if (!binding.hasErrors()) {
             try {
                 tutorial = service.create(tutorial);
-                result = ControllerUtils.redirect("/tutorials/show.do");
+
                 redir.addAttribute("id", tutorial.getId());
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+
+                return ControllerUtils.redirect("/tutorials/show.do");
             } catch(Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-                result = newForm(tutorial,
-                                 binding,
-                                 "misc.commit.error");
+                globalErrorMessage = "misc.commit.error";
             }
         }
 
-        return result;
+        return createEditModelAndView("tutorials/new", "tutorials/create.do", binding, globalErrorMessage, tutorial);
     }
 
     @RequestMapping("/edit")
@@ -103,24 +100,7 @@ public class TutorialController extends AbstractController {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
 
         Tutorial tutorial = service.getByIdForEdit(id);
-        return editForm(tutorial, null, null);
-    }
-
-    public ModelAndView editForm(
-            Tutorial tutorial,
-            BindingResult binding,
-            String globalErrorMessage
-    )
-    {
-        ModelAndView result = ControllerUtils.createViewWithBinding(
-                "tutorials/edit",
-                binding,
-                globalErrorMessage
-        );
-
-        result.addObject("tutorial", tutorial);
-
-        return result;
+        return createEditModelAndView("tutorials/edit", "tutorials/update.do", null, null, tutorial);
     }
 
     @RequestMapping(value="/update", method=RequestMethod.POST)
@@ -130,25 +110,22 @@ public class TutorialController extends AbstractController {
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-        ModelAndView result;
-        if (binding.hasErrors()) {
-            result = editForm(tutorial, binding, null);
-        } else {
+        String globalErrorMessage = null;
+
+        if (!binding.hasErrors()) {
             try {
                 tutorial = service.update(tutorial);
-                result = ControllerUtils.redirect("/tutorials/show.do");
+
                 redir.addAttribute("id", tutorial.getId());
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+                return ControllerUtils.redirect("/tutorials/show.do");
             } catch(Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-                result = newForm(tutorial,
-                                 binding,
-                                 "misc.commit.error");
+                globalErrorMessage = "misc.commit.error";
             }
         }
 
-        return result;
+        return createEditModelAndView("tutorials/edit", "tutorials/update.do", binding, globalErrorMessage, tutorial);
     }
 
     @RequestMapping("/show")
@@ -181,10 +158,15 @@ public class TutorialController extends AbstractController {
             result = show(tutorialComment.getTutorial().getId(), null, tutorialComment);
             result.addObject("result", binding);
         } else {
-            tutorialCommentService.create(tutorialComment);
-            result = ControllerUtils.redirect("/tutorials/show.do");
-            redir.addAttribute("id", tutorialComment.getTutorial().getId());
-            redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+            try {
+                tutorialCommentService.create(tutorialComment);
+                result = ControllerUtils.redirect("/tutorials/show.do");
+                redir.addAttribute("id", tutorialComment.getTutorial().getId());
+                redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+            } catch (Throwable oops) {
+                result = show(tutorialComment.getTutorial().getId(), null, tutorialComment);
+                result.addObject("globalErrorMessage", "misc.commit.error");
+            }
         }
 
         return result;
@@ -198,11 +180,15 @@ public class TutorialController extends AbstractController {
         TutorialComment comment = tutorialCommentService.getByIdForDelete(id);
 
         Tutorial tutorial = comment.getTutorial();
-        tutorialCommentService.delete(id);
-
         ModelAndView result = ControllerUtils.redirect("/tutorials/show.do");
         redir.addAttribute("id", tutorial.getId());
-        redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+        try {
+            tutorialCommentService.delete(id);
+            redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+        } catch (Throwable oops) {
+            if (ApplicationConfig.DEBUG) oops.printStackTrace();
+            redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
+        }
         return result;
     }
 
@@ -211,10 +197,13 @@ public class TutorialController extends AbstractController {
     {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-        service.delete(id);
-
-        ModelAndView result = ControllerUtils.redirect("/tutorials/index.do");
-        redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-        return result;
+        try {
+            service.delete(id);
+            redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+        } catch (Throwable oops) {
+            if (ApplicationConfig.DEBUG) oops.printStackTrace();
+            redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
+        }
+        return ControllerUtils.redirect("/tutorials/index.do");
     }
 }

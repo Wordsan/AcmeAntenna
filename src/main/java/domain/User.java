@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -12,9 +13,9 @@ import javax.validation.Valid;
 @Access(AccessType.PROPERTY)
 public class User
 extends Actor {
-	private List<Antenna> antennas;
-    private List<Tutorial> tutorials;
-    private List<PlatformSubscription> platformSubscriptions;
+	private List<Antenna> antennas = new ArrayList<>();
+    private List<Tutorial> tutorials = new ArrayList<>();
+    private List<PlatformSubscription> platformSubscriptions = new ArrayList<>();
 
     @Valid
     @OneToMany(mappedBy = "user")
@@ -24,6 +25,7 @@ extends Actor {
     }
     public void setAntennas(List<Antenna> antennas)
     {
+        if (antennas == null) antennas = new ArrayList<>();
         this.antennas = antennas;
     }
 
@@ -35,6 +37,7 @@ extends Actor {
     }
     public void setTutorials(List<Tutorial> tutorials)
     {
+        if (tutorials == null) tutorials = new ArrayList<>();
         this.tutorials = tutorials;
     }
 
@@ -46,6 +49,7 @@ extends Actor {
     }
     public void setPlatformSubscriptions(List<PlatformSubscription> platformSubscriptions)
     {
+        if (platformSubscriptions == null) platformSubscriptions = new ArrayList<>();
         this.platformSubscriptions = platformSubscriptions;
     }
 }

@@ -12,8 +12,10 @@ import javax.transaction.Transactional;
 
 import domain.Actor;
 import domain.Antenna;
+import domain.Satellite;
 import domain.User;
 import repositories.AntennaRepository;
+import repositories.SatelliteRepository;
 import utilities.AbstractTest;
 
 /**
@@ -28,9 +30,9 @@ import utilities.AbstractTest;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class AntennaServiceTest extends AbstractTest {
-    @Autowired AntennaService antennaService;
-    @Autowired AntennaRepository antennaRepository;
-    @Autowired SatelliteService satelliteService;
+    @Autowired private AntennaService antennaService;
+    @Autowired private AntennaRepository antennaRepository;
+    @Autowired private SatelliteRepository satelliteRepository;
 
     // Test successful creation of an antenna.
     @Test
@@ -47,7 +49,7 @@ public class AntennaServiceTest extends AbstractTest {
         antenna.setRotationAzimuth(10);
         antenna.setRotationElevation(10);
         antenna.setSignalQuality(100);
-        antenna.setSatellite(satelliteService.findAllForIndex().get(0));
+        antenna.setSatellite(satelliteRepository.findByName("METEOSAT"));
         antennaService.create(antenna);
     }
 
@@ -66,7 +68,26 @@ public class AntennaServiceTest extends AbstractTest {
         antenna.setRotationAzimuth(10);
         antenna.setRotationElevation(10);
         antenna.setSignalQuality(100);
-        antenna.setSatellite(satelliteService.findAllForIndex().get(0));
+        antenna.setSatellite(satelliteRepository.findByName("METEOSAT"));
+        antennaService.create(antenna);
+    }
+
+    // Test creation of an antenna fails if satellite is deleted.
+    @Test(expected = AccessDeniedException.class)
+    public void testCreateAntennaFailsWithDeletedSatellite()
+    {
+        authenticate("user1");
+
+        Antenna antenna = new Antenna();
+        antenna.setUser((User) getActor("user1"));
+        antenna.setModel("Model X");
+        antenna.setSerialNumber("SX1123");
+        antenna.setPositionLatitude(10);
+        antenna.setPositionLongitude(10);
+        antenna.setRotationAzimuth(10);
+        antenna.setRotationElevation(10);
+        antenna.setSignalQuality(100);
+        antenna.setSatellite(satelliteRepository.findByName("DELETED-SAT"));
         antennaService.create(antenna);
     }
 
@@ -76,7 +97,7 @@ public class AntennaServiceTest extends AbstractTest {
     {
         authenticate("user1");
 
-        Antenna antenna = ((User) getPrincipal()).getAntennas().get(0);
+        Antenna antenna = antennaRepository.findBySerialNumber("A001");
         antennaService.create(antenna);
     }
 
@@ -86,13 +107,11 @@ public class AntennaServiceTest extends AbstractTest {
     {
         authenticate("user1");
 
-        Actor principal = getPrincipal();
-
-        // Get any antenna belonging to this principal.
-        Antenna antenna = ((User) principal).getAntennas().get(0);
+        // Get an antenna belonging to this principal.
+        Antenna antenna = antennaRepository.findBySerialNumber("A001");
 
         // Change anything.
-        antenna.setModel("TEST-testUpdateAntenna");
+        antenna.setSerialNumber("TEST-testUpdateAntenna");
 
         // See if it updates correctly.
         antenna = antennaService.update(antenna);
@@ -104,7 +123,54 @@ public class AntennaServiceTest extends AbstractTest {
         antenna = antennaRepository.findOne(antenna.getId());
 
         // Check that it's really updated.
-        Assert.isTrue(antenna.getModel().equals("TEST-testUpdateAntenna"));
+        Assert.isTrue(antenna.getSerialNumber().equals("TEST-testUpdateAntenna"));
+    }
+
+    // Test an antenna can be updated, even if it's satellite is deleted, as long as the satellite has not been changed.
+    @Test
+    public void testUpdateAntennaWithDeletedSat()
+    {
+        authenticate("user1");
+
+        // Get an antenna belonging to this principal with a deleted satellite.
+        Antenna antenna = antennaRepository.findBySerialNumber("D001");
+        Satellite deletedSat = satelliteRepository.findByName("DELETED-SAT");
+
+        Assert.isTrue(antenna.getSatellite().equals(deletedSat));
+
+        // Change anything.
+        antenna.setSerialNumber("TEST-testUpdateAntennaWithDeletedSat");
+
+        // See if it updates correctly.
+        antenna = antennaService.update(antenna);
+
+        // Flush changes and detach all entities.
+        flushTransaction();
+
+        // Reload entity.
+        antenna = antennaRepository.findOne(antenna.getId());
+
+        // Check that it's really updated.
+        Assert.isTrue(antenna.getSerialNumber().equals("TEST-testUpdateAntennaWithDeletedSat"));
+    }
+
+    // Test an antenna cannot be updated to point to a deleted satellite if it wasn't pointing to it before.
+    @Test(expected = AccessDeniedException.class)
+    public void testUpdateAntennaFailsToPointToDeletedSat()
+    {
+        authenticate("user1");
+
+        // Get an antenna belonging to this principal without a deleted satellite.
+        Antenna antenna = antennaRepository.findBySerialNumber("A001");
+        Satellite deletedSat = satelliteRepository.findByName("DELETED-SAT");
+
+        Assert.isTrue(!antenna.getSatellite().equals(deletedSat));
+
+        // Point to deleted satellite.
+        antenna.setSatellite(deletedSat);
+
+        // See if it updates correctly.
+        antennaService.update(antenna);
     }
 
     // Test update of an antenna fails if principal does not match antenna owner.
@@ -159,7 +225,7 @@ public class AntennaServiceTest extends AbstractTest {
         antenna.setRotationAzimuth(10);
         antenna.setRotationElevation(10);
         antenna.setSignalQuality(100);
-        antenna.setSatellite(satelliteService.findAllForIndex().get(0));
+        antenna.setSatellite(satelliteRepository.findByName("METEOSAT"));
 
         // Attempt to save new antenna as if we were updating it.
         antennaService.update(antenna);

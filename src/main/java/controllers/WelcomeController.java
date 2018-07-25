@@ -31,18 +31,8 @@ public class WelcomeController extends AbstractController {
 	// Index ------------------------------------------------------------------		
 
 	@RequestMapping(value = "/index")
-	public ModelAndView index(@RequestParam(required = false, defaultValue = "John Doe") final String name) {
-		ModelAndView result;
-		SimpleDateFormat formatter;
-		String moment;
-
-		formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		moment = formatter.format(new Date());
-
-		result = new ModelAndView("welcome/index");
-		result.addObject("name", name);
-		result.addObject("moment", moment);
-
-		return result;
+	public ModelAndView index()
+	{
+		return new ModelAndView("welcome/index");
 	}
 }

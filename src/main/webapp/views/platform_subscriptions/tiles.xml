@@ -12,6 +12,6 @@
 
 	<definition name="platform_subscriptions/new" extends="master.page">
 		<put-attribute name="title" value="New subscription" />
-		<put-attribute name="body" value="/views/platform_subscriptions/new.jsp" />
+		<put-attribute name="body" value="/views/platform_subscriptions/edit.jsp" />
 	</definition>
 </tiles-definitions>

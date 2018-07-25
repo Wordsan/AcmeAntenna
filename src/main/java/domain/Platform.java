@@ -6,6 +6,7 @@ import org.hibernate.search.indexes.interceptor.EntityIndexingInterceptor;
 import org.hibernate.search.indexes.interceptor.IndexingOverride;
 import org.hibernate.validator.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -24,11 +25,10 @@ extends DomainEntity
 {
     private String name;
     private String description;
-    private List<Satellite> satellites;
+    private List<Satellite> satellites = new ArrayList<>();
     private boolean deleted;
 
     @NotBlank
-    @NotNull
     @Field
     public String getName()
     {
@@ -36,7 +36,6 @@ extends DomainEntity
     }
 
     @NotBlank
-    @NotNull
     @Field
     @Lob
     public String getDescription()
@@ -68,6 +67,7 @@ extends DomainEntity
 
     public void setSatellites(List<Satellite> satellites)
     {
+        if (satellites == null) satellites = new ArrayList<>();
         this.satellites = satellites;
     }
 

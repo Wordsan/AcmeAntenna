@@ -1,0 +1,48 @@
+Hola Alejandro,
+
+En primer lugar, ¿por qué no han seguido ustedes los consejos del documento “On your tutorials”?... lo mismo al plantear la duda con alternativas de solución se les ocurre una alternativa mejor.
+
+
+
+Porque realmente, ya que no se encuentra ningún requisito para gestionar satélites y plataformas en el documento de requisitos, la pregunta a cuestionarse sería: ¿la lista de satélites y plataformas estaría precargada o se consultaría de un sistema externo?.
+
+
+
+La alternativa de que esté precargada no tendría demasiado sentido, pues de vez en cuando aparecen nuevos satélites, dejan de existir los más viejos y aparecen o desaparecen plataformas.  Consultar la lista de un sistema externo haciendo uso de un API REST podría ser un A+ si ustedes encuentran la fuente de datos apropiada. La gestión de esta lista podría ser responsabilidad del administrador, mediante un requisito com oel que sigue:
+
+ An actor who is authenticated as an administrator must be able to:
+
+1.       Manage the list of satellites and platforms, which involves listing, registering, editing, and deleting them
+
+Por tanto hagan ustedes la opción que consideren una vez evalúen pros y contras.
+
+Un Saludo.
+Carlos Müller.
+
+El sáb., 21 jul. 2018 a las 13:55, ALEJANDRO OJEDA GUTIERREZ (<aleojegut@alum.us.es>) escribió:
+
+    Buenos días,
+
+
+    Le escribo para consultarle una duda que tiene nuestro grupo sobre los requisitos de Acme-Antenna y lo que a nuestro parecer es un conflicto entre ellos. Me explico:
+
+    - Acme Antenna tiene Satélites y Plataformas. Se usan para mostrarlos en una lista, para realizar búsquedas sobre ellos, y para registrar Antenas, que requieren especificar el Satélite al que apuntan.
+
+    - En ningún lugar del documento de requisitos se especifica que se deban poder crear o modificar Satélites o Plataformas. No hay ningún requisito funcional que lo pida explicitamente y los requisitos de información pertinentes solo especifican lo que se debe guardar de cada Satélite o Plataforma, no dice ni insinúa que algún actor los cree.
+
+    En principio esto no es problema para desarrollar el proyecto porque se insertan desde el PopulateDatabase, y "en la practica" pueden ser datos fijos o que se inserten directamente desde un sistema externo.
+
+    - Los requisitos comunes a todos los proyectos piden un script SQL para crear la base de datos de pre-producción. En el documento de procedimientos de evaluación se dice explicitamente que el script no debe incluir ningún dato de ejemplo en la base de datos, excepto una cuenta de administrador y otros datos que el sistema necesite para funcionar, que entendemos es la configuración de la propia aplicación en aquellos proyectos que la necesiten (para guardar la URL del banner en Acme Explorer, por ejemplo).
+
+
+    El problema que vemos es que sin datos de Satélites y Plataformas, prácticamente la mitad de la aplicación no se podría usar, lo que no tiene mucho sentido.
+
+
+    Dicho todo esto, nuestra pregunta es la siguiente: ¿añadimos los datos de ejemplo de Satélites y Plataformas al script, en contra de lo que se pide en el documento de procedimientos de evaluación?, ¿o implementamos poder crear Plataformas y Satélites, añadiendo un requisito que no esta en el documento?
+
+
+    Cualquiera de las dos opciones nos sirve, pero ya que ambas se podrían interpretar como "en contra" de los requisitos del ejercicio, preferimos consultárselo antes.
+
+
+    Un saludo y gracias por su tiempo.
+

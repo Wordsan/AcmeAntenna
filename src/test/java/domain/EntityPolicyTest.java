@@ -90,9 +90,9 @@ public class EntityPolicyTest extends AbstractTest {
             result = false;
             System.err.println("Method " + entity.getSimpleName() + "." + method.getName() + " using EachNotBlank but not using EachNotNull. (unlike NotBlank, EachNotBlank does NOT enforce the not-null constraint)");
         }
-        if (method.isAnnotationPresent(NotBlank.class) && !method.isAnnotationPresent(NotNull.class)) {
+        if (method.isAnnotationPresent(NotBlank.class) && method.isAnnotationPresent(NotNull.class)) {
             result = false;
-            System.err.println("Method " + entity.getSimpleName() + "." + method.getName() + " using NotBlank but not using NotNull. (NotBlank already enforces the not-null constraint, but the lecturers might also want NotNull anyway)");
+            System.err.println("Method " + entity.getSimpleName() + "." + method.getName() + " using NotBlank and using NotNull. (NotBlank already enforces the not-null constraint, using both doubles the error message)");
         }
 
         return result;

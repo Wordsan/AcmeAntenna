@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,10 +36,10 @@ public class ActorController extends AbstractController {
         CheckUtils.checkAuthenticated();
 
         Actor actor = actorService.getPrincipal();
-        return editForm(actor, null, null);
+        return createEditModelAndView(actor, null, null);
     }
 
-    public ModelAndView editForm(
+    public ModelAndView createEditModelAndView(
             Actor actor,
             BindingResult binding,
             String globalErrorMessage
@@ -52,6 +51,7 @@ public class ActorController extends AbstractController {
                 globalErrorMessage
         );
 
+        result.addObject("formAction", "actors/update.do");
         result.addObject("actor", actor);
 
         return result;
@@ -66,27 +66,22 @@ public class ActorController extends AbstractController {
     {
         CheckUtils.checkAuthenticated();
 
-        ModelAndView result;
-        if (binding.hasErrors()) {
-            // Go back to edit form.
-            result = editForm(actor, binding, null);
-        } else {
+        String globalErrorMessage = null;
+
+        if (!binding.hasErrors()) {
             try {
-                // Commit to DB.
                 actor = actorService.updateOwnProfile(actor);
-                result = ControllerUtils.redirect("/welcome/index.do");
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+
+                return ControllerUtils.redirect("/welcome/index.do");
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
+                globalErrorMessage = "misc.commit.error";
 
-                result = editForm(actor,
-                                  binding,
-                                  "misc.commit.error"
-                );
             }
         }
 
-        return result;
+        return createEditModelAndView(actor, binding, globalErrorMessage);
     }
 
 
@@ -95,10 +90,10 @@ public class ActorController extends AbstractController {
     {
         CheckUtils.checkAuthenticated();
 
-        return editOwnPasswordForm(new EditOwnPasswordForm(), null, null);
+        return createEditOwnPasswordModelAndView(new EditOwnPasswordForm(), null, null);
     }
 
-    public ModelAndView editOwnPasswordForm(
+    public ModelAndView createEditOwnPasswordModelAndView(
             EditOwnPasswordForm form,
             BindingResult binding,
             String globalErrorMessage
@@ -124,32 +119,22 @@ public class ActorController extends AbstractController {
     {
         CheckUtils.checkAuthenticated();
 
-        ModelAndView result;
-        if (binding.hasErrors()) {
-            // Go back to edit form.
-            result = editOwnPasswordForm(form, binding, null);
-        } else {
+        String globalErrorMessage = null;
+
+        if (!binding.hasErrors()) {
             try {
-                // Commit to DB.
                 actorService.updateOwnPassword(getPrincipal(), form.getOldPassword(), form.getNewPassword());
-                result = ControllerUtils.redirect("/welcome/index.do");
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+
+                return ControllerUtils.redirect("/welcome/index.do");
             } catch (OldPasswordDoesntMatchException oops) {
                 binding.addError(new FieldError("form", "oldPassword", form.getOldPassword(), false, new String[]{"actors.error.oldPasswordDoesntMatch"}, null, null));
-                result = editOwnPasswordForm(form,
-                                             binding,
-                                             null
-                );
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-                result = editOwnPasswordForm(form,
-                                             binding,
-                                             "misc.commit.error"
-                );
+                globalErrorMessage = "misc.commit.error";
             }
         }
 
-        return result;
+        return createEditOwnPasswordModelAndView(form, binding, globalErrorMessage);
     }
 }

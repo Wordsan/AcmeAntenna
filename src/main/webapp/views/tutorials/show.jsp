@@ -6,6 +6,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
@@ -43,10 +44,10 @@
     <br/>
 
     <c:if test="${principal == tutorial.user}">
-        <app:redir-button code="misc.actions.edit" action="tutorials/edit.do?id=${tutorial.id}" />
+        <app:redir-button code="misc.actions.edit" action="tutorials/edit.do?id=${tutorial.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
     </c:if>
     <security:authorize access="hasRole('ADMINISTRATOR')">
-        <app:delete-button code="misc.actions.delete" action="tutorials/delete.do" id="${tutorial.id}" />
+        <app:delete-button code="misc.actions.delete" action="tutorials/delete.do?id=${tutorial.id}" />
     </security:authorize>
 </div>
 
@@ -98,7 +99,7 @@
                         </div>
                     </c:if>
                     <security:authorize access="hasRole('ADMINISTRATOR')">
-                        <app:delete-button code="misc.actions.delete" action="tutorials/deleteComment.do" id="${comment.id}" />
+                        <app:delete-button code="misc.actions.delete" action="tutorials/deleteComment.do?id=${comment.id}" />
                     </security:authorize>
                 </div>
             </div>

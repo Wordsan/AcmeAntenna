@@ -5,7 +5,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.util.UriUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletRequestWrapper;
@@ -36,7 +38,9 @@ public class JspViewUtils {
         HttpServletRequest request = getCurrentHttpRequest();
         StringBuffer sb = request.getRequestURL();
 
-        String queryString = request.getQueryString().replaceFirst("(^|&)" + Pattern.quote(paramName) + "($|=[^&]*)", "");
+        String queryString = request.getQueryString();
+        if (queryString == null) queryString = "";
+        queryString = queryString.replaceFirst("(^|&)" + Pattern.quote(paramName) + "($|=[^&]*)", "");
         sb.append("?");
         if (!queryString.isEmpty()) {
             sb.append(queryString);
@@ -51,6 +55,28 @@ public class JspViewUtils {
     public static String escapeJs(String textToEscape)
     {
         return StringEscapeUtils.escapeEcmaScript(textToEscape);
+    }
+    public static String escapeUrlParam(String textToEscape)
+    {
+        try {
+            return UriUtils.encodeQueryParam(textToEscape, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // UTF-8 is guaranteed by Java. This will never happen.
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String currentRelativeUrl()
+    {
+        HttpServletRequest request = getCurrentHttpRequest();
+        String relativePath = request.getServletPath();
+        if (relativePath.startsWith("/")) relativePath = relativePath.substring(1);
+        String queryString = request.getQueryString();
+        if (queryString == null) queryString = "";
+        if (!queryString.isEmpty()) {
+            relativePath += "?" + queryString;
+        }
+        return relativePath;
     }
 
 }

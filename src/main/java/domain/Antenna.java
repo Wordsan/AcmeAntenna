@@ -34,14 +34,12 @@ extends DomainEntity {
     }
 
     @NotBlank
-    @NotNull
     public String getSerialNumber()
     {
         return serialNumber;
     }
 
     @NotBlank
-    @NotNull
     public String getModel()
     {
         return model;

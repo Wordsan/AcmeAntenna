@@ -20,6 +20,7 @@ import security.Authority;
 import security.LoginService;
 import services.PlatformService;
 import services.PlatformSubscriptionService;
+import services.SatelliteService;
 import utilities.ApplicationConfig;
 import utilities.CheckUtils;
 import utilities.ControllerUtils;
@@ -28,6 +29,7 @@ import utilities.ControllerUtils;
 @RequestMapping("/platforms")
 public class PlatformController extends AbstractController {
 	@Autowired private PlatformService platformService;
+	@Autowired private SatelliteService satelliteService;
 	@Autowired private PlatformSubscriptionService platformSubscriptionService;
 
 	@RequestMapping("/index")
@@ -59,22 +61,20 @@ public class PlatformController extends AbstractController {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
 		Platform platform = new Platform();
-		return newForm(platform, null, null);
+		return createEditModelAndView("platforms/new", "platforms/create.do", null, null, platform);
 	}
 
-	private ModelAndView newForm(
-			Platform platform,
-			BindingResult binding,
-			String globalErrorMessage
-	)
+	private ModelAndView createEditModelAndView(String viewName, String formAction, String globalErrorMessage, BindingResult binding, Platform platform)
 	{
 		ModelAndView result = ControllerUtils.createViewWithBinding(
-				"platforms/new",
+				viewName,
 				binding,
 				globalErrorMessage
 		);
 
+		result.addObject("formAction", formAction);
 		result.addObject("platform", platform);
+		result.addObject("satellites", satelliteService.findAllForIndex());
 
 		return result;
 	}
@@ -87,24 +87,20 @@ public class PlatformController extends AbstractController {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-		ModelAndView result;
-		if (binding.hasErrors()) {
-			result = newForm(platform, binding, null);
-		} else {
+		String globalErrorMessage = null;
+		if (!binding.hasErrors()) {
 			try {
 				platform = platformService.create(platform);
-				result = ControllerUtils.redirect("/platforms/index.do");
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+
+				return ControllerUtils.redirect("/platforms/index.do");
 			} catch(Throwable oops) {
 				if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-				result = newForm(platform,
-								 binding,
-								 "misc.commit.error");
+				globalErrorMessage = "misc.commit.error";
 			}
 		}
 
-		return result;
+		return createEditModelAndView("platforms/new", "platforms/create.do", globalErrorMessage, binding, platform);
 	}
 
 	@RequestMapping("/edit")
@@ -113,25 +109,9 @@ public class PlatformController extends AbstractController {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
 		Platform platform = platformService.getByIdForEdit(id);
-		return editForm(platform, null, null);
+		return createEditModelAndView("platforms/edit", "platforms/update.do", null, null, platform);
 	}
 
-	private ModelAndView editForm(
-			Platform platform,
-			BindingResult binding,
-			String globalErrorMessage
-	)
-	{
-		ModelAndView result = ControllerUtils.createViewWithBinding(
-				"platforms/edit",
-				binding,
-				globalErrorMessage
-		);
-
-		result.addObject("platform", platform);
-
-		return result;
-	}
 
 	@RequestMapping(value="/update", method= RequestMethod.POST)
 	public ModelAndView update(
@@ -140,24 +120,20 @@ public class PlatformController extends AbstractController {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-		ModelAndView result;
-		if (binding.hasErrors()) {
-			result = editForm(platform, binding, null);
-		} else {
+		String globalErrorMessage = null;
+		if (!binding.hasErrors()) {
 			try {
 				platform = platformService.update(platform);
-				result = ControllerUtils.redirect("/platforms/index.do");
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+
+				return ControllerUtils.redirect("/platforms/index.do");
 			} catch(Throwable oops) {
 				if (ApplicationConfig.DEBUG) oops.printStackTrace();
-
-				result = newForm(platform,
-								 binding,
-								 "misc.commit.error");
+				globalErrorMessage = "misc.commit.error";
 			}
 		}
 
-		return result;
+		return createEditModelAndView("platforms/edit", "platforms/update.do", globalErrorMessage, binding, platform);
 	}
 
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
@@ -165,9 +141,14 @@ public class PlatformController extends AbstractController {
 	{
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-		platformService.delete(id);
 		ModelAndView result = ControllerUtils.redirect("/platforms/index.do");
-		redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+		try {
+			platformService.delete(id);
+			redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+		} catch (Throwable oops) {
+			if (ApplicationConfig.DEBUG) oops.printStackTrace();
+			redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
+		}
 		return result;
 	}
 }
