@@ -57,7 +57,7 @@
     <h3><spring:message code="tutorials.postAComment" /></h3>
 
     <spring:message code="tutorial_comments.postConfirm" htmlEscape="false" javaScriptEscape="true" var="confirmMessage" />
-    <form:form action="tutorials/createComment.do" modelAttribute="tutorialComment" onsubmit="return confirm('${confirmMessage}')">
+    <form:form action="tutorials/create_comment.do" modelAttribute="tutorialComment" onsubmit="return confirm('${confirmMessage}')">
         <form:hidden path="user" />
         <form:hidden path="tutorial" />
         <app:textbox path="title" code="tutorial_comments.title" />
@@ -99,7 +99,7 @@
                         </div>
                     </c:if>
                     <security:authorize access="hasRole('ADMINISTRATOR')">
-                        <app:delete-button code="misc.actions.delete" action="tutorials/deleteComment.do?id=${comment.id}" />
+                        <app:delete-button code="misc.actions.delete" action="tutorials/delete_comment.do?id=${comment.id}" />
                     </security:authorize>
                 </div>
             </div>

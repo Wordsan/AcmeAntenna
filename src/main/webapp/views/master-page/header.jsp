@@ -46,7 +46,7 @@
                 <ul>
                     <li class="arrow"></li>
                     <li><a href="platforms/index.do"><spring:message code="master.page.platforms.list" /> </a></li>
-                    <li><a href="platform_subscriptions/index.do"><spring:message code="master.page.platforms.mySubscriptions" /> </a></li>
+                    <li><a href="platform_subscriptions/index.do"><spring:message code="master.page.platforms.my_subscriptions" /> </a></li>
                 </ul>
             </li>
         </security:authorize>
@@ -71,7 +71,7 @@
         </li>
 
         <security:authorize access="hasRole('ADMINISTRATOR')">
-            <li><a class="fNiv" href="administrators/dashboard.do"><spring:message code="master.page.administratorDashboard" /></a></li>
+            <li><a class="fNiv" href="administrators/dashboard.do"><spring:message code="master.page.administrator_dashboard" /></a></li>
         </security:authorize>
 
 		<security:authorize access="isAnonymous()">
@@ -92,7 +92,7 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="actors/editOwnPassword.do"><spring:message code="master.page.actor.editOwnPassword" /> </a></li>
+					<li><a href="actors/edit_own_password.do"><spring:message code="master.page.actor.edit_own_password" /> </a></li>
                     <li><a href="actors/edit.do"><spring:message code="master.page.actor.edit" /> </a></li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>

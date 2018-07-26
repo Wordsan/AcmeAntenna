@@ -148,7 +148,7 @@ public class TutorialController extends AbstractController {
         return result;
     }
 
-    @RequestMapping(value="/createComment", method= RequestMethod.POST)
+    @RequestMapping(value="/create_comment", method= RequestMethod.POST)
     public ModelAndView createComment(@ModelAttribute("tutorialComment") @Valid TutorialComment tutorialComment, BindingResult binding, RedirectAttributes redir)
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
@@ -172,7 +172,7 @@ public class TutorialController extends AbstractController {
         return result;
     }
 
-    @RequestMapping(value="/deleteComment", method=RequestMethod.POST)
+    @RequestMapping(value="/delete_comment", method=RequestMethod.POST)
     public ModelAndView deleteComment(@RequestParam("id") int id, RedirectAttributes redir)
     {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);

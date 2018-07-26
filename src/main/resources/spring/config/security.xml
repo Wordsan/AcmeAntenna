@@ -42,8 +42,56 @@
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" />
 
 		<!-- FIXME: For debugging/testing. -->
-		<security:intercept-url pattern="/**" access="permitAll" />
-		<!-- <security:intercept-url pattern="/**" access="hasRole('NONE')" /> -->
+		<!-- <security:intercept-url pattern="/**" access="permitAll" /> -->
+
+		<security:intercept-url pattern="/satellites/new.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/satellites/update.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/satellites/delete.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/satellites/edit.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/satellites/show.do" access="permitAll" />
+		<security:intercept-url pattern="/satellites/index.do" access="permitAll" />
+
+		<security:intercept-url pattern="/platforms/new.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/platforms/update.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/platforms/delete.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/platforms/edit.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/platforms/show.do" access="permitAll" />
+		<security:intercept-url pattern="/platforms/index.do" access="permitAll" />
+
+		<security:intercept-url pattern="/actors/edit.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/actors/update.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/actors/edit_own_password.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/actors/update_own_password.do" access="isAuthenticated()" />
+
+		<security:intercept-url pattern="/administrators/dashboard.do" access="hasRole('ADMINISTRATOR')" />
+
+		<security:intercept-url pattern="/antennas/index.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/antennas/show.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/antennas/new.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/antennas/create.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/antennas/edit.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/antennas/update.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/antennas/delete.do" access="hasRole('USER')" />
+
+		<security:intercept-url pattern="/platform_subscriptions/index.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/platform_subscriptions/new.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/platform_subscriptions/create.do" access="hasRole('USER')" />
+
+		<security:intercept-url pattern="/tutorials/index.do" access="permitAll" />
+		<security:intercept-url pattern="/tutorials/show.do" access="permitAll" />
+		<security:intercept-url pattern="/tutorials/new.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/tutorials/create.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/tutorials/edit.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/tutorials/update.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/tutorials/create_comment.do" access="hasRole('USER')" />
+
+		<security:intercept-url pattern="/tutorials/delete.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/tutorials/delete_comment.do" access="hasRole('ADMINISTRATOR')" />
+
+		<security:intercept-url pattern="/users/new.do" access="!isAuthenticated()" />
+		<security:intercept-url pattern="/users/create.do" access="!isAuthenticated()" />
+
+		<security:intercept-url pattern="/**" access="denyAll" />
 
 		<security:form-login 
 			login-page="/security/login.do"

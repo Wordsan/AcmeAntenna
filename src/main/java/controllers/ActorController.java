@@ -85,7 +85,7 @@ public class ActorController extends AbstractController {
     }
 
 
-    @RequestMapping("/editOwnPassword")
+    @RequestMapping("/edit_own_password")
     public ModelAndView editOwnPassword()
     {
         CheckUtils.checkAuthenticated();
@@ -100,7 +100,7 @@ public class ActorController extends AbstractController {
     )
     {
         ModelAndView result = ControllerUtils.createViewWithBinding(
-                "actors/editOwnPassword",
+                "actors/edit_own_password",
                 binding,
                 globalErrorMessage
         );
@@ -110,7 +110,7 @@ public class ActorController extends AbstractController {
         return result;
     }
 
-    @RequestMapping(value = "/updateOwnPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/update_own_password", method = RequestMethod.POST)
     public ModelAndView updateOwnPassword(
             @ModelAttribute("form") @Valid EditOwnPasswordForm form,
             BindingResult binding,
