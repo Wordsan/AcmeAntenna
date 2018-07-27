@@ -111,6 +111,7 @@ public class ExportPopulateDatabase {
 	{
 		EclipseConsole.fix();
 		LogManager.getLogger("org.hibernate").setLevel(Level.ERROR);
+		LogManager.getLogger("cz.jirutka.validator").setLevel(Level.ERROR);
 
 		initializeXml();
 		initializeDatabase();
@@ -259,8 +260,15 @@ public class ExportPopulateDatabase {
 				@Override
 				public void execute(Connection connection) throws SQLException
 				{
-					Statement stmt = connection.createStatement();
-					stmt.execute("DELETE FROM " + table.getQuotedName());
+					Statement stmt = null;
+					try {
+						stmt = connection.createStatement();
+						stmt.execute("DELETE FROM " + table.getQuotedName());
+					} finally {
+						try {
+							if (stmt != null) stmt.close();
+						} catch(Exception ignored) {}
+					}
 				}
 			});
 		}

@@ -39,6 +39,7 @@ public class PopulateDatabase {
 
 		EclipseConsole.fix();
 		LogManager.getLogger("org.hibernate").setLevel(Level.OFF);
+		LogManager.getLogger("cz.jirutka.validator").setLevel(Level.ERROR);
 		databaseUtil = null;
 
 		try {

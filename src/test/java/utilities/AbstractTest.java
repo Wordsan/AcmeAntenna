@@ -75,6 +75,7 @@ public abstract class AbstractTest {
 	public AbstractTest() {
 		EclipseConsole.fix();
 		LogManager.getLogger("org.hibernate").setLevel(Level.OFF);
+		LogManager.getLogger("cz.jirutka.validator").setLevel(Level.OFF);
 
 		this.transactionDefinition = new DefaultTransactionDefinition();
 		this.transactionDefinition.setName("TestTransaction");

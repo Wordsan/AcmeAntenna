@@ -131,6 +131,7 @@
                 <ref bean="antenna_2"/>
                 <ref bean="antenna_7"/>
                 <ref bean="antenna_8"/>
+                <ref bean="antenna_10"/>
             </list>
         </property>
         <property name="tutorials">
@@ -980,6 +981,21 @@
         <property name="signalQuality" value="1.0"/>
         <property name="satellite">
             <ref bean="satellite_4"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_10">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="serialNumber" value="X001"/>
+        <property name="model" value="Model 4"/>
+        <property name="positionLongitude" value="0.0"/>
+        <property name="positionLatitude" value="0.0"/>
+        <property name="rotationAzimuth" value="0.0"/>
+        <property name="rotationElevation" value="0.0"/>
+        <property name="signalQuality" value="100.0"/>
+        <property name="satellite">
+            <ref bean="satellite_2"/>
         </property>
     </bean>
 </beans>
