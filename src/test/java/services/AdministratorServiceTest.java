@@ -80,20 +80,26 @@ public class AdministratorServiceTest extends AbstractTest {
 
         // Call the method.
         Object actual = method.invoke(administratorService);
-        boolean ok = false;
-        if (actual.equals(expected)) ok = true;
-        if (!ok && printObject(actual).equals(expected)) ok = true;
-        if (!ok && expected instanceof Number && actual instanceof Number && Math.round(1000 * (double) expected) == Math.round(1000 * (double) actual)) ok = true;
+        boolean ok = dashboardItemEqual(expected, actual);
         if (DASHBOARD_LOGGING_MODE) {
             // For development use only.
-            System.err.println(String.format("%4s %-40s %45s %45s", ok ? "OK" : "FAIL", methodName, printObject(expected), printObject(actual)));
+            System.err.println(String.format("%4s %-40s %45s %45s", ok ? "OK" : "FAIL", methodName, printDashboardItem(expected), printDashboardItem(actual)));
         } else {
             // Ensure it returns the expected value.
             Assert.isTrue(ok);
         }
     }
 
-    private Object printObject(Object object)
+    private boolean dashboardItemEqual(Object expected, Object actual)
+    {
+        boolean ok = false;
+        if (actual.equals(expected)) ok = true;
+        if (!ok && printDashboardItem(actual).equals(expected)) ok = true;
+        if (!ok && expected instanceof Number && actual instanceof Number && Math.round(1000 * (double) expected) == Math.round(1000 * (double) actual)) ok = true;
+        return ok;
+    }
+
+    private Object printDashboardItem(Object object)
     {
         if (object instanceof Double) {
             return String.format("%.3f", Math.round(1000 * (Double) object) / 1000.0);
@@ -110,7 +116,7 @@ public class AdministratorServiceTest extends AbstractTest {
                 } else {
                     sb.append(", ");
                 }
-                sb.append(printObject(child));
+                sb.append(printDashboardItem(child));
             }
             sb.append("]");
             return sb.toString();
