@@ -10,13 +10,16 @@
 
 package security;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.security.core.GrantedAuthority;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
@@ -36,6 +39,8 @@ public class Authority implements GrantedAuthority {
 
 	public static final String	ADMINISTRATOR	= "ADMINISTRATOR";
 	public static final String	USER			= "USER";
+	public static final String	HANDYWORKER		= "HANDYWORKER";
+	public static final String	AGENT			= "AGENT";
 
 	// Attributes -------------------------------------------------------------
 
@@ -43,7 +48,7 @@ public class Authority implements GrantedAuthority {
 
 
 	@NotBlank
-	@Pattern(regexp = "^" + Authority.ADMINISTRATOR + "|" + Authority.USER + "$")
+	@Pattern(regexp = "^" + Authority.ADMINISTRATOR + "|" + Authority.USER + "|" + Authority.HANDYWORKER + "|" + Authority.AGENT + "$")
 	@Override
 	public String getAuthority() {
 		return this.authority;
@@ -51,6 +56,31 @@ public class Authority implements GrantedAuthority {
 
 	public void setAuthority(final String authority) {
 		this.authority = authority;
+	}
+
+	public static Collection<Authority> listAuthorities() {
+		Collection<Authority> result;
+		Authority authority;
+
+		result = new ArrayList<Authority>();
+
+		authority = new Authority();
+		authority.setAuthority(Authority.ADMINISTRATOR);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.USER);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.HANDYWORKER);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.AGENT);
+		result.add(authority);
+
+		return result;
 	}
 
 	// Object interface -------------------------------------------------------

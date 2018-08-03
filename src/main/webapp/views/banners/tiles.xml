@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="banners/list" extends="master.page">
+		<put-attribute name="title" value="Banners list" />
+		<put-attribute name="body" value="/views/banners/list.jsp" />
+	</definition> 
+	
+	<definition name="banners/create" extends="master.page">
+		<put-attribute name="title" value="Make banner" />
+		<put-attribute name="body" value="/views/banners/create.jsp" />
+	</definition>
+	
+	<definition name="banners/delete" extends="master.page">
+		<put-attribute name="title" value="Delete banner" />
+		<put-attribute name="body" value="/views/banners/delete.jsp" />
+	</definition>
+	
+</tiles-definitions>

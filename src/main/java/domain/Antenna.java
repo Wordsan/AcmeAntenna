@@ -1,157 +1,150 @@
+
 package domain;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
+
 @Entity
 @Access(AccessType.PROPERTY)
-public class Antenna
-extends DomainEntity {
-    private User user;
-    private String serialNumber;
-    private String model;
-    private double positionLongitude;
-    private double positionLatitude;
-    private double rotationAzimuth;
-    private double rotationElevation;
-    private double signalQuality;
-    private Satellite satellite;
+public class Antenna extends DomainEntity {
 
-    @Valid
-    @ManyToOne(optional = false)
-    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
-    public User getUser()
-    {
-        return user;
-    }
+	private User							user;
+	private String							serialNumber;
+	private String							model;
+	private double							positionLongitude;
+	private double							positionLatitude;
+	private double							rotationAzimuth;
+	private double							rotationElevation;
+	private double							signalQuality;
+	private Satellite						satellite;
+	private Collection<MaintenanceRequest>	requests;
 
-    @NotBlank
-    public String getSerialNumber()
-    {
-        return serialNumber;
-    }
 
-    @NotBlank
-    public String getModel()
-    {
-        return model;
-    }
+	@Valid
+	@ManyToOne(optional = false)
+	@NotNull
+	// Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+	public User getUser() {
+		return this.user;
+	}
 
-    /**
-     * Longitude angle of the position of the antenna.
-     *
-     * Positive longitude indicates EAST, negative indicates WEST.
-     */
-    @Range(min = -180, max = 180)
-    public double getPositionLongitude()
-    {
-        return positionLongitude;
-    }
+	@NotBlank
+	public String getSerialNumber() {
+		return this.serialNumber;
+	}
 
-    /**
-     * Latitude angle of the position of the antenna.
-     *
-     * Positive latitude indicates NORTH, negative indicates SOUTH.
-     */
-    @Range(min = -90, max = 90)
-    public double getPositionLatitude()
-    {
-        return positionLatitude;
-    }
+	@NotBlank
+	public String getModel() {
+		return this.model;
+	}
 
-    @Transient
-    public String getPositionForDisplay()
-    {
-        return String.format("%.4f°%s %.4f°%s",
-                      Math.abs(getPositionLatitude()),
-                      getPositionLatitude() > 0 ? "N" : "S",
-                      Math.abs(getPositionLongitude()),
-                      getPositionLongitude() > 0 ? "E" : "W"
-                      );
-    }
+	/**
+	 * Longitude angle of the position of the antenna.
+	 * 
+	 * Positive longitude indicates EAST, negative indicates WEST.
+	 */
+	@Range(min = -180, max = 180)
+	public double getPositionLongitude() {
+		return this.positionLongitude;
+	}
 
-    /**
-     * Angle indicating the horizontal rotation of the satellite, with 0 pointing at north and increasing angles indicating clockwise rotation.
-     */
-    @Range(min = 0, max = 360)
-    public double getRotationAzimuth()
-    {
-        return rotationAzimuth;
-    }
+	/**
+	 * Latitude angle of the position of the antenna.
+	 * 
+	 * Positive latitude indicates NORTH, negative indicates SOUTH.
+	 */
+	@Range(min = -90, max = 90)
+	public double getPositionLatitude() {
+		return this.positionLatitude;
+	}
 
-    /**
-     * Angle indicating the vertical rotation of the satellite, with 0 pointing directly forward and increasing angles indicating upwards rotation.
-     */
-    @Range(min = 0, max = 90)
-    public double getRotationElevation()
-    {
-        return rotationElevation;
-    }
+	@Transient
+	public String getPositionForDisplay() {
+		return String.format("%.4f°%s %.4f°%s", Math.abs(this.getPositionLatitude()), this.getPositionLatitude() > 0 ? "N" : "S", Math.abs(this.getPositionLongitude()), this.getPositionLongitude() > 0 ? "E" : "W");
+	}
 
-    @Range(min = 0, max = 100)
-    public double getSignalQuality()
-    {
-        return signalQuality;
-    }
+	/**
+	 * Angle indicating the horizontal rotation of the satellite, with 0 pointing at north and increasing angles indicating clockwise rotation.
+	 */
+	@Range(min = 0, max = 360)
+	public double getRotationAzimuth() {
+		return this.rotationAzimuth;
+	}
 
-    @Valid
-    @ManyToOne(optional = false)
-    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
-    public Satellite getSatellite()
-    {
-        return satellite;
-    }
+	/**
+	 * Angle indicating the vertical rotation of the satellite, with 0 pointing directly forward and increasing angles indicating upwards rotation.
+	 */
+	@Range(min = 0, max = 90)
+	public double getRotationElevation() {
+		return this.rotationElevation;
+	}
 
-    public void setUser(User user)
-    {
-        this.user = user;
-    }
+	@Range(min = 0, max = 100)
+	public double getSignalQuality() {
+		return this.signalQuality;
+	}
 
-    public void setSerialNumber(String serialNumber)
-    {
-        this.serialNumber = serialNumber;
-    }
+	@Valid
+	@ManyToOne(optional = false)
+	@NotNull
+	// Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+	public Satellite getSatellite() {
+		return this.satellite;
+	}
 
-    public void setModel(String model)
-    {
-        this.model = model;
-    }
+	public void setUser(final User user) {
+		this.user = user;
+	}
 
-    public void setPositionLongitude(double positionLongitude)
-    {
-        this.positionLongitude = positionLongitude;
-    }
+	public void setSerialNumber(final String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
 
-    public void setPositionLatitude(double positionLatitude)
-    {
-        this.positionLatitude = positionLatitude;
-    }
+	public void setModel(final String model) {
+		this.model = model;
+	}
 
-    public void setRotationAzimuth(double rotationAzimuth)
-    {
-        this.rotationAzimuth = rotationAzimuth;
-    }
+	public void setPositionLongitude(final double positionLongitude) {
+		this.positionLongitude = positionLongitude;
+	}
 
-    public void setRotationElevation(double rotationElevation)
-    {
-        this.rotationElevation = rotationElevation;
-    }
+	public void setPositionLatitude(final double positionLatitude) {
+		this.positionLatitude = positionLatitude;
+	}
 
-    public void setSignalQuality(double signalQuality)
-    {
-        this.signalQuality = signalQuality;
-    }
+	public void setRotationAzimuth(final double rotationAzimuth) {
+		this.rotationAzimuth = rotationAzimuth;
+	}
 
-    public void setSatellite(Satellite satellite)
-    {
-        this.satellite = satellite;
-    }
+	public void setRotationElevation(final double rotationElevation) {
+		this.rotationElevation = rotationElevation;
+	}
+
+	public void setSignalQuality(final double signalQuality) {
+		this.signalQuality = signalQuality;
+	}
+
+	public void setSatellite(final Satellite satellite) {
+		this.satellite = satellite;
+	}
+
+	@OneToMany(mappedBy = "antenna")
+	public Collection<MaintenanceRequest> getRequests() {
+		return this.requests;
+	}
+
+	public void setRequests(final Collection<MaintenanceRequest> requests) {
+		this.requests = requests;
+	}
 }

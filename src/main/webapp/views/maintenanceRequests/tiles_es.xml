@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="maintenanceRequests/list" extends="master.page">
+		<put-attribute name="title" value="Lista de peticiones" />
+		<put-attribute name="body" value="/views/maintenanceRequests/list.jsp" />
+	</definition>
+	
+	<definition name="maintenanceRequests/create" extends="master.page">
+		<put-attribute name="title" value="Hacer peticion" />
+		<put-attribute name="body" value="/views/maintenanceRequests/create.jsp" />
+	</definition>
+	
+	<definition name="maintenanceRequests/service" extends="master.page">
+		<put-attribute name="title" value="Resolver peticion" />
+		<put-attribute name="body" value="/views/maintenanceRequests/service.jsp" />
+	</definition>
+	
+	
+</tiles-definitions>

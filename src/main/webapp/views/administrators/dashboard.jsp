@@ -51,6 +51,31 @@
 	<span class="content"><c:out value="${stdDevCommentCountPerTutorial}" /></span>
 </div>
 
+<div>
+	<span class="label"><spring:message code="administrators.avgRequestCountPerUser" />: </span>
+	<span class="content"><c:out value="${avgRequestCountPerUser}" /></span>
+</div>
+
+<div>
+	<span class="label"><spring:message code="administrators.stdDevRequestCountPerUser" />: </span>
+	<span class="content"><c:out value="${stdDevRequestCountPerUser}" /></span>
+</div>
+
+<div>
+	<span class="label"><spring:message code="administrators.avgRatioServicedRequestsPerUser" />: </span>
+	<span class="content"><c:out value="${avgRatioServicedRequestsPerUser}" /></span>
+</div>
+
+<div>
+	<span class="label"><spring:message code="administrators.avgRatioServicedRequestsPerHandyworker" />: </span>
+	<span class="content"><c:out value="${avgRatioServicedRequestsPerHandyworker}" /></span>
+</div>
+
+<div>
+	<span class="label"><spring:message code="administrators.avgBannerCountPerAgent" />: </span>
+	<span class="content"><c:out value="${avgBannerCountPerAgent}" /></span>
+</div>
+
 <h3><spring:message code="administrators.antennaCountPerModel" /></h3>
 
 <div>
@@ -70,6 +95,27 @@
     <display:column value="${antenna[1]}" titleKey="administrators.antennaCount" escapeXml="true" sortable="true" />
 </display:table>
 </div>
+
+
+
+
+<h3><spring:message code="administrators.mostPopularAgents" /></h3>
+
+<div>
+<display:table name="mostPopularAgents"
+	       id="banner"
+	       pagesize="${displayTagPageSize}"
+	       sort="list"
+	       requestURI="administrators/dashboard.do">
+
+    <display:column value="${banner[0]}" titleKey="agents.name" escapeXml="true" sortable="true" />
+    <display:column value="${banner[1]}" titleKey="administrators.bannerCount" escapeXml="true" sortable="true" />
+</display:table>
+</div>
+
+
+
+
 
 <h3><spring:message code="administrators.topTutorialContributors" /></h3>
 

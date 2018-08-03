@@ -10,7 +10,11 @@
 		<put-attribute name="body" value="/views/actors/edit.jsp" />
 	</definition>
 	<definition name="actors/edit_own_password" extends="master.page">
-		<put-attribute name="title" value="Edit my password" />
+		<put-attribute name="title" value="Editar mi contraseña" />
 		<put-attribute name="body" value="/views/actors/edit_own_password.jsp" />
+	</definition>
+	<definition name="actors/list" extends="master.page">
+		<put-attribute name="title" value="Lista de actores" />
+		<put-attribute name="body" value="/views/actors/list.jsp" />
 	</definition>
 </tiles-definitions>

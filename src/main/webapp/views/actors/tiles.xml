@@ -13,4 +13,8 @@
 		<put-attribute name="title" value="Edit my password" />
 		<put-attribute name="body" value="/views/actors/edit_own_password.jsp" />
 	</definition>
+	<definition name="actors/list" extends="master.page">
+		<put-attribute name="title" value="Actors list" />
+		<put-attribute name="body" value="/views/actors/list.jsp" />
+	</definition>
 </tiles-definitions>

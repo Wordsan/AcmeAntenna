@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
     <bean class="security.UserAccount" id="userAccount_admin">
         <property name="username" value="admin"/>
         <property name="password" value="21232f297a57a5a743894a0e4a801fc3"/>
@@ -66,6 +67,72 @@
             </list>
         </property>
     </bean>
+    <bean class="security.UserAccount" id="userAccount_handy1">
+        <property name="username" value="handy1"/>
+        <property name="password" value="3b6c343a81c39cad30afdeea96c677c0"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="HANDYWORKER"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+     <bean class="security.UserAccount" id="userAccount_handy2">
+        <property name="username" value="handy2"/>
+        <property name="password" value="63f19f866943da7a621905c7518a8ba9"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="HANDYWORKER"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <bean class="security.UserAccount" id="userAccount_agent1">
+        <property name="username" value="agent1"/>
+        <property name="password" value="83a87fd756ab57199c0bb6d5e11168cb"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="AGENT"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <bean class="security.UserAccount" id="userAccount_agent2">
+        <property name="username" value="agent2"/>
+        <property name="password" value="b1a4a6b01cc297d4677c4ca6656e14d7"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="AGENT"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+     <bean class="security.UserAccount" id="userAccount_agent3">
+        <property name="username" value="agent3"/>
+        <property name="password" value="6f097a447415dd5030d579a9051165f0"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="AGENT"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <bean class="security.UserAccount" id="userAccount_agent4">
+        <property name="username" value="agent4"/>
+        <property name="password" value="0d7745d57a8ae3fcacdd9fe6e54cac8a"/>
+        <property name="authorities">
+            <list value-type="security.Authority">
+                <bean class="security.Authority">
+                    <property name="authority" value="AGENT"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
     <bean class="domain.Satellite" id="satellite_1">
         <property name="name" value="METEOSAT"/>
         <property name="description" value="This is satellite 1"/>
@@ -124,6 +191,7 @@
         </property>
         <property name="deleted" value="true"/>
     </bean>
+    
     <bean class="domain.User" id="user_user1">
         <property name="antennas">
             <list>
@@ -159,7 +227,15 @@
         <property name="userAccount">
             <ref bean="userAccount_user1"/>
         </property>
+        <property name="requests">
+        	<list>
+        		<ref bean="maintenanceRequest_1"/>
+        		<ref bean="maintenanceRequest_2"/>
+        	</list>
+        </property>
+        <property name="banned" value="false"/>
     </bean>
+    
     <bean class="domain.User" id="user_user2">
         <property name="antennas">
             <list>
@@ -191,6 +267,13 @@
         <property name="userAccount">
             <ref bean="userAccount_user2"/>
         </property>
+        <property name="requests">
+        	<list>
+        		<ref bean="maintenanceRequest_3"/>
+        		<ref bean="maintenanceRequest_4"/>
+        	</list>
+        </property>
+        <property name="banned" value="false"/>
     </bean>
     <bean class="domain.User" id="user_user3">
         <property name="antennas">
@@ -221,6 +304,7 @@
         <property name="userAccount">
             <ref bean="userAccount_user3"/>
         </property>
+        <property name="banned" value="true"/>
     </bean>
     <bean class="domain.Administrator" id="administrator_admin">
         <property name="name" value="Admin 1"/>
@@ -236,6 +320,7 @@
         <property name="userAccount">
             <ref bean="userAccount_admin"/>
         </property>
+        <property name="banned" value="false"/>
     </bean>
     <bean class="domain.Administrator" id="administrator_admin2">
         <property name="name" value="Admin 2"/>
@@ -251,6 +336,7 @@
         <property name="userAccount">
             <ref bean="userAccount_admin2"/>
         </property>
+        <property name="banned" value="false"/>
     </bean>
     <bean class="domain.Administrator" id="administrator_admin3">
         <property name="name" value="Admin 3"/>
@@ -266,6 +352,7 @@
         <property name="userAccount">
             <ref bean="userAccount_admin3"/>
         </property>
+        <property name="banned" value="true"/>
     </bean>
     <bean class="domain.Tutorial" id="tutorial_1">
         <property name="user">
@@ -862,6 +949,11 @@
         <property name="satellite">
             <ref bean="satellite_1"/>
         </property>
+        <property name="requests">
+        	<list>
+        		<ref bean="maintenanceRequest_1"/>
+        	</list>
+        </property>
     </bean>
     <bean class="domain.Antenna" id="antenna_2">
         <property name="user">
@@ -892,6 +984,11 @@
         <property name="satellite">
             <ref bean="satellite_3"/>
         </property>
+        <property name="requests">
+        	<list>
+        		<ref bean="maintenanceRequest_3"/>
+        	</list>
+        </property>
     </bean>
     <bean class="domain.Antenna" id="antenna_4">
         <property name="user">
@@ -906,6 +1003,11 @@
         <property name="signalQuality" value="1.0"/>
         <property name="satellite">
             <ref bean="satellite_4"/>
+        </property>
+        <property name="requests">
+        	<list>
+        		<ref bean="maintenanceRequest_4"/>
+        	</list>
         </property>
     </bean>
     <bean class="domain.Antenna" id="antenna_5">
@@ -997,5 +1099,241 @@
         <property name="satellite">
             <ref bean="satellite_2"/>
         </property>
+        <property name="requests">
+        	<list>
+        		<ref bean="maintenanceRequest_2"/>
+        	</list>
+        </property>
     </bean>
+    
+    <!-- Handyworkers -->
+    
+    <bean class="domain.Handyworker" id="handyworker_handy1">
+    	<property name="name" value="Handyworker 1"/>
+    	<property name="surname" value="Handyworker1Surname"/>
+    	<property name="email" value="handyworker1@handy.com"/>
+    	<property name="pictureUrl">
+            <null/>
+        </property>
+    	<property name="phoneNumber" value="+11686845679"/>
+    	<property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount" ref="userAccount_handy1"/>
+    	<property name="antennaModels">
+    		<list value-type="java.lang.String">
+    			<value>Model 1</value>
+    			<value>Model 4</value>
+    		</list>
+    	</property>
+    	<property name="requests">
+    		<list>
+    			<ref bean="maintenanceRequest_1"/>
+    			<ref bean="maintenanceRequest_2"/>
+    		</list>
+    	</property>
+    	<property name="banned" value="false"/>
+    </bean>
+    
+    <bean class="domain.Handyworker" id="handyworker_handy2">
+    	<property name="name" value="Handyworker 2"/>
+    	<property name="surname" value="Handyworker2Surname"/>
+    	<property name="email" value="handyworker2@handy.com"/>
+    	<property name="pictureUrl">
+            <null/>
+        </property>
+    	<property name="phoneNumber" value="+11686845678"/>
+    	<property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount" ref="userAccount_handy2"/>
+    	<property name="antennaModels">
+    		<list value-type="java.lang.String">
+    			<value>Model 1</value>
+    			<value>Model 3</value>
+    			<value>Model 2</value>
+    		</list>
+    	</property>
+    	<property name="requests">
+    		<list>
+    			<ref bean="maintenanceRequest_3"/>
+    			<ref bean="maintenanceRequest_4"/>
+    		</list>
+    	</property>
+    	<property name="banned" value="false"/>
+    </bean>
+    
+    <!-- Maintenance requests -->
+    
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_1">
+    	<property name="user" ref="user_user1"/>
+    	<property name="handyworker" ref="handyworker_handy1"/>
+    	<property name="creditCard" value="3566002020360505"/>
+    	<property name="creationTime" value="2018/07/24"/>
+    	<property name="description" value="This is the description of request 1"/>
+    	<property name="antenna" ref="antenna_1"/>
+    	<property name="doneTime" value="2017/07/26"/>
+    	<property name="resultsDescription" value="This is the description of 
+    	the results of request 1"/>
+    </bean>
+    
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_2">
+    	<property name="user" ref="user_user1"/>
+    	<property name="handyworker" ref="handyworker_handy1"/>
+    	<property name="creditCard" value="3566002020360505"/>
+    	<property name="creationTime" value="2018/07/26"/>
+    	<property name="description" value="This is the description of request 2"/>
+    	<property name="antenna" ref="antenna_10"/>
+    </bean>
+    
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_3">
+    	<property name="user" ref="user_user2"/>
+    	<property name="handyworker" ref="handyworker_handy2"/>
+    	<property name="creditCard" value="5105105105105100"/>
+    	<property name="creationTime" value="2018/07/25"/>
+    	<property name="description" value="This is the description of request 3"/>
+    	<property name="antenna" ref="antenna_3"/>
+    </bean>
+    
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_4">
+    	<property name="user" ref="user_user2"/>
+    	<property name="handyworker" ref="handyworker_handy2"/>
+    	<property name="creditCard" value="5105105105105100"/>
+    	<property name="creationTime" value="2018/07/28"/>
+    	<property name="description" value="This is the description of request 4"/>
+    	<property name="antenna" ref="antenna_4"/>
+    	<property name="doneTime" value="2017/07/29"/>
+    	<property name="resultsDescription" value="This is the description of 
+    	the results of request 4"/>
+    </bean>
+    
+    <!-- Agents -->
+    
+    <bean class="domain.Agent" id="agent_agent1">
+    	<property name="name" value="Agent 1"/>
+    	<property name="surname" value="Agent1Surname"/>
+    	<property name="email" value="agent1@agent.com"/>
+    	<property name="pictureUrl">
+            <null/>
+        </property>
+    	<property name="phoneNumber" value="+11682374679"/>
+    	<property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount" ref="userAccount_agent1"/>
+    	<property name="banned" value="false"/>
+    	<property name="banners">
+    		<list>
+    			<ref bean="banner_1"/>
+    			<ref bean="banner_2"/>
+    			<ref bean="banner_3"/>
+    		</list>
+    	</property>
+    </bean>
+    
+    <bean class="domain.Agent" id="agent_agent2">
+    	<property name="name" value="Agent 2"/>
+    	<property name="surname" value="Agent2Surname"/>
+    	<property name="email" value="agent2@agent.com"/>
+    	<property name="pictureUrl">
+            <null/>
+        </property>
+    	<property name="phoneNumber" value="+11682371234"/>
+    	<property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount" ref="userAccount_agent2"/>
+    	<property name="banned" value="false"/>
+    	<property name="banners">
+    		<list>
+    			<ref bean="banner_4"/>
+    			<ref bean="banner_5"/>
+    		</list>
+    	</property>
+    </bean>
+    
+    <bean class="domain.Agent" id="agent_agent3">
+    	<property name="name" value="Agent 3"/>
+    	<property name="surname" value="Agent3Surname"/>
+    	<property name="email" value="agent3@agent.com"/>
+    	<property name="pictureUrl">
+            <null/>
+        </property>
+    	<property name="phoneNumber" value="+11660974679"/>
+    	<property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount" ref="userAccount_agent3"/>
+    	<property name="banned" value="false"/>
+    	<property name="banners">
+    		<list>
+    			<ref bean="banner_6"/>
+    		</list>
+    	</property>
+    </bean>
+    
+    <bean class="domain.Agent" id="agent_agent4">
+    	<property name="name" value="Agent 4"/>
+    	<property name="surname" value="Agent4Surname"/>
+    	<property name="email" value="agent4@agent.com"/>
+    	<property name="pictureUrl">
+            <null/>
+        </property>
+    	<property name="phoneNumber" value="+11674974679"/>
+    	<property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount" ref="userAccount_agent4"/>
+    	<property name="banned" value="false"/>
+    	<property name="banners">
+    		<list>
+    			
+    		</list>
+    	</property>
+    </bean>
+    
+    <!-- Banners -->
+    
+    <bean class="domain.Banner" id="banner_1">
+    	<property name="pictureUrl" value="https://institucional.telecom.com.ar/antenas/images/header_antenas.jpg"/>
+    	<property name="targetPage" value="1"/>
+    	<property name="creditCard" value="3566002020360505"/>
+    	<property name="agent" ref="agent_agent1"/>
+    </bean>
+    
+    <bean class="domain.Banner" id="banner_2">
+    	<property name="pictureUrl" value="https://www.winncom.com/images/WinncomProductsBanner.jpg"/>
+    	<property name="targetPage" value="2"/>
+    	<property name="creditCard" value="3566002020360505"/>
+    	<property name="agent" ref="agent_agent1"/>
+    </bean>
+    
+    <bean class="domain.Banner" id="banner_3">
+    	<property name="pictureUrl" value="https://reparacion-instalacion.es/wp-content/uploads/2016/01/banner.png"/>
+    	<property name="targetPage" value="3"/>
+    	<property name="creditCard" value="3566002020360505"/>
+    	<property name="agent" ref="agent_agent1"/>
+    </bean>
+    
+    <bean class="domain.Banner" id="banner_4">
+    	<property name="pictureUrl" value="https://static.miweb.padigital.es/var/m_7/72/722/14898/272703-banner.jpg"/>
+    	<property name="targetPage" value="4"/>
+    	<property name="creditCard" value="3566002020360505"/>
+    	<property name="agent" ref="agent_agent2"/>
+    </bean>
+    
+    <bean class="domain.Banner" id="banner_5">
+    	<property name="pictureUrl" value="http://satelec.esy.es/wp-content/uploads/2015/10/banner-antenas.jpg"/>
+    	<property name="targetPage" value="5"/>
+    	<property name="creditCard" value="3566002020360505"/>
+    	<property name="agent" ref="agent_agent2"/>
+    </bean>
+    
+    <bean class="domain.Banner" id="banner_6">
+    	<property name="pictureUrl" value="https://static.miweb.padigital.es/var/m_9/94/94b/15922/287772-banner.jpg"/>
+    	<property name="targetPage" value="6"/>
+    	<property name="creditCard" value="3566002020360505"/>
+    	<property name="agent" ref="agent_agent3"/>
+    </bean>
+    
 </beans>

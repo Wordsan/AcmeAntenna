@@ -62,8 +62,9 @@
 		<security:intercept-url pattern="/actors/update.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/actors/edit_own_password.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/actors/update_own_password.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/actors/list.do" access="hasRole('ADMINISTRATOR')"/>
 
-		<security:intercept-url pattern="/administrators/dashboard.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/administrators/**" access="hasRole('ADMINISTRATOR')" />
 
 		<security:intercept-url pattern="/antennas/index.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/antennas/show.do" access="hasRole('USER')" />
@@ -90,6 +91,19 @@
 
 		<security:intercept-url pattern="/users/new.do" access="!isAuthenticated()" />
 		<security:intercept-url pattern="/users/create.do" access="!isAuthenticated()" />
+
+		<security:intercept-url pattern="/handyworkers/**" access="!isAuthenticated()"/>
+		
+		<security:intercept-url pattern="/maintenanceRequests/user/**" access="hasRole('USER')"/>
+		<security:intercept-url pattern="/maintenanceRequests/handyworker/**" access="hasRole('HANDYWORKER')"/>
+
+		<security:intercept-url pattern="/agents/**" access="!isAuthenticated()"/>
+		
+		<security:intercept-url pattern="/banners/list.do" access="permitAll"/>
+		<security:intercept-url pattern="/banners/create.do" access="hasRole('AGENT')"/>
+		<security:intercept-url pattern="/banners/delete.do" access="hasRole('ADMINISTRATOR')"/>
+
+
 
 		<security:intercept-url pattern="/**" access="denyAll" />
 
