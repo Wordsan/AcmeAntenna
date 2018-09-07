@@ -1,10 +1,9 @@
-
 package converters;
-
-import javax.transaction.Transactional;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
 
 import domain.Handyworker;
 
@@ -12,15 +11,17 @@ import domain.Handyworker;
 @Transactional
 public class HandyworkerToStringConverter implements Converter<Handyworker, String> {
 
-	@Override
-	public String convert(final Handyworker handyworker) {
-		String result;
+    @Override
+    public String convert(final Handyworker handyworker)
+    {
+        String result;
 
-		if (handyworker == null)
-			result = null;
-		else
-			result = String.valueOf(handyworker.getId());
+        if (handyworker == null) {
+            result = null;
+        } else {
+            result = String.valueOf(handyworker.getId());
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

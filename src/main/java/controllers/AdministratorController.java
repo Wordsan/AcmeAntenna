@@ -1,4 +1,3 @@
-
 package controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,65 +15,68 @@ import utilities.CheckUtils;
 @RequestMapping("/administrators")
 public class AdministratorController extends AbstractController {
 
-	private @Autowired
-	AdministratorService	service;
+    private @Autowired
+    AdministratorService service;
 
 
-	@RequestMapping("/dashboard")
-	public ModelAndView dashboard() {
-		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+    @RequestMapping("/dashboard")
+    public ModelAndView dashboard()
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-		final ModelAndView result = new ModelAndView("administrators/dashboard");
-		result.addObject("avgAntennaCountPerUser", this.service.findAvgAntennaCountPerUser());
-		result.addObject("stdDevAntennaCountPerUser", this.service.findStdDevAntennaCountPerUser());
-		result.addObject("avgAntennaSignalQuality", this.service.findAvgAntennaSignalQuality());
-		result.addObject("stdDevAntennaSignalQuality", this.service.findStdDevAntennaSignalQuality());
-		result.addObject("avgTutorialCountPerUser", this.service.findAvgTutorialCountPerUser());
-		result.addObject("stdDevTutorialCountPerUser", this.service.findStdDevTutorialCountPerUser());
-		result.addObject("avgCommentCountPerTutorial", this.service.findAvgCommentCountPerTutorial());
-		result.addObject("stdDevCommentCountPerTutorial", this.service.findStdDevCommentCountPerTutorial());
-		result.addObject("antennaCountPerModel", this.service.findAntennaCountPerModel());
-		result.addObject("mostPopularAntennas", this.service.findMostPopularAntennas());
-		result.addObject("topTutorialContributors", this.service.findTopTutorialContributors());
-		result.addObject("avgRequestCountPerUser", this.service.findAvgRequestCountPerUser());
-		result.addObject("stdDevRequestCountPerUser", this.service.findStdDevRequestCountPerUser());
-		result.addObject("avgRatioServicedRequestsPerUser", this.service.findAvgRatioServicedRequestsPerUser());
-		result.addObject("avgRatioServicedRequestsPerHandyworker", this.service.findAvgRatioServicedRequestsPerHandyworker());
-		result.addObject("avgBannerCountPerAgent", this.service.findAvgBannerCountPerAgent());
-		result.addObject("mostPopularAgents", this.service.findMostPopularAgentsByBanners());
-		return result;
-	}
+        final ModelAndView result = new ModelAndView("administrators/dashboard");
+        result.addObject("avgAntennaCountPerUser", this.service.findAvgAntennaCountPerUser());
+        result.addObject("stdDevAntennaCountPerUser", this.service.findStdDevAntennaCountPerUser());
+        result.addObject("avgAntennaSignalQuality", this.service.findAvgAntennaSignalQuality());
+        result.addObject("stdDevAntennaSignalQuality", this.service.findStdDevAntennaSignalQuality());
+        result.addObject("avgTutorialCountPerUser", this.service.findAvgTutorialCountPerUser());
+        result.addObject("stdDevTutorialCountPerUser", this.service.findStdDevTutorialCountPerUser());
+        result.addObject("avgCommentCountPerTutorial", this.service.findAvgCommentCountPerTutorial());
+        result.addObject("stdDevCommentCountPerTutorial", this.service.findStdDevCommentCountPerTutorial());
+        result.addObject("antennaCountPerModel", this.service.findAntennaCountPerModel());
+        result.addObject("mostPopularAntennas", this.service.findMostPopularAntennas());
+        result.addObject("topTutorialContributors", this.service.findTopTutorialContributors());
+        result.addObject("avgRequestCountPerUser", this.service.findAvgRequestCountPerUser());
+        result.addObject("stdDevRequestCountPerUser", this.service.findStdDevRequestCountPerUser());
+        result.addObject("avgRatioServicedRequestsPerUser", this.service.findAvgRatioServicedRequestsPerUser());
+        result.addObject("avgRatioServicedRequestsPerHandyworker", this.service.findAvgRatioServicedRequestsPerHandyworker());
+        result.addObject("avgBannerCountPerAgent", this.service.findAvgBannerCountPerAgent());
+        result.addObject("mostPopularAgents", this.service.findMostPopularAgentsByBanners());
+        return result;
+    }
 
-	@RequestMapping(value = "/ban", method = RequestMethod.GET)
-	public ModelAndView ban(@RequestParam final int actorId) {
-		ModelAndView result;
+    @RequestMapping(value = "/ban", method = RequestMethod.GET)
+    public ModelAndView ban(@RequestParam final int actorId)
+    {
+        ModelAndView result;
 
-		try {
-			this.service.ban(actorId);
-			result = new ModelAndView("redirect:/actors/list.do");
-			result.addObject("message", "administrator.commit.ok");
-		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/actors/list.do");
-			result.addObject("message", "administrator.commit.error");
-		}
+        try {
+            this.service.ban(actorId);
+            result = new ModelAndView("redirect:/actors/list.do");
+            result.addObject("message", "administrator.commit.ok");
+        } catch (final Throwable oops) {
+            result = new ModelAndView("redirect:/actors/list.do");
+            result.addObject("message", "administrator.commit.error");
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@RequestMapping(value = "/unban", method = RequestMethod.GET)
-	public ModelAndView unblock(@RequestParam final int actorId) {
-		ModelAndView result;
+    @RequestMapping(value = "/unban", method = RequestMethod.GET)
+    public ModelAndView unblock(@RequestParam final int actorId)
+    {
+        ModelAndView result;
 
-		try {
-			this.service.unban(actorId);
-			;
-			result = new ModelAndView("redirect:/actors/list.do");
-			result.addObject("message", "administrator.commit.ok");
-		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/actors/list.do");
-			result.addObject("message", "administrator.commit.error");
-		}
+        try {
+            this.service.unban(actorId);
+            ;
+            result = new ModelAndView("redirect:/actors/list.do");
+            result.addObject("message", "administrator.commit.ok");
+        } catch (final Throwable oops) {
+            result = new ModelAndView("redirect:/actors/list.do");
+            result.addObject("message", "administrator.commit.error");
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

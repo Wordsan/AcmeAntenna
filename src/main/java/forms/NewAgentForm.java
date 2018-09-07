@@ -1,4 +1,3 @@
-
 package forms;
 
 import javax.persistence.Access;
@@ -7,57 +6,66 @@ import javax.validation.Valid;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 
+import domain.Agent;
 import security.Authority;
 import security.UserAccount;
 import validators.CustomValidator;
 import validators.HasCustomValidators;
 import validators.UseConstraintsFrom;
-import domain.Agent;
 
 @Access(AccessType.PROPERTY)
 @HasCustomValidators
 public class NewAgentForm {
 
-	private Agent	agent			= new Agent();
-	private String	repeatPassword	= "";
-	private boolean agreesToTerms;
+    private Agent agent = new Agent();
+    private String repeatPassword = "";
+    private boolean agreesToTerms;
 
-	public NewAgentForm() {
-		this.agent.setUserAccount(new UserAccount("", "", Authority.AGENT));
-	}
+    public NewAgentForm()
+    {
+        this.agent.setUserAccount(new UserAccount("", "", Authority.AGENT));
+    }
 
-	@Valid
-	@NotNull
-	public Agent getAgent() {
-		return this.agent;
-	}
-	public void setAgent(final Agent agent) {
-		this.agent = agent;
-	}
+    @Valid
+    @NotNull
+    public Agent getAgent()
+    {
+        return this.agent;
+    }
 
-	@CustomValidator(message = "{misc.error.passwordDoesNotMatch}", applyOn = "repeatPassword")
-	public boolean isValidPasswordsMatch() {
-		if (this.agent == null || this.agent.getUserAccount() == null || this.getRepeatPassword() == null)
-			return false;
-		return this.getRepeatPassword().equals(this.agent.getUserAccount().getPassword());
-	}
+    public void setAgent(final Agent agent)
+    {
+        this.agent = agent;
+    }
 
-	@UseConstraintsFrom(klazz = UserAccount.class, property = "password")
-	public String getRepeatPassword() {
-		return this.repeatPassword;
-	}
-	public void setRepeatPassword(final String repeatPassword) {
-		this.repeatPassword = repeatPassword;
-	}
+    @CustomValidator(message = "{misc.error.passwordDoesNotMatch}", applyOn = "repeatPassword")
+    public boolean isValidPasswordsMatch()
+    {
+        if (this.agent == null || this.agent.getUserAccount() == null || this.getRepeatPassword() == null) {
+            return false;
+        }
+        return this.getRepeatPassword().equals(this.agent.getUserAccount().getPassword());
+    }
 
-	@AssertTrue(message = "{users.mustAgreeToTerms}")
-	public boolean getAgreesToTerms()
-	{
-		return agreesToTerms;
-	}
+    @UseConstraintsFrom(klazz = UserAccount.class, property = "password")
+    public String getRepeatPassword()
+    {
+        return this.repeatPassword;
+    }
 
-	public void setAgreesToTerms(boolean agreesToTerms)
-	{
-		this.agreesToTerms = agreesToTerms;
-	}
+    public void setRepeatPassword(final String repeatPassword)
+    {
+        this.repeatPassword = repeatPassword;
+    }
+
+    @AssertTrue(message = "{users.mustAgreeToTerms}")
+    public boolean getAgreesToTerms()
+    {
+        return agreesToTerms;
+    }
+
+    public void setAgreesToTerms(boolean agreesToTerms)
+    {
+        this.agreesToTerms = agreesToTerms;
+    }
 }

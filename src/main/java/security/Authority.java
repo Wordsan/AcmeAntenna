@@ -10,6 +10,9 @@
 
 package security;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -18,97 +21,102 @@ import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.security.core.GrantedAuthority;
-
 @Embeddable
 @Access(AccessType.PROPERTY)
 public class Authority implements GrantedAuthority {
 
-	// Constructors -----------------------------------------------------------
+    // Constructors -----------------------------------------------------------
 
-	private static final long	serialVersionUID	= 1L;
-
-
-	public Authority() {
-		super();
-	}
+    private static final long serialVersionUID = 1L;
 
 
-	// Values -----------------------------------------------------------------
-
-	public static final String	ADMINISTRATOR	= "ADMINISTRATOR";
-	public static final String	USER			= "USER";
-	public static final String	HANDYWORKER		= "HANDYWORKER";
-	public static final String	AGENT			= "AGENT";
-
-	// Attributes -------------------------------------------------------------
-
-	private String				authority;
+    public Authority()
+    {
+        super();
+    }
 
 
-	@NotBlank
-	@Pattern(regexp = "^" + Authority.ADMINISTRATOR + "|" + Authority.USER + "|" + Authority.HANDYWORKER + "|" + Authority.AGENT + "$")
-	@Override
-	public String getAuthority() {
-		return this.authority;
-	}
+    // Values -----------------------------------------------------------------
 
-	public void setAuthority(final String authority) {
-		this.authority = authority;
-	}
+    public static final String ADMINISTRATOR = "ADMINISTRATOR";
+    public static final String USER = "USER";
+    public static final String HANDYWORKER = "HANDYWORKER";
+    public static final String AGENT = "AGENT";
 
-	public static Collection<Authority> listAuthorities() {
-		Collection<Authority> result;
-		Authority authority;
+    // Attributes -------------------------------------------------------------
 
-		result = new ArrayList<Authority>();
+    private String authority;
 
-		authority = new Authority();
-		authority.setAuthority(Authority.ADMINISTRATOR);
-		result.add(authority);
 
-		authority = new Authority();
-		authority.setAuthority(Authority.USER);
-		result.add(authority);
+    @NotBlank
+    @Pattern(regexp = "^" + Authority.ADMINISTRATOR + "|" + Authority.USER + "|" + Authority.HANDYWORKER + "|" + Authority.AGENT + "$")
+    @Override
+    public String getAuthority()
+    {
+        return this.authority;
+    }
 
-		authority = new Authority();
-		authority.setAuthority(Authority.HANDYWORKER);
-		result.add(authority);
+    public void setAuthority(final String authority)
+    {
+        this.authority = authority;
+    }
 
-		authority = new Authority();
-		authority.setAuthority(Authority.AGENT);
-		result.add(authority);
+    public static Collection<Authority> listAuthorities()
+    {
+        Collection<Authority> result;
+        Authority authority;
 
-		return result;
-	}
+        result = new ArrayList<Authority>();
 
-	// Object interface -------------------------------------------------------
+        authority = new Authority();
+        authority.setAuthority(Authority.ADMINISTRATOR);
+        result.add(authority);
 
-	@Override
-	public int hashCode() {
-		return this.getAuthority().hashCode();
-	}
+        authority = new Authority();
+        authority.setAuthority(Authority.USER);
+        result.add(authority);
 
-	@Override
-	public boolean equals(final Object other) {
-		boolean result;
+        authority = new Authority();
+        authority.setAuthority(Authority.HANDYWORKER);
+        result.add(authority);
 
-		if (this == other)
-			result = true;
-		else if (other == null)
-			result = false;
-		else if (!this.getClass().isInstance(other))
-			result = false;
-		else
-			result = (this.getAuthority().equals(((Authority) other).getAuthority()));
+        authority = new Authority();
+        authority.setAuthority(Authority.AGENT);
+        result.add(authority);
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public String toString() {
-		return this.authority;
-	}
+    // Object interface -------------------------------------------------------
+
+    @Override
+    public int hashCode()
+    {
+        return this.getAuthority().hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other)
+    {
+        boolean result;
+
+        if (this == other) {
+            result = true;
+        } else if (other == null) {
+            result = false;
+        } else if (!this.getClass().isInstance(other)) {
+            result = false;
+        } else {
+            result = (this.getAuthority().equals(((Authority) other).getAuthority()));
+        }
+
+        return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.authority;
+    }
 
 }

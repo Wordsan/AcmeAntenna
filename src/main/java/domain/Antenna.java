@@ -1,5 +1,9 @@
-
 package domain;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 import java.util.Collection;
 
@@ -12,142 +16,158 @@ import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class Antenna extends DomainEntity {
 
-	private User							user;
-	private String							serialNumber;
-	private String							model;
-	private double							positionLongitude;
-	private double							positionLatitude;
-	private double							rotationAzimuth;
-	private double							rotationElevation;
-	private double							signalQuality;
-	private Satellite						satellite;
-	private Collection<MaintenanceRequest>	requests;
+    private User user;
+    private String serialNumber;
+    private String model;
+    private double positionLongitude;
+    private double positionLatitude;
+    private double rotationAzimuth;
+    private double rotationElevation;
+    private double signalQuality;
+    private Satellite satellite;
+    private Collection<MaintenanceRequest> requests;
 
 
-	@Valid
-	@ManyToOne(optional = false)
-	@NotNull
-	// Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
-	public User getUser() {
-		return this.user;
-	}
+    @Valid
+    @ManyToOne(optional = false)
+    @NotNull
+    // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+    public User getUser()
+    {
+        return this.user;
+    }
 
-	@NotBlank
-	public String getSerialNumber() {
-		return this.serialNumber;
-	}
+    @NotBlank
+    public String getSerialNumber()
+    {
+        return this.serialNumber;
+    }
 
-	@NotBlank
-	public String getModel() {
-		return this.model;
-	}
+    @NotBlank
+    public String getModel()
+    {
+        return this.model;
+    }
 
-	/**
-	 * Longitude angle of the position of the antenna.
-	 * 
-	 * Positive longitude indicates EAST, negative indicates WEST.
-	 */
-	@Range(min = -180, max = 180)
-	public double getPositionLongitude() {
-		return this.positionLongitude;
-	}
+    /**
+     * Longitude angle of the position of the antenna.
+     * <p>
+     * Positive longitude indicates EAST, negative indicates WEST.
+     */
+    @Range(min = -180, max = 180)
+    public double getPositionLongitude()
+    {
+        return this.positionLongitude;
+    }
 
-	/**
-	 * Latitude angle of the position of the antenna.
-	 * 
-	 * Positive latitude indicates NORTH, negative indicates SOUTH.
-	 */
-	@Range(min = -90, max = 90)
-	public double getPositionLatitude() {
-		return this.positionLatitude;
-	}
+    /**
+     * Latitude angle of the position of the antenna.
+     * <p>
+     * Positive latitude indicates NORTH, negative indicates SOUTH.
+     */
+    @Range(min = -90, max = 90)
+    public double getPositionLatitude()
+    {
+        return this.positionLatitude;
+    }
 
-	@Transient
-	public String getPositionForDisplay() {
-		return String.format("%.4f°%s %.4f°%s", Math.abs(this.getPositionLatitude()), this.getPositionLatitude() > 0 ? "N" : "S", Math.abs(this.getPositionLongitude()), this.getPositionLongitude() > 0 ? "E" : "W");
-	}
+    @Transient
+    public String getPositionForDisplay()
+    {
+        return String.format("%.4f°%s %.4f°%s", Math.abs(this.getPositionLatitude()), this.getPositionLatitude() > 0 ? "N" : "S", Math.abs(this.getPositionLongitude()), this.getPositionLongitude() > 0 ? "E" : "W");
+    }
 
-	/**
-	 * Angle indicating the horizontal rotation of the satellite, with 0 pointing at north and increasing angles indicating clockwise rotation.
-	 */
-	@Range(min = 0, max = 360)
-	public double getRotationAzimuth() {
-		return this.rotationAzimuth;
-	}
+    /**
+     * Angle indicating the horizontal rotation of the satellite, with 0 pointing at north and increasing angles indicating clockwise rotation.
+     */
+    @Range(min = 0, max = 360)
+    public double getRotationAzimuth()
+    {
+        return this.rotationAzimuth;
+    }
 
-	/**
-	 * Angle indicating the vertical rotation of the satellite, with 0 pointing directly forward and increasing angles indicating upwards rotation.
-	 */
-	@Range(min = 0, max = 90)
-	public double getRotationElevation() {
-		return this.rotationElevation;
-	}
+    /**
+     * Angle indicating the vertical rotation of the satellite, with 0 pointing directly forward and increasing angles indicating upwards rotation.
+     */
+    @Range(min = 0, max = 90)
+    public double getRotationElevation()
+    {
+        return this.rotationElevation;
+    }
 
-	@Range(min = 0, max = 100)
-	public double getSignalQuality() {
-		return this.signalQuality;
-	}
+    @Range(min = 0, max = 100)
+    public double getSignalQuality()
+    {
+        return this.signalQuality;
+    }
 
-	@Valid
-	@ManyToOne(optional = false)
-	@NotNull
-	// Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
-	public Satellite getSatellite() {
-		return this.satellite;
-	}
+    @Valid
+    @ManyToOne(optional = false)
+    @NotNull
+    // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+    public Satellite getSatellite()
+    {
+        return this.satellite;
+    }
 
-	public void setUser(final User user) {
-		this.user = user;
-	}
+    public void setUser(final User user)
+    {
+        this.user = user;
+    }
 
-	public void setSerialNumber(final String serialNumber) {
-		this.serialNumber = serialNumber;
-	}
+    public void setSerialNumber(final String serialNumber)
+    {
+        this.serialNumber = serialNumber;
+    }
 
-	public void setModel(final String model) {
-		this.model = model;
-	}
+    public void setModel(final String model)
+    {
+        this.model = model;
+    }
 
-	public void setPositionLongitude(final double positionLongitude) {
-		this.positionLongitude = positionLongitude;
-	}
+    public void setPositionLongitude(final double positionLongitude)
+    {
+        this.positionLongitude = positionLongitude;
+    }
 
-	public void setPositionLatitude(final double positionLatitude) {
-		this.positionLatitude = positionLatitude;
-	}
+    public void setPositionLatitude(final double positionLatitude)
+    {
+        this.positionLatitude = positionLatitude;
+    }
 
-	public void setRotationAzimuth(final double rotationAzimuth) {
-		this.rotationAzimuth = rotationAzimuth;
-	}
+    public void setRotationAzimuth(final double rotationAzimuth)
+    {
+        this.rotationAzimuth = rotationAzimuth;
+    }
 
-	public void setRotationElevation(final double rotationElevation) {
-		this.rotationElevation = rotationElevation;
-	}
+    public void setRotationElevation(final double rotationElevation)
+    {
+        this.rotationElevation = rotationElevation;
+    }
 
-	public void setSignalQuality(final double signalQuality) {
-		this.signalQuality = signalQuality;
-	}
+    public void setSignalQuality(final double signalQuality)
+    {
+        this.signalQuality = signalQuality;
+    }
 
-	public void setSatellite(final Satellite satellite) {
-		this.satellite = satellite;
-	}
+    public void setSatellite(final Satellite satellite)
+    {
+        this.satellite = satellite;
+    }
 
-	@OneToMany(mappedBy = "antenna")
-	@Cascade(CascadeType.DELETE)
-	public Collection<MaintenanceRequest> getRequests() {
-		return this.requests;
-	}
+    @OneToMany(mappedBy = "antenna")
+    @Cascade(CascadeType.DELETE)
+    public Collection<MaintenanceRequest> getRequests()
+    {
+        return this.requests;
+    }
 
-	public void setRequests(final Collection<MaintenanceRequest> requests) {
-		this.requests = requests;
-	}
+    public void setRequests(final Collection<MaintenanceRequest> requests)
+    {
+        this.requests = requests;
+    }
 }

@@ -1,71 +1,76 @@
-
 package services;
-
-import java.util.Collection;
-
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.Collection;
+
+import javax.transaction.Transactional;
+
+import domain.Actor;
+import domain.Agent;
+import exceptions.ResourceNotUniqueException;
 import repositories.AgentRepository;
 import security.Authority;
 import security.UserAccountService;
 import utilities.CheckUtils;
-import domain.Actor;
-import domain.Agent;
-import exceptions.ResourceNotUniqueException;
 
 @Service
 @Transactional
 public class AgentService {
 
-	@Autowired
-	private AgentRepository		agentRepository;
-	@Autowired
-	private UserAccountService	userAccountService;
-	@Autowired
-	private ActorService		actorService;
+    @Autowired
+    private AgentRepository agentRepository;
+    @Autowired
+    private UserAccountService userAccountService;
+    @Autowired
+    private ActorService actorService;
 
 
-	public AgentService() {
-		super();
-	}
-
-	public Agent findPrincipal() {
-		final Actor principal = this.actorService.findPrincipal();
-		if (principal instanceof Agent)
-			return (Agent) principal;
-		return null;
-	}
-
-	public Agent createAsNewAgent(final Agent agent) throws ResourceNotUniqueException
+    public AgentService()
     {
-		CheckUtils.checkUnauthenticated();
-		CheckUtils.checkNotExists(agent);
+        super();
+    }
 
-		agent.setUserAccount(this.userAccountService.create(agent.getUserAccount().getUsername(), agent.getUserAccount().getPassword(), Authority.AGENT));
+    public Agent findPrincipal()
+    {
+        final Actor principal = this.actorService.findPrincipal();
+        if (principal instanceof Agent) {
+            return (Agent) principal;
+        }
+        return null;
+    }
 
-		return this.agentRepository.save(agent);
-	}
+    public Agent createAsNewAgent(final Agent agent) throws ResourceNotUniqueException
+    {
+        CheckUtils.checkUnauthenticated();
+        CheckUtils.checkNotExists(agent);
 
-	public Agent create() {
-		final Agent a = new Agent();
-		a.setBanned(false);
+        agent.setUserAccount(this.userAccountService.create(agent.getUserAccount().getUsername(), agent.getUserAccount().getPassword(), Authority.AGENT));
 
-		return a;
-	}
+        return this.agentRepository.save(agent);
+    }
 
-	public Agent save(final Agent agent) {
-		Assert.notNull(agent);
-		Assert.notNull(agent.getUserAccount());
-		return this.agentRepository.save(agent);
-	}
+    public Agent create()
+    {
+        final Agent a = new Agent();
+        a.setBanned(false);
 
-	public Collection<Agent> findAll() {
+        return a;
+    }
 
-		return this.agentRepository.findAll();
-	}
+    public Agent save(final Agent agent)
+    {
+        Assert.notNull(agent);
+        Assert.notNull(agent.getUserAccount());
+        return this.agentRepository.save(agent);
+    }
+
+    public Collection<Agent> findAll()
+    {
+
+        return this.agentRepository.findAll();
+    }
 
 }

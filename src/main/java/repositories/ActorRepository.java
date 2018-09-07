@@ -9,7 +9,8 @@ import security.UserAccount;
 
 @Repository
 public interface ActorRepository
-extends JpaRepository<Actor, Integer> {
+        extends JpaRepository<Actor, Integer>
+{
     Actor findByUserAccount(UserAccount userAccount);
 
     @Query("select a from Actor a where a.userAccount.username = ?")

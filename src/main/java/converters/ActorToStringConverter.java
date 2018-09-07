@@ -10,18 +10,19 @@ import domain.Actor;
 @Component
 @Transactional
 public class ActorToStringConverter
-implements Converter<Actor, String> {
-	@Override
-	public String convert(Actor actor)
-	{
-		String result;
+        implements Converter<Actor, String>
+{
+    @Override
+    public String convert(Actor actor)
+    {
+        String result;
 
-		if (actor == null) {
-			result = null;
-		} else {
-			result = String.valueOf(actor.getId());
-		}
+        if (actor == null) {
+            result = null;
+        } else {
+            result = String.valueOf(actor.getId());
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

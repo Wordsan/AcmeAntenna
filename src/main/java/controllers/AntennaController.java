@@ -26,127 +26,129 @@ import utilities.ControllerUtils;
 @Controller
 @RequestMapping("/antennas")
 public class AntennaController extends AbstractController {
-	@Autowired private AntennaService antennaService;
-	@Autowired private SatelliteService satelliteService;
+    @Autowired private AntennaService antennaService;
+    @Autowired private SatelliteService satelliteService;
 
-	@RequestMapping("/index")
-	public ModelAndView index()
-	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
+    @RequestMapping("/index")
+    public ModelAndView index()
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		List<Antenna> antennas = antennaService.findAllForPrincipal();
-		ModelAndView result = new ModelAndView("antennas/index");
-		result.addObject("antennas", antennas);
-		return result;
-	}
+        List<Antenna> antennas = antennaService.findAllForPrincipal();
+        ModelAndView result = new ModelAndView("antennas/index");
+        result.addObject("antennas", antennas);
+        return result;
+    }
 
-	@RequestMapping("/show")
-	public ModelAndView show(int id)
-	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
+    @RequestMapping("/show")
+    public ModelAndView show(int id)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		Antenna antenna = antennaService.getByIdForShow(id);
-		ModelAndView result = new ModelAndView("antennas/show");
-		result.addObject("antenna", antenna);
-		return result;
-	}
+        Antenna antenna = antennaService.getByIdForShow(id);
+        ModelAndView result = new ModelAndView("antennas/show");
+        result.addObject("antenna", antenna);
+        return result;
+    }
 
-	@RequestMapping("/new")
-	public ModelAndView new_()
-	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
+    @RequestMapping("/new")
+    public ModelAndView new_()
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		Antenna antenna = new Antenna();
-		antenna.setUser((User) getPrincipal());
-		return createEditModelAndView("antennas/new", "antennas/create.do", null, null, antenna);
-	}
+        Antenna antenna = new Antenna();
+        antenna.setUser((User) getPrincipal());
+        return createEditModelAndView("antennas/new", "antennas/create.do", null, null, antenna);
+    }
 
-	public ModelAndView createEditModelAndView(
-			String viewName, String formAction, BindingResult binding, String globalErrorMessage, Antenna antenna
-	)
-	{
-		ModelAndView result = ControllerUtils.createViewWithBinding(
-				viewName,
-				binding,
-				globalErrorMessage
-				);
+    public ModelAndView createEditModelAndView(
+            String viewName, String formAction, BindingResult binding, String globalErrorMessage, Antenna antenna
+    )
+    {
+        ModelAndView result = ControllerUtils.createViewWithBinding(
+                viewName,
+                binding,
+                globalErrorMessage
+        );
 
-		result.addObject("formAction", formAction);
-		result.addObject("antenna", antenna);
-		result.addObject("satellites", satelliteService.findAllForIndex());
+        result.addObject("formAction", formAction);
+        result.addObject("antenna", antenna);
+        result.addObject("satellites", satelliteService.findAllForIndex());
 
-		return result;
-	}
+        return result;
+    }
 
-	@RequestMapping(value="/create", method=RequestMethod.POST)
-	public ModelAndView create(
-			@ModelAttribute("antenna") @Valid Antenna antenna,
-			BindingResult binding,
-			RedirectAttributes redir)
-	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ModelAndView create(
+            @ModelAttribute("antenna") @Valid Antenna antenna,
+            BindingResult binding,
+            RedirectAttributes redir
+    )
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		String globalErrorMessage = null;
+        String globalErrorMessage = null;
 
-		if (!binding.hasErrors()) {
-			try {
-				antenna = antennaService.create(antenna);
-				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-				return ControllerUtils.redirect("/antennas/index.do");
-			} catch(Throwable oops) {
-				if (ApplicationConfig.DEBUG) oops.printStackTrace();
-				globalErrorMessage = "misc.commit.error";
-			}
-		}
+        if (!binding.hasErrors()) {
+            try {
+                antenna = antennaService.create(antenna);
+                redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+                return ControllerUtils.redirect("/antennas/index.do");
+            } catch (Throwable oops) {
+                if (ApplicationConfig.DEBUG) oops.printStackTrace();
+                globalErrorMessage = "misc.commit.error";
+            }
+        }
 
-		return createEditModelAndView("antennas/new", "antennas/create.do", binding, globalErrorMessage, antenna);
-	}
+        return createEditModelAndView("antennas/new", "antennas/create.do", binding, globalErrorMessage, antenna);
+    }
 
-	@RequestMapping("/edit")
-	public ModelAndView edit(@RequestParam("id") int id)
-	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
+    @RequestMapping("/edit")
+    public ModelAndView edit(@RequestParam("id") int id)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		Antenna antenna = antennaService.getByIdForEdit(id);
-		return createEditModelAndView("antennas/edit", "antennas/update.do", null, null, antenna);
-	}
+        Antenna antenna = antennaService.getByIdForEdit(id);
+        return createEditModelAndView("antennas/edit", "antennas/update.do", null, null, antenna);
+    }
 
-	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public ModelAndView update(
-			@ModelAttribute("antenna") @Valid Antenna antenna,
-			BindingResult binding, RedirectAttributes redir)
-	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ModelAndView update(
+            @ModelAttribute("antenna") @Valid Antenna antenna,
+            BindingResult binding, RedirectAttributes redir
+    )
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		String globalErrorMessage = null;
-		if (!binding.hasErrors()) {
-			try {
-				antenna = antennaService.update(antenna);
-				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+        String globalErrorMessage = null;
+        if (!binding.hasErrors()) {
+            try {
+                antenna = antennaService.update(antenna);
+                redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 
-				return ControllerUtils.redirect("/antennas/index.do");
-			} catch(Throwable oops) {
-				if (ApplicationConfig.DEBUG) oops.printStackTrace();
-				globalErrorMessage = "misc.commit.error";
-			}
-		}
+                return ControllerUtils.redirect("/antennas/index.do");
+            } catch (Throwable oops) {
+                if (ApplicationConfig.DEBUG) oops.printStackTrace();
+                globalErrorMessage = "misc.commit.error";
+            }
+        }
 
-		return createEditModelAndView("antennas/edit", "antennas/update.do", binding, globalErrorMessage, antenna);
-	}
+        return createEditModelAndView("antennas/edit", "antennas/update.do", binding, globalErrorMessage, antenna);
+    }
 
-	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public ModelAndView delete(@ModelAttribute("id") int id, RedirectAttributes redir)
-	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ModelAndView delete(@ModelAttribute("id") int id, RedirectAttributes redir)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
 
-		try {
-			antennaService.delete(id);
-			redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-		} catch (Throwable oops) {
-			if (ApplicationConfig.DEBUG) oops.printStackTrace();
-			redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
-		}
-		return ControllerUtils.redirect("/antennas/index.do");
-	}
+        try {
+            antennaService.delete(id);
+            redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+        } catch (Throwable oops) {
+            if (ApplicationConfig.DEBUG) oops.printStackTrace();
+            redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
+        }
+        return ControllerUtils.redirect("/antennas/index.do");
+    }
 
 }

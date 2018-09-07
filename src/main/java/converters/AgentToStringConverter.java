@@ -1,10 +1,9 @@
-
 package converters;
-
-import javax.transaction.Transactional;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
 
 import domain.Agent;
 
@@ -12,15 +11,17 @@ import domain.Agent;
 @Transactional
 public class AgentToStringConverter implements Converter<Agent, String> {
 
-	@Override
-	public String convert(final Agent agent) {
-		String result;
+    @Override
+    public String convert(final Agent agent)
+    {
+        String result;
 
-		if (agent == null)
-			result = null;
-		else
-			result = String.valueOf(agent.getId());
+        if (agent == null) {
+            result = null;
+        } else {
+            result = String.valueOf(agent.getId());
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

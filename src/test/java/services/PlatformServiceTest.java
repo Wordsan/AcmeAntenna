@@ -8,32 +8,26 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import domain.Actor;
-import domain.Antenna;
 import domain.Platform;
 import domain.Satellite;
-import domain.User;
-import repositories.AntennaRepository;
 import repositories.PlatformRepository;
 import repositories.SatelliteRepository;
 import utilities.AbstractTest;
 
 /**
  * Tests the following use cases from the requirements document:
- *   - Browse the list of platforms and [...].
- *   - Search for satellites and platforms using a single key word that must be contained in
+ * - Browse the list of platforms and [...].
+ * - Search for satellites and platforms using a single key word that must be contained in
  * their names or descriptions.
- *
+ * <p>
  * Also tests the following use case given by email by Mr. Carlos Muller:
- *  - An actor who is not authenticated must be able to manage the list of satellites
- *  and platforms, which involves listing, registering, editing, and deleting them.
- *
+ * - An actor who is not authenticated must be able to manage the list of satellites
+ * and platforms, which involves listing, registering, editing, and deleting them.
+ * <p>
  * The complete email is available in the "Documentacion" folder for reference.
  */
 @ContextConfiguration(locations = {
@@ -338,7 +332,6 @@ public class PlatformServiceTest extends AbstractTest {
 
         // Shouldn't reach this point.
     }
-
 
 
     // Test deletion of a platform fails if already deleted.

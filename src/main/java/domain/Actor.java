@@ -1,5 +1,10 @@
-
 package domain;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -10,12 +15,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
-
 import security.UserAccount;
 import validators.NullOrNotBlank;
 
@@ -23,93 +22,116 @@ import validators.NullOrNotBlank;
 @Access(AccessType.PROPERTY)
 public class Actor extends DomainEntity {
 
-	private String		name;
-	private String		surname;
-	private String		email;
-	private String		pictureUrl;
-	private String		phoneNumber;
-	private String		postalAddress;
-	private UserAccount	userAccount;
-	private boolean		banned;
+    private String name;
+    private String surname;
+    private String email;
+    private String pictureUrl;
+    private String phoneNumber;
+    private String postalAddress;
+    private UserAccount userAccount;
+    private boolean banned;
 
 
-	@NotBlank
-	public String getName() {
-		return this.name;
-	}
-	@NotBlank
-	public String getSurname() {
-		return this.surname;
-	}
+    @NotBlank
+    public String getName()
+    {
+        return this.name;
+    }
 
-	@Transient
-	public String getFullName() {
-		if (this.getName() == null || this.getSurname() == null)
-			return null;
-		return this.getName().trim() + " " + this.getSurname().trim();
-	}
+    @NotBlank
+    public String getSurname()
+    {
+        return this.surname;
+    }
 
-	@NotBlank
-	@Email
-	public String getEmail() {
-		return this.email;
-	}
-	@Pattern(regexp = "^\\+?\\d+$")
-	@NullOrNotBlank
-	public String getPhoneNumber() {
-		return this.phoneNumber;
-	}
-	@URL
-	@NullOrNotBlank
-	public String getPictureUrl() {
-		return this.pictureUrl;
-	}
-	@NullOrNotBlank
-	public String getPostalAddress() {
-		return this.postalAddress;
-	}
+    @Transient
+    public String getFullName()
+    {
+        if (this.getName() == null || this.getSurname() == null) {
+            return null;
+        }
+        return this.getName().trim() + " " + this.getSurname().trim();
+    }
 
-	@Valid
-	@OneToOne(optional = false)
-	@NotNull
-	// Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
-	@Cascade(CascadeType.DELETE)
-	public UserAccount getUserAccount() {
-		return this.userAccount;
-	}
+    @NotBlank
+    @Email
+    public String getEmail()
+    {
+        return this.email;
+    }
 
-	public void setUserAccount(final UserAccount userAccount) {
-		this.userAccount = userAccount;
-	}
+    @Pattern(regexp = "^\\+?\\d+$")
+    @NullOrNotBlank
+    public String getPhoneNumber()
+    {
+        return this.phoneNumber;
+    }
 
-	public void setName(final String name) {
-		this.name = name;
-	}
+    @URL
+    @NullOrNotBlank
+    public String getPictureUrl()
+    {
+        return this.pictureUrl;
+    }
 
-	public void setSurname(final String surname) {
-		this.surname = surname;
-	}
+    @NullOrNotBlank
+    public String getPostalAddress()
+    {
+        return this.postalAddress;
+    }
 
-	public void setEmail(final String email) {
-		this.email = email;
-	}
+    @Valid
+    @OneToOne(optional = false)
+    @NotNull
+    // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+    @Cascade(CascadeType.DELETE)
+    public UserAccount getUserAccount()
+    {
+        return this.userAccount;
+    }
 
-	public void setPictureUrl(final String pictureUrl) {
-		this.pictureUrl = pictureUrl;
-	}
+    public void setUserAccount(final UserAccount userAccount)
+    {
+        this.userAccount = userAccount;
+    }
 
-	public void setPhoneNumber(final String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public void setName(final String name)
+    {
+        this.name = name;
+    }
 
-	public void setPostalAddress(final String postalAddress) {
-		this.postalAddress = postalAddress;
-	}
+    public void setSurname(final String surname)
+    {
+        this.surname = surname;
+    }
 
-	public boolean isBanned() {
-		return this.banned;
-	}
-	public void setBanned(final boolean banned) {
-		this.banned = banned;
-	}
+    public void setEmail(final String email)
+    {
+        this.email = email;
+    }
+
+    public void setPictureUrl(final String pictureUrl)
+    {
+        this.pictureUrl = pictureUrl;
+    }
+
+    public void setPhoneNumber(final String phoneNumber)
+    {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setPostalAddress(final String postalAddress)
+    {
+        this.postalAddress = postalAddress;
+    }
+
+    public boolean isBanned()
+    {
+        return this.banned;
+    }
+
+    public void setBanned(final boolean banned)
+    {
+        this.banned = banned;
+    }
 }

@@ -1,7 +1,4 @@
-
 package services;
-
-import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,14 +16,13 @@ import security.Authority;
 import security.UserAccount;
 import security.UserAccountService;
 import utilities.AbstractTest;
-import domain.User;
 
 /**
  * Tests the following use cases from the requirements document:
  * - Register to the system as a user.
  */
 @ContextConfiguration(locations = {
-	"classpath:spring/junit.xml"
+        "classpath:spring/junit.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional

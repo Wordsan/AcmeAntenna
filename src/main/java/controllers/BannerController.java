@@ -1,9 +1,4 @@
-
 package controllers;
-
-import java.util.Collection;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,107 +8,121 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.BannerService;
+import java.util.Collection;
+
+import javax.validation.Valid;
+
 import domain.Banner;
+import services.BannerService;
 
 @Controller
 @RequestMapping("/banners")
 public class BannerController extends AbstractController {
 
-	@Autowired
-	private BannerService	bannerService;
+    @Autowired
+    private BannerService bannerService;
 
 
-	public BannerController() {
-		super();
-	}
+    public BannerController()
+    {
+        super();
+    }
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
-		ModelAndView result;
-		final Collection<Banner> banners = this.bannerService.findAll();
-		result = new ModelAndView("banners/list");
-		result.addObject("requestURI", "banners/list.do");
-		result.addObject("banners", banners);
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView list()
+    {
+        ModelAndView result;
+        final Collection<Banner> banners = this.bannerService.findAll();
+        result = new ModelAndView("banners/list");
+        result.addObject("requestURI", "banners/list.do");
+        result.addObject("banners", banners);
 
-		return result;
-	}
+        return result;
+    }
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
-		ModelAndView result;
-		Banner b;
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create()
+    {
+        ModelAndView result;
+        Banner b;
 
-		b = this.bannerService.create();
-		result = this.createEditModelAndView(b);
+        b = this.bannerService.create();
+        result = this.createEditModelAndView(b);
 
-		return result;
+        return result;
 
-	}
+    }
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int bannerId) {
-		ModelAndView result;
-		final Banner banner = this.bannerService.findOne(bannerId);
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public ModelAndView delete(@RequestParam final int bannerId)
+    {
+        ModelAndView result;
+        final Banner banner = this.bannerService.findOne(bannerId);
 
-		result = new ModelAndView("banners/delete");
-		result.addObject("banner", banner);
+        result = new ModelAndView("banners/delete");
+        result.addObject("banner", banner);
 
-		return result;
-	}
+        return result;
+    }
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Banner b, final BindingResult binding) {
-		ModelAndView result;
+    @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid final Banner b, final BindingResult binding)
+    {
+        ModelAndView result;
 
-		if (binding.hasErrors()) {
-			System.out.println(binding.getAllErrors());
-			result = this.createEditModelAndView(b);
-		} else
-			try {
-				this.bannerService.save(b);
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(b, "banner.commit.error");
-			}
+        if (binding.hasErrors()) {
+            System.out.println(binding.getAllErrors());
+            result = this.createEditModelAndView(b);
+        } else {
+            try {
+                this.bannerService.save(b);
+                result = new ModelAndView("redirect:list.do");
+            } catch (final Throwable oops) {
+                result = this.createEditModelAndView(b, "banner.commit.error");
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@RequestMapping(value = "/delete", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final Banner b, final BindingResult binding) {
-		ModelAndView result;
-		if (binding.hasErrors()) {
-			System.out.println(binding.getAllErrors());
-			result = this.createEditModelAndView(b);
-		} else
-			try {
-				this.bannerService.delete(b);
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(b, "banner.commit.error");
-			}
+    @RequestMapping(value = "/delete", method = RequestMethod.POST, params = "delete")
+    public ModelAndView delete(final Banner b, final BindingResult binding)
+    {
+        ModelAndView result;
+        if (binding.hasErrors()) {
+            System.out.println(binding.getAllErrors());
+            result = this.createEditModelAndView(b);
+        } else {
+            try {
+                this.bannerService.delete(b);
+                result = new ModelAndView("redirect:list.do");
+            } catch (final Throwable oops) {
+                result = this.createEditModelAndView(b, "banner.commit.error");
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	protected ModelAndView createEditModelAndView(final Banner b) {
-		ModelAndView result;
+    protected ModelAndView createEditModelAndView(final Banner b)
+    {
+        ModelAndView result;
 
-		result = this.createEditModelAndView(b, null);
+        result = this.createEditModelAndView(b, null);
 
-		return result;
-	}
+        return result;
+    }
 
-	protected ModelAndView createEditModelAndView(final Banner banner, final String message) {
-		ModelAndView result;
+    protected ModelAndView createEditModelAndView(final Banner banner, final String message)
+    {
+        ModelAndView result;
 
-		result = new ModelAndView("banners/create");
-		result.addObject("banner", banner);
-		result.addObject("message", message);
+        result = new ModelAndView("banners/create");
+        result.addObject("banner", banner);
+        result.addObject("message", message);
 
-		return result;
-	}
+        return result;
+    }
 
 	/*
 	 * @RequestMapping(value = "/randomBanner", method = RequestMethod.GET)

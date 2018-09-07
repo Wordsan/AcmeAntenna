@@ -29,7 +29,8 @@ import validators.PastOrPresent;
 @Entity
 @Access(AccessType.PROPERTY)
 public class Tutorial
-extends DomainEntity {
+        extends DomainEntity
+{
     private User user;
     private Date lastUpdateTime;
     private String title;

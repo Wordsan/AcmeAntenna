@@ -2,7 +2,6 @@ package domain;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.solr.common.util.DateUtil;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,7 +19,6 @@ import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import validators.CustomValidator;
 import validators.HasCustomValidators;
@@ -29,7 +27,8 @@ import validators.HasCustomValidators;
 @Access(AccessType.PROPERTY)
 @HasCustomValidators
 public class PlatformSubscription
-extends DomainEntity {
+        extends DomainEntity
+{
     public static final String KEYCODE_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final int KEYCODE_LENGTH = 32;
 

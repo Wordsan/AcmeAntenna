@@ -16,7 +16,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import javax.validation.constraints.AssertTrue;
 
 import domain.Platform;
 import domain.Satellite;
@@ -75,6 +74,7 @@ public class PlatformService {
         satelliteService.updatePlatformRelation(result, new ArrayList<Satellite>());
         return result;
     }
+
     public Platform update(Platform platform)
     {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);

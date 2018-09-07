@@ -10,6 +10,7 @@ public class QueryUtils {
 
         return result;
     }
+
     public static double doubleFrom(Object o)
     {
         if (o instanceof Integer) {

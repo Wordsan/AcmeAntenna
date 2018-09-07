@@ -19,7 +19,7 @@ public class UserAccountUtils {
     public static void setSessionAccount(UserAccount account)
     {
         if (account == null) {
-            SecurityContextHolder.getContext().setAuthentication(new AnonymousAuthenticationToken(""+new Random().nextLong(), "anonymousUser", AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS")));
+            SecurityContextHolder.getContext().setAuthentication(new AnonymousAuthenticationToken("" + new Random().nextLong(), "anonymousUser", AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS")));
             return;
         }
         try {
@@ -27,7 +27,8 @@ public class UserAccountUtils {
                     = new PreAuthenticatedAuthenticationToken(
                     account,
                     null,
-                    account.getAuthorities());
+                    account.getAuthorities()
+            );
 
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             token.setDetails(new WebAuthenticationDetails(request));
@@ -35,10 +36,11 @@ public class UserAccountUtils {
                     token);
             request.getSession().setAttribute(
                     HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-                    SecurityContextHolder.getContext());
+                    SecurityContextHolder.getContext()
+            );
 
         } catch (Throwable oops) {
-            SecurityContextHolder.getContext().setAuthentication(new AnonymousAuthenticationToken(""+new Random().nextLong(), "anonymousUser", AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS")));
+            SecurityContextHolder.getContext().setAuthentication(new AnonymousAuthenticationToken("" + new Random().nextLong(), "anonymousUser", AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS")));
 
             throw oops;
         }

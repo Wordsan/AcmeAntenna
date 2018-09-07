@@ -12,9 +12,9 @@ import javax.validation.Payload;
 /**
  * This annotation can be used in a form class to ensure a field is validated
  * according to the constraints of another field in another entity class.
- *
+ * <p>
  * Note that this does not work with CustomValidator.
- *
+ * <p>
  * To use, attach this to a field's getter method as with any other constraint.
  */
 
@@ -23,12 +23,18 @@ import javax.validation.Payload;
 @Constraint(validatedBy = UseConstraintsFromValidator.class)
 public @interface UseConstraintsFrom {
     String message() default "{misc.error.undefinedValidationError}";
-    Class<?>[] groups() default { };
-    Class<? extends Payload>[] payload() default { };
 
-    /** Name of the class to use constraints from. */
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
+
+    /**
+     * Name of the class to use constraints from.
+     */
     Class<?> klazz();
 
-    /** Field of the class to use constraints from */
+    /**
+     * Field of the class to use constraints from
+     */
     String property();
 }

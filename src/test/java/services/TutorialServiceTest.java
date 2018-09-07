@@ -1,6 +1,5 @@
 package services;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,24 +11,21 @@ import org.springframework.util.Assert;
 import java.util.Date;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 
 import domain.Tutorial;
-import domain.TutorialComment;
 import domain.User;
-import repositories.TutorialCommentRepository;
 import repositories.TutorialRepository;
 import utilities.AbstractTest;
 
 /**
  * Tests the following use cases from the requirements document:
- *  An actor who is not authenticated must be able to:
- *  - List the tutorials in the system and display them, [...].
- *  An actor who is authenticated as a user must be able to:
- *  - List the tutorials and display them, [...].
- *  - Publish a tutorial and edit it.
- *  An actor who is authenticated as an administrator must be able to:
- *  - Remove a tutorial that he or she thinks is inappropriate.
+ * An actor who is not authenticated must be able to:
+ * - List the tutorials in the system and display them, [...].
+ * An actor who is authenticated as a user must be able to:
+ * - List the tutorials and display them, [...].
+ * - Publish a tutorial and edit it.
+ * An actor who is authenticated as an administrator must be able to:
+ * - Remove a tutorial that he or she thinks is inappropriate.
  */
 @ContextConfiguration(locations = {
         "classpath:spring/junit.xml"

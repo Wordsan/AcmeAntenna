@@ -13,26 +13,27 @@ import repositories.ActorRepository;
 @Component
 @Transactional
 public class StringToActorConverter
-implements Converter<String, Actor> {
-	@Autowired
-	private ActorRepository repository;
+        implements Converter<String, Actor>
+{
+    @Autowired
+    private ActorRepository repository;
 
-	@Override
-	public Actor convert(String text)
-	{
-		Actor result;
+    @Override
+    public Actor convert(String text)
+    {
+        Actor result;
 
-		try {
-			if (StringUtils.isEmpty(text)) {
-				result = null;
-			} else {
-				int id = Integer.valueOf(text);
-				result = repository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+        try {
+            if (StringUtils.isEmpty(text)) {
+                result = null;
+            } else {
+                int id = Integer.valueOf(text);
+                result = repository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

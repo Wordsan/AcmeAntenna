@@ -7,7 +7,8 @@ import domain.Tutorial;
 
 @Repository
 public interface TutorialRepository
-extends JpaRepository<Tutorial, Integer> {
+        extends JpaRepository<Tutorial, Integer>
+{
     // For test use:
     Tutorial findByTitle(String title);
 }

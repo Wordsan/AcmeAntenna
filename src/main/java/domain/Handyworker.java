@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -13,30 +12,35 @@ import javax.persistence.OneToMany;
 @Access(AccessType.PROPERTY)
 public class Handyworker extends Actor {
 
-	private Collection<String>				antennaModels;
-	private Collection<MaintenanceRequest>	requests;
+    private Collection<String> antennaModels;
+    private Collection<MaintenanceRequest> requests;
 
 
-	public Handyworker() {
-		super();
-	}
+    public Handyworker()
+    {
+        super();
+    }
 
-	@ElementCollection
-	public Collection<String> getAntennaModels() {
-		return this.antennaModels;
-	}
+    @ElementCollection
+    public Collection<String> getAntennaModels()
+    {
+        return this.antennaModels;
+    }
 
-	public void setAntennaModels(final Collection<String> antennaModels) {
-		this.antennaModels = antennaModels;
-	}
+    public void setAntennaModels(final Collection<String> antennaModels)
+    {
+        this.antennaModels = antennaModels;
+    }
 
-	@OneToMany(mappedBy = "handyworker")
-	public Collection<MaintenanceRequest> getRequests() {
-		return this.requests;
-	}
+    @OneToMany(mappedBy = "handyworker")
+    public Collection<MaintenanceRequest> getRequests()
+    {
+        return this.requests;
+    }
 
-	public void setRequests(final Collection<MaintenanceRequest> requests) {
-		this.requests = requests;
-	}
+    public void setRequests(final Collection<MaintenanceRequest> requests)
+    {
+        this.requests = requests;
+    }
 
 }

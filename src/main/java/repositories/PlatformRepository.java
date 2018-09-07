@@ -10,7 +10,8 @@ import domain.Platform;
 
 @Repository
 public interface PlatformRepository
-extends JpaRepository<Platform, Integer> {
+        extends JpaRepository<Platform, Integer>
+{
     @Query("select p from Platform p where p.deleted = false order by p.name asc")
     List<Platform> findAllForIndex();
 

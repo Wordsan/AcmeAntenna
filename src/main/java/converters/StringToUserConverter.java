@@ -13,26 +13,27 @@ import repositories.UserRepository;
 @Component
 @Transactional
 public class StringToUserConverter
-implements Converter<String, User> {
-	@Autowired
-	private UserRepository repository;
+        implements Converter<String, User>
+{
+    @Autowired
+    private UserRepository repository;
 
-	@Override
-	public User convert(String text)
-	{
-		User result;
+    @Override
+    public User convert(String text)
+    {
+        User result;
 
-		try {
-			if (StringUtils.isEmpty(text)) {
-				result = null;
-			} else {
-				int id = Integer.valueOf(text);
-				result = repository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+        try {
+            if (StringUtils.isEmpty(text)) {
+                result = null;
+            } else {
+                int id = Integer.valueOf(text);
+                result = repository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

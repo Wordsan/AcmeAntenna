@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.ArrayList;
@@ -13,20 +12,23 @@ import javax.persistence.OneToMany;
 @Access(AccessType.PROPERTY)
 public class Agent extends Actor {
 
-	private Collection<Banner>	banners	= new ArrayList<Banner>();
+    private Collection<Banner> banners = new ArrayList<Banner>();
 
 
-	public Agent() {
-		super();
-	}
+    public Agent()
+    {
+        super();
+    }
 
-	@OneToMany(mappedBy = "agent")
-	public Collection<Banner> getBanners() {
-		return this.banners;
-	}
+    @OneToMany(mappedBy = "agent")
+    public Collection<Banner> getBanners()
+    {
+        return this.banners;
+    }
 
-	public void setBanners(final Collection<Banner> banners) {
-		this.banners = banners;
-	}
+    public void setBanners(final Collection<Banner> banners)
+    {
+        this.banners = banners;
+    }
 
 }

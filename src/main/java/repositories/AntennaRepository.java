@@ -11,7 +11,8 @@ import domain.User;
 
 @Repository
 public interface AntennaRepository
-extends JpaRepository<Antenna, Integer> {
+        extends JpaRepository<Antenna, Integer>
+{
     @Query("select a from Antenna a where a.id = ?1 and 1=1")
     Antenna findActualEntityInDb(int id);
 

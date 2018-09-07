@@ -12,34 +12,27 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
-import javax.xml.stream.events.Comment;
 
-import domain.Platform;
-import domain.Satellite;
 import domain.Tutorial;
 import domain.TutorialComment;
 import domain.User;
-import repositories.PlatformRepository;
-import repositories.SatelliteRepository;
 import repositories.TutorialCommentRepository;
 import repositories.TutorialRepository;
-import sun.awt.image.SurfaceManager;
 import utilities.AbstractTest;
 
 /**
  * Tests the following use cases from the requirements document:
- *  An actor who is not authenticated must be able to:
- *  - List the tutorials in the system and display them, **but not their comments**.
- *  An actor who is authenticated as a user must be able to:
- *  - List the tutorials and display them, **including their comments**.
- *  - Post a comment to a tutorial. Confirmation must be requested before posting a
- *    comment since they cannot be modified later.
- *  An actor who is authenticated as an administrator must be able to:
- *  - Remove a comment that he or she thinks is inappropriate.
+ * An actor who is not authenticated must be able to:
+ * - List the tutorials in the system and display them, **but not their comments**.
+ * An actor who is authenticated as a user must be able to:
+ * - List the tutorials and display them, **including their comments**.
+ * - Post a comment to a tutorial. Confirmation must be requested before posting a
+ * comment since they cannot be modified later.
+ * An actor who is authenticated as an administrator must be able to:
+ * - Remove a comment that he or she thinks is inappropriate.
  */
 @ContextConfiguration(locations = {
         "classpath:spring/junit.xml"

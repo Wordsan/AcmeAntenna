@@ -13,26 +13,27 @@ import repositories.AdministratorRepository;
 @Component
 @Transactional
 public class StringToAdministratorConverter
-implements Converter<String, Administrator> {
-	@Autowired
-	private AdministratorRepository repository;
+        implements Converter<String, Administrator>
+{
+    @Autowired
+    private AdministratorRepository repository;
 
-	@Override
-	public Administrator convert(String text)
-	{
-		Administrator result;
+    @Override
+    public Administrator convert(String text)
+    {
+        Administrator result;
 
-		try {
-			if (StringUtils.isEmpty(text)) {
-				result = null;
-			} else {
-				int id = Integer.valueOf(text);
-				result = repository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+        try {
+            if (StringUtils.isEmpty(text)) {
+                result = null;
+            } else {
+                int id = Integer.valueOf(text);
+                result = repository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

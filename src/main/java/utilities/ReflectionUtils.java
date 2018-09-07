@@ -20,7 +20,7 @@ public class ReflectionUtils {
     {
         Set<Class<?>> result = new HashSet<Class<?>>();
 
-        for (String pkgName: new String[] {"domain"}) {
+        for (String pkgName : new String[]{"domain"}) {
             result.addAll(findCandidatesByAnnotation(Entity.class, pkgName));
         }
 
@@ -58,7 +58,7 @@ public class ReflectionUtils {
     {
         Set<Class<?>> result = new HashSet<Class<?>>();
 
-        for (String pkgName: new String[] {"services"}) {
+        for (String pkgName : new String[]{"services"}) {
             result.addAll(findCandidatesByAnnotation(Service.class, pkgName));
         }
         return result;

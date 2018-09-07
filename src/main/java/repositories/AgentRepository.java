@@ -1,4 +1,3 @@
-
 package repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +9,7 @@ import domain.Agent;
 @Repository
 public interface AgentRepository extends JpaRepository<Agent, Integer> {
 
-	@Query("select a from Agent a where a.userAccount.id=?1")
-	Agent findByUserAccount(int userAccount);
+    @Query("select a from Agent a where a.userAccount.id=?1")
+    Agent findByUserAccount(int userAccount);
 
 }
