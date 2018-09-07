@@ -12,7 +12,8 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <form:form action="${formAction}" modelAttribute="platform">
-    <app:model-editor />
+    <app:preserve-return-action />
+    <app:entity-editor />
     <form:hidden path="deleted" />
     <app:textbox path="name" code="platforms.name" />
     <app:textarea path="description" code="platforms.description" />
@@ -20,9 +21,6 @@
 
     <div>
         <app:submit entity="${platform}" />
-        <c:if test="${platform.id != 0}">
-            <app:delete-button code="misc.actions.delete" action="platforms/delete.do?id=${platform.id}" />
-        </c:if>
         <app:cancel-button />
     </div>
 </form:form>

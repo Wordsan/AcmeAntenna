@@ -74,16 +74,32 @@ public class AbstractController {
         return ApplicationConfig.DISPLAYTAG_PAGE_SIZE;
     }
 
+    // Returns the current request URI without the query string.
     @ModelAttribute("currentRequestUri")
     public String getCurrentRequestUri()
     {
         return HttpServletUtils.currentRequestUri();
     }
 
+    // Returns the current request URI and query string.
     @ModelAttribute("currentRequestUriAndParams")
     public String getCurrentRequestUriAndParams()
     {
         return HttpServletUtils.currentRequestUriAndParams();
+    }
+
+    // Returns the URI that a form, called by the page in this request, should return to. For cancel buttons.
+    // First returns the returnAction parameter, if not, if it's a GET request, the current URI and params, else the welcome page.
+    @ModelAttribute("returnActionForHere")
+    public String getReturnActionForHere()
+    {
+        String prevReturnAction = HttpServletUtils.getCurrentHttpRequest().getParameter("returnAction");
+        if (prevReturnAction != null && !prevReturnAction.isEmpty()) return prevReturnAction;
+        if (HttpServletUtils.getCurrentHttpRequest().getMethod().equalsIgnoreCase("GET")) {
+            return HttpServletUtils.currentRequestUriAndParams();
+        } else {
+            return "welcome/index.do";
+        }
     }
 
     @InitBinder

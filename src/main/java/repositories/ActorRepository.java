@@ -13,6 +13,6 @@ public interface ActorRepository
 {
     Actor findByUserAccount(UserAccount userAccount);
 
-    @Query("select a from Actor a where a.userAccount.username = ?")
+    @Query("select a from Actor a where a.userAccount.username = ?1")
     Actor findByUsername(String username);
 }

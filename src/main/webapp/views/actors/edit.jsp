@@ -12,7 +12,8 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <form:form action="${formAction}" modelAttribute="actor">
-    <app:model-editor />
+    <app:preserve-return-action />
+    <app:entity-editor />
 	<app:actor-editor />
 
     <div>

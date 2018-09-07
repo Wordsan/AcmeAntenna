@@ -43,12 +43,4 @@ public class TutorialCommentService {
 
         return repository.save(tutorialComment);
     }
-
-    public TutorialComment getByIdForDelete(int id)
-    {
-        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-        TutorialComment result = repository.findOne(id);
-        if (result == null) throw new ResourceNotFoundException();
-        return result;
-    }
 }

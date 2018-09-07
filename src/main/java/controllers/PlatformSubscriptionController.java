@@ -68,11 +68,17 @@ public class PlatformSubscriptionController extends AbstractController {
 
     public ModelAndView createEditModelAndView(final String viewName, final String formAction, final String globalErrorMessage, final BindingResult binding, final PlatformSubscription platformSubscription)
     {
-        final ModelAndView result = ControllerUtils.createViewWithBinding(viewName, binding, globalErrorMessage);
+        ModelAndView result = ControllerUtils.createViewWithBinding(
+                viewName,
+                "platformSubscription",
+                platformSubscription,
+                binding,
+                globalErrorMessage
+        );
 
         result.addObject("formAction", formAction);
-        result.addObject("platformSubscription", platformSubscription);
-        result.addObject("platforms", this.platformService.findAllForIndex());
+        result.addObject("platforms", platformService.findAllForIndex());
+
 
         return result;
     }
@@ -88,8 +94,8 @@ public class PlatformSubscriptionController extends AbstractController {
             try {
                 platformSubscription = this.service.create(platformSubscription);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-                return ControllerUtils.redirect("/platform_subscriptions/index.do");
-            } catch (final OverlappingPlatformSubscriptionException ex) {
+                return ControllerUtils.redirectToReturnAction();
+            } catch (OverlappingPlatformSubscriptionException ex) {
                 globalErrorMessage = "platform_subscription.error.overlapping";
             } catch (final Throwable oops) {
                 if (ApplicationConfig.DEBUG) {

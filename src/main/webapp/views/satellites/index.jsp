@@ -31,8 +31,8 @@
     <display:column property="description" titleKey="satellites.description" escapeXml="true" sortable="true" />
     <security:authorize access="hasRole('ADMINISTRATOR')">
         <display:column titleKey="misc.actions">
-            <app:redir-button code="misc.actions.edit" action="satellites/edit.do?id=${satellite.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
-            <app:delete-button code="misc.actions.delete" action="satellites/delete.do?id=${satellite.id}" />
+            <app:redir-button code="misc.actions.edit" action="satellites/edit.do?id=${satellite.id}&returnAction=${appfn:escapeUrlParam(returnActionForHere)}" />
+            <app:delete-button code="misc.actions.delete" action="satellites/delete.do?id=${satellite.id}&returnAction=${appfn:escapeUrlParam(appfn:withoutDisplayTagParams(currentRequestUriAndParams, 'satellite'))}" />
         </display:column>
     </security:authorize>
 </display:table>

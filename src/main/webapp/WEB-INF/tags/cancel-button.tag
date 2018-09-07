@@ -37,15 +37,10 @@
 <c:if test="${action == null && param.returnAction != null}">
     <c:set var="action" value="${param.returnAction}" />
 </c:if>
-<c:choose>
-    <c:when test="${action != null}">
-       	<c:set var="onclick" value="relativeRedir('${appfn:escapeJs(action)}')" />
-    </c:when>
-    <c:otherwise>
-        <c:set var="onclick" value="window.history.back()" />
-    </c:otherwise>
-</c:choose>
+<c:if test="${action == null && param.returnAction != null}">
+    <c:set var="action" value="welcome/index.do" />
+</c:if>
 
-<button type="button" onclick="${onclick}" >
+<button type="button" onclick="relativeRedir('${appfn:escapeJs(action)}')" >
     <spring:message code="${code}" />
 </button>

@@ -67,12 +67,13 @@ public class AntennaController extends AbstractController {
     {
         ModelAndView result = ControllerUtils.createViewWithBinding(
                 viewName,
+                "antenna",
+                antenna,
                 binding,
                 globalErrorMessage
         );
 
         result.addObject("formAction", formAction);
-        result.addObject("antenna", antenna);
         result.addObject("satellites", satelliteService.findAllForIndex());
 
         return result;
@@ -93,7 +94,8 @@ public class AntennaController extends AbstractController {
             try {
                 antenna = antennaService.create(antenna);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-                return ControllerUtils.redirect("/antennas/index.do");
+                redir.addAttribute("id", antenna.getId());
+                return ControllerUtils.redirect("/antennas/show.do");
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
@@ -126,7 +128,7 @@ public class AntennaController extends AbstractController {
                 antenna = antennaService.update(antenna);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 
-                return ControllerUtils.redirect("/antennas/index.do");
+                return ControllerUtils.redirectToReturnAction();
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
@@ -148,7 +150,7 @@ public class AntennaController extends AbstractController {
             if (ApplicationConfig.DEBUG) oops.printStackTrace();
             redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
         }
-        return ControllerUtils.redirect("/antennas/index.do");
+        return ControllerUtils.redirectToReturnAction();
     }
 
 }

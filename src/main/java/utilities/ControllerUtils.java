@@ -1,27 +1,35 @@
 package utilities;
 
+import org.displaytag.util.ParamEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 
 public class ControllerUtils {
     public static ModelAndView createViewWithBinding(
             String viewName,
+            String modelName,
+            Object modelObject,
             BindingResult binding,
             String globalErrorMessage
     )
     {
         ModelAndView result = new ModelAndView(viewName);
 
+        result.addObject(modelName, modelObject);
+
         if (binding != null) {
-            result.addObject("result", binding);
+            result.addObject("org.springframework.validation.BindingResult." + modelName, binding);
             if (globalErrorMessage == null && binding.getGlobalError() != null) {
                 globalErrorMessage = binding
                         .getGlobalError()
@@ -42,9 +50,6 @@ public class ControllerUtils {
 
         // Fix root-relative url handling.
         view.setContextRelative(true);
-
-        // Do not expose model attributes, use RedirectAttributes instead.
-        view.setExposeModelAttributes(false);
 
         ModelAndView result = new ModelAndView(view);
         return result;
@@ -86,6 +91,9 @@ public class ControllerUtils {
         String returnAction = null;
 
         returnAction = HttpServletUtils.getCurrentHttpRequest().getParameter("returnAction");
+        if (returnAction != null && !returnAction.isEmpty() && !returnAction.startsWith("/")) {
+            returnAction = "/" + returnAction;
+        }
 
         if (returnAction == null || returnAction.isEmpty()) {
             returnAction = "/welcome/index.do";

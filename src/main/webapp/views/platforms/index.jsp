@@ -32,8 +32,8 @@
 
         <security:authorize access="hasRole('ADMINISTRATOR')">
             <display:column titleKey="misc.actions">
-                <app:redir-button code="misc.actions.edit" action="platforms/edit.do?id=${platform.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
-                <app:delete-button code="misc.actions.delete" action="platforms/delete.do?id=${platform.id}" />
+                <app:redir-button code="misc.actions.edit" action="platforms/edit.do?id=${platform.id}&returnAction=${appfn:escapeUrlParam(returnActionForHere)}" />
+                <app:delete-button code="misc.actions.delete" action="platforms/delete.do?id=${platform.id}&returnAction=${appfn:escapeUrlParam(appfn:withoutDisplayTagParams(currentRequestUriAndParams, 'platform'))}" />
             </display:column>
         </security:authorize>
     </display:table>

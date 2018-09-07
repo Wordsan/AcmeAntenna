@@ -63,12 +63,13 @@ public class SatelliteController extends AbstractController {
     {
         ModelAndView result = ControllerUtils.createViewWithBinding(
                 viewName,
+                "satellite",
+                satellite,
                 binding,
                 globalErrorMessage
         );
 
         result.addObject("formAction", formAction);
-        result.addObject("satellite", satellite);
         result.addObject("platforms", platformService.findAllForIndex());
 
         return result;
@@ -87,9 +88,10 @@ public class SatelliteController extends AbstractController {
         if (!binding.hasErrors()) {
             try {
                 satellite = satelliteService.create(satellite);
+                redir.addAttribute("id", satellite.getId());
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 
-                return ControllerUtils.redirect("/satellites/index.do");
+                return ControllerUtils.redirect("/satellites/show.do");
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
@@ -122,7 +124,7 @@ public class SatelliteController extends AbstractController {
             try {
                 satellite = satelliteService.update(satellite);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-                return ControllerUtils.redirect("/satellites/index.do");
+                return ControllerUtils.redirectToReturnAction();
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
@@ -137,7 +139,7 @@ public class SatelliteController extends AbstractController {
     {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-        ModelAndView result = ControllerUtils.redirect("/satellites/index.do");
+        ModelAndView result = ControllerUtils.redirectToReturnAction();
         try {
             satelliteService.delete(id);
             redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");

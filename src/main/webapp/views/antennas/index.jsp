@@ -23,8 +23,8 @@
     <display:column property="positionForDisplay" titleKey="antennas.position" escapeXml="true" />
     <display:column property="satellite.name" titleKey="antennas.satellite" escapeXml="true" sortable="true" href="satellites/show.do" paramId="id" paramProperty="satellite.id" />
     <display:column titleKey="misc.actions">
-        <app:redir-button code="misc.actions.edit" action="antennas/edit.do?id=${antenna.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
-        <app:delete-button code="misc.actions.delete" action="antennas/delete.do?id=${antenna.id}" />
+        <app:redir-button code="misc.actions.edit" action="antennas/edit.do?id=${antenna.id}&returnAction=${appfn:escapeUrlParam(returnActionForHere)}" />
+        <app:delete-button code="misc.actions.delete" action="antennas/delete.do?id=${antenna.id}&returnAction=${appfn:escapeUrlParam(appfn:withoutDisplayTagParams(currentRequestUriAndParams, 'antenna'))}" />
     </display:column>
 
 </display:table>

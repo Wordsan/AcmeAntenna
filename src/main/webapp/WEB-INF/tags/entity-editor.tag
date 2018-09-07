@@ -1,4 +1,4 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@tag language="java" body-content="empty" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -11,20 +11,5 @@
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
-<form:form action="${formAction}" modelAttribute="tutorial">
-    <app:preserve-return-action />
-    <app:entity-editor />
-
-    <form:hidden path="user" />
-    <form:hidden path="lastUpdateTime" />
-
-    <app:textbox path="title" code="tutorials.title" />
-    <app:textarea path="text" code="tutorials.text" />
-    <app:stringlist path="pictureUrls" items="${tutorial.pictureUrls}" code="tutorials.pictureUrls" />
-
-    <div>
-        <app:submit entity="${tutorial}" />
-        <app:cancel-button />
-    </div>
-</form:form>
-
+<form:hidden path="id" />
+<form:hidden path="version" />

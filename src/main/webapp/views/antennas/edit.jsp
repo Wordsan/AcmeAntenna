@@ -12,7 +12,8 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <form:form action="${formAction}" modelAttribute="antenna">
-    <app:model-editor />
+    <app:preserve-return-action />
+    <app:entity-editor />
     <form:hidden path="user" />
     <app:textbox path="serialNumber" code="antennas.serialNumber" />
     <app:textbox path="model" code="antennas.model" />
@@ -25,9 +26,6 @@
 
     <div>
         <app:submit entity="${antenna}" />
-        <c:if test="${antenna.id != 0}">
-            <app:delete-button code="misc.actions.delete" action="antennas/delete.do?id=${antenna.id}" />
-        </c:if>
         <app:cancel-button />
     </div>
 </form:form>

@@ -12,6 +12,8 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <form:form action="users/create.do" modelAttribute="form">
+    <app:preserve-return-action />
+
     <app:textbox path="user.userAccount.username" code="actors.username" />
     <app:password path="user.userAccount.password" code="actors.password" />
     <app:password path="repeatPassword" code="actors.repeatPassword" />

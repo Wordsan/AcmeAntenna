@@ -58,10 +58,9 @@ public class ActorController extends AbstractController {
 
     public ModelAndView createEditModelAndView(final Actor actor, final BindingResult binding, final String globalErrorMessage)
     {
-        final ModelAndView result = ControllerUtils.createViewWithBinding("actors/edit", binding, globalErrorMessage);
+        ModelAndView result = ControllerUtils.createViewWithBinding("actors/edit", "actor", actor, binding, globalErrorMessage);
 
         result.addObject("formAction", "actors/update.do");
-        result.addObject("actor", actor);
 
         return result;
     }
@@ -78,13 +77,12 @@ public class ActorController extends AbstractController {
 				actor = this.actorService.updateOwnProfile(actor);
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 
-				return ControllerUtils.redirect("/welcome/index.do");
-			} catch (final Throwable oops) {
-				if (ApplicationConfig.DEBUG) {
-					oops.printStackTrace();
-				}
-				globalErrorMessage = "misc.commit.error";
-
+                return ControllerUtils.redirectToReturnAction();
+            } catch (final Throwable oops) {
+                if (ApplicationConfig.DEBUG) {
+                    oops.printStackTrace();
+                }
+                globalErrorMessage = "misc.commit.error";
 			}
 		}
 
@@ -101,9 +99,7 @@ public class ActorController extends AbstractController {
 
     public ModelAndView createEditOwnPasswordModelAndView(final EditOwnPasswordForm form, final BindingResult binding, final String globalErrorMessage)
     {
-        final ModelAndView result = ControllerUtils.createViewWithBinding("actors/edit_own_password", binding, globalErrorMessage);
-
-        result.addObject("form", form);
+        ModelAndView result = ControllerUtils.createViewWithBinding("actors/edit_own_password", "form", form, binding, globalErrorMessage);
 
         return result;
     }
@@ -115,23 +111,23 @@ public class ActorController extends AbstractController {
 
         String globalErrorMessage = null;
 
-		if (!binding.hasErrors()) {
-			try {
-				this.actorService.updateOwnPassword(form.getOldPassword(), form.getNewPassword());
-				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+        if (!binding.hasErrors()) {
+            try {
+                this.actorService.updateOwnPassword(form.getOldPassword(), form.getNewPassword());
+                redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 
-				return ControllerUtils.redirect("/welcome/index.do");
-			} catch (final OldPasswordDoesntMatchException oops) {
-				binding.addError(new FieldError("form", "oldPassword", form.getOldPassword(), false, new String[]{
-						"actors.error.oldPasswordDoesntMatch"
-				}, null, null));
-			} catch (final Throwable oops) {
-				if (ApplicationConfig.DEBUG) {
-					oops.printStackTrace();
-				}
-				globalErrorMessage = "misc.commit.error";
-			}
-		}
+                return ControllerUtils.redirectToReturnAction();
+            } catch (final OldPasswordDoesntMatchException oops) {
+                binding.addError(new FieldError("form", "oldPassword", form.getOldPassword(), false, new String[]{
+                        "actors.error.oldPasswordDoesntMatch"
+                }, null, null));
+            } catch (final Throwable oops) {
+                if (ApplicationConfig.DEBUG) {
+                    oops.printStackTrace();
+                }
+                globalErrorMessage = "misc.commit.error";
+            }
+        }
 
         return this.createEditOwnPasswordModelAndView(form, binding, globalErrorMessage);
     }

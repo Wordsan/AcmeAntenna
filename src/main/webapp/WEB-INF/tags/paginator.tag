@@ -28,7 +28,7 @@
         </c:if>
         <c:if test="${page.number > 0}" >
             <li class="page-item">
-                <a class="page-link" href="<c:out value="${appfn:urlForPage(paramName, page.number - 1)}" />"><spring:message code="misc.previous" /></a>
+                <a class="page-link" href="<c:out value="${appfn:withUrlParam(currentRequestUriAndParams, paramName, page.number - 1)}" />"><spring:message code="misc.previous" /></a>
             </li>
         </c:if>
 
@@ -39,14 +39,14 @@
                     <li class="page-item active"><a class="page-link" href="#" onclick="return false"><c:out value="${page.number + 1}" /> <span class="sr-only">(current)</span></a></li>
                 </c:if>
                 <c:if test="${offset != 0}">
-                    <li class="page-item"><a class="page-link" href="<c:out value="${appfn:urlForPage(paramName, page.number + offset)}" />"><c:out value="${page.number + offset + 1}" /></a></li>
+                    <li class="page-item"><a class="page-link" href="<c:out value="${appfn:withUrlParam(currentRequestUriAndParams, paramName, page.number + offset)}" />"><c:out value="${page.number + offset + 1}" /></a></li>
                 </c:if>
             </c:if>
         </c:forEach>
 
         <c:if test="${page.number + 1 < page.totalPages}" >
             <li class="page-item">
-                <a class="page-link" href="<c:out value="${appfn:urlForPage(paramName, page.number + 1)}" />"><spring:message code="misc.next" /></a>
+                <a class="page-link" href="<c:out value="${appfn:withUrlParam(currentRequestUriAndParams, paramName, page.number + 1)}" />"><spring:message code="misc.next" /></a>
             </li>
         </c:if>
         <c:if test="${page.number + 1 >= page.totalPages}" >

@@ -12,7 +12,8 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <form:form action="${formAction}" modelAttribute="satellite">
-    <app:model-editor />
+    <app:preserve-return-action />
+    <app:entity-editor />
     <form:hidden path="deleted" />
     <app:textbox path="name" code="satellites.name" />
     <app:textarea path="description" code="satellites.description" />
@@ -20,10 +21,6 @@
 
     <div>
         <app:submit entity="${satellite}" />
-
-        <c:if test="${satellite.id != 0}">
-        <app:delete-button code="misc.actions.delete" action="satellites/delete.do?id=${satellite.id}" />
-        </c:if>
         <app:cancel-button />
     </div>
 </form:form>

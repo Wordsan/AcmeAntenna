@@ -42,11 +42,11 @@ public class UserController extends AbstractController {
     {
         ModelAndView result = ControllerUtils.createViewWithBinding(
                 "users/new",
+                "form",
+                form,
                 binding,
                 globalErrorMessage
         );
-
-        result.addObject("form", form);
 
         return result;
     }

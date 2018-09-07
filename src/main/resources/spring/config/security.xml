@@ -55,6 +55,7 @@
 		<security:intercept-url pattern="/platforms/new.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/platforms/create.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/platforms/update.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/platforms/create.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/platforms/delete.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/platforms/edit.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/platforms/show.do" access="permitAll" />
