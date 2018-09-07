@@ -191,6 +191,7 @@ public class ExportPopulateDatabase {
 		printDocument(System.out);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void unlazifyRelationships(DomainEntity entity, Class<? extends DomainEntity> klazz)
 	{
 		Hibernate.initialize(entity);

@@ -88,8 +88,13 @@
 		<security:intercept-url pattern="/tutorials/delete.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/tutorials/delete_comment.do" access="hasRole('ADMINISTRATOR')" />
 
-		<security:intercept-url pattern="/users/new.do" access="!isAuthenticated()" />
-		<security:intercept-url pattern="/users/create.do" access="!isAuthenticated()" />
+		<security:intercept-url pattern="/users/new.do" access="isAnonymous()" />
+		<security:intercept-url pattern="/users/create.do" access="isAnonymous()" />
+
+		<security:intercept-url pattern="/legal/about_us.do" access="permitAll" />
+		<security:intercept-url pattern="/legal/terms.do" access="permitAll" />
+		<security:intercept-url pattern="/legal/cookies.do" access="permitAll" />
+		<security:intercept-url pattern="/legal/privacy.do" access="permitAll" />
 
 		<security:intercept-url pattern="/**" access="denyAll" />
 

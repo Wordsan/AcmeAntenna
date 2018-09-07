@@ -42,6 +42,7 @@
 <script type="text/javascript" src="scripts/stringlist.js"></script>
 <script type="text/javascript" src="scripts/multiple-select.js"></script>
 <script type="text/javascript" src="scripts/functions.js"></script>
+<script type="text/javascript" src="scripts/cookies.js"></script>
 
 <link rel="stylesheet" href="styles/common.css" type="text/css">
 <link rel="stylesheet" href="styles/jquery-ui.css" media="screen"
@@ -50,6 +51,7 @@
 	type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
 <link rel="stylesheet" href="styles/multiple-select.css" type="text/css">
+<link rel="stylesheet" href="styles/cookies.css" type="text/css">
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 

@@ -12,6 +12,7 @@
 		<value>/views/actors/tiles.xml</value>
 		<value>/views/antennas/tiles.xml</value>
 		<value>/views/users/tiles.xml</value>
+		<value>/views/legal/tiles.xml</value>
 		<value>/views/tutorials/tiles.xml</value>
 		<value>/views/master-page/tiles.xml</value>
 		<value>/views/misc/tiles.xml</value>
