@@ -59,9 +59,7 @@ public class HandyworkerController extends AbstractController {
 
     public ModelAndView createEditModelAndView(final String globalErrorMessage, final BindingResult binding, final NewHandyworkerForm form)
     {
-        final ModelAndView result = ControllerUtils.createViewWithBinding("handyworkers/new", binding, globalErrorMessage);
-
-        result.addObject("form", form);
+        final ModelAndView result = ControllerUtils.createViewWithBinding("handyworkers/new", "form", form, binding, globalErrorMessage);
 
         return result;
     }
@@ -92,43 +90,4 @@ public class HandyworkerController extends AbstractController {
 
         return this.createEditModelAndView(globalErrorMessage, binding, form);
     }
-
-	/*
-     * @RequestMapping(value = "/create", method = RequestMethod.GET)
-	 * public ModelAndView create() {
-	 * final Handyworker handyworker = this.handyworkerService.create();
-	 * final UserAccount ua = this.userAccountService.create();
-	 * handyworker.setUserAccount(ua);
-	 * final ModelAndView result = this.createModelAndView(handyworker, null);
-	 * 
-	 * return result;
-	 * }
-	 * 
-	 * @RequestMapping(value = "/create", method = RequestMethod.POST)
-	 * public ModelAndView saveHandyworker(@Valid final Handyworker handyworker, final BindingResult binding) {
-	 * ModelAndView res;
-	 * final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-	 * if (binding.hasErrors()) {
-	 * System.out.print(binding.getAllErrors());
-	 * res = this.createModelAndView(handyworker, null);
-	 * } else {
-	 * 
-	 * handyworker.getUserAccount().setPassword(encoder.encodePassword(handyworker.getUserAccount().getPassword(), null));
-	 * 
-	 * final Handyworker handyworkerSaved = this.handyworkerService.save(handyworker);
-	 * res = new ModelAndView("security/login");
-	 * res.addObject("credentials", handyworkerSaved.getUserAccount());
-	 * }
-	 * return res;
-	 * }
-	 * protected ModelAndView createModelAndView(final Handyworker handyworker, final String message) {
-	 * ModelAndView result;
-	 * 
-	 * result = new ModelAndView("handyworkers/create");
-	 * result.addObject("handyworker", handyworker);
-	 * result.addObject("message", message);
-	 * 
-	 * return result;
-	 * }
-	 */
 }

@@ -43,7 +43,7 @@ public class AgentController extends AbstractController {
 
     public ModelAndView createEditModelAndView(final String globalErrorMessage, final BindingResult binding, final NewAgentForm form)
     {
-        final ModelAndView result = ControllerUtils.createViewWithBinding("agents/new", binding, globalErrorMessage);
+        final ModelAndView result = ControllerUtils.createViewWithBinding("agents/new", "form", form, binding, globalErrorMessage);
 
         result.addObject("form", form);
 
