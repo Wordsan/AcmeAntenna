@@ -6,4 +6,4 @@
 domain.*
 *.iml
 /src/main/resources/Entities.map
-
+/*.war
