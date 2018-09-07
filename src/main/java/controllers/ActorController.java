@@ -102,9 +102,7 @@ public class ActorController extends AbstractController {
 
                 return ControllerUtils.redirectToReturnAction();
             } catch (final OldPasswordDoesntMatchException oops) {
-                binding.addError(new FieldError("form", "oldPassword", form.getOldPassword(), false, new String[]{
-                        "actors.error.oldPasswordDoesntMatch"
-                }, null, null));
+                binding.rejectValue("oldPassword", "actors.error.oldPasswordDoesntMatch");
             } catch (final Throwable oops) {
                 if (ApplicationConfig.DEBUG) {
                     oops.printStackTrace();
