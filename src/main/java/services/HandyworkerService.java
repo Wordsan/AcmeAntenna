@@ -19,7 +19,7 @@ import utilities.CheckUtils;
 import domain.Actor;
 import domain.Handyworker;
 import domain.MaintenanceRequest;
-import exceptions.UsernameNotUniqueException;
+import exceptions.ResourceNotUniqueException;
 
 @Service
 @Transactional
@@ -78,7 +78,8 @@ public class HandyworkerService {
 		return res;
 	}
 
-	public Handyworker createAsNewHandyworker(final Handyworker handyworker) throws UsernameNotUniqueException {
+	public Handyworker createAsNewHandyworker(final Handyworker handyworker) throws ResourceNotUniqueException
+    {
 		CheckUtils.checkUnauthenticated();
 		CheckUtils.checkNotExists(handyworker);
 

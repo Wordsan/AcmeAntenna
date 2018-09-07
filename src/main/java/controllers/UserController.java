@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 import domain.User;
-import exceptions.UsernameNotUniqueException;
+import exceptions.ResourceNotUniqueException;
 import forms.NewUserForm;
 import services.UserService;
 import utilities.ApplicationConfig;
@@ -35,10 +35,10 @@ public class UserController extends AbstractController {
 	{
 		CheckUtils.checkUnauthenticated();
 
-		return createEditModelAndView(null, null, new NewUserForm());
+		return createNewModelAndView(null, null, new NewUserForm());
 	}
 
-	public ModelAndView createEditModelAndView(String globalErrorMessage, BindingResult binding, NewUserForm form)
+	public ModelAndView createNewModelAndView(String globalErrorMessage, BindingResult binding, NewUserForm form)
 	{
 		ModelAndView result = ControllerUtils.createViewWithBinding(
 				"users/new",
@@ -67,15 +67,15 @@ public class UserController extends AbstractController {
 
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 				return ControllerUtils.redirect("/welcome/index.do");
-			} catch(UsernameNotUniqueException ex) {
-				globalErrorMessage = "misc.error.usernameNotUnique";
+			} catch(ResourceNotUniqueException ex) {
+				binding.rejectValue("username", "misc.error.usernameNotUnique");
 			} catch(Throwable oops) {
 				if (ApplicationConfig.DEBUG) oops.printStackTrace();
 				globalErrorMessage = "misc.commit.error";
 			}
 		}
 
-		return createEditModelAndView(globalErrorMessage, binding, form);
+		return createNewModelAndView(globalErrorMessage, binding, form);
 	}
 
 }

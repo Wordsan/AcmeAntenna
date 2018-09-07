@@ -10,13 +10,6 @@
 
 package utilities;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Properties;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.junit.After;
@@ -32,6 +25,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Properties;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import domain.Actor;
 import security.LoginService;
@@ -54,18 +54,18 @@ public abstract class AbstractTest {
 	// Supporting services --------------------------------
 
 	@Autowired
-	private LoginService						loginService;
+	private LoginService loginService;
 	@Autowired
 	private JpaTransactionManager				transactionManager;
 	@Autowired
-	private ActorService						actorService;
+	private ActorService actorService;
 
 	// Internal state -------------------------------------
 
 	private final DefaultTransactionDefinition	transactionDefinition;
 	private TransactionStatus					currentTransaction;
 	private final Properties					entityMap;
-	
+
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -101,6 +101,10 @@ public abstract class AbstractTest {
 	public void outerTearDown() {
 		tearDown();
 		try {
+			// Clear the entity manager if an exception has already been thrown to prevent another exception from happening here.
+			if (currentTransaction.isRollbackOnly()) {
+				entityManager.clear();
+			}
 			flushTransaction();
 		} finally {
 			try {
@@ -111,7 +115,7 @@ public abstract class AbstractTest {
 		}
 	}
 	public void tearDown() {}
-	
+
 	private static boolean hasPopulatedDatabase = false;
 	@BeforeClass
 	public static void setUpGlobal()
@@ -124,7 +128,7 @@ public abstract class AbstractTest {
 				PopulateDatabase.main(null);
 			}
 		}
-		
+
 	}
 
 	// Supporting methods ---------------------------------

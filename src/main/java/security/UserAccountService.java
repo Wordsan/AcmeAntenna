@@ -3,7 +3,6 @@ package security;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -13,14 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import utilities.CheckUtils;
-import exceptions.UsernameNotUniqueException;
+import exceptions.ResourceNotUniqueException;
 
 @Service
 @Transactional
 public class UserAccountService {
 
-	@Autowired
-	UserAccountRepository	repository;
+	@Autowired private UserAccountRepository	repository;
 
 
 	public UserAccount findOne(final int id) {
@@ -31,9 +29,10 @@ public class UserAccountService {
 		return this.repository.findByUsername(username);
 	}
 
-	public UserAccount create(final String username, final String password, final String authority) throws UsernameNotUniqueException {
+	public UserAccount create(final String username, final String password, final String authority) throws ResourceNotUniqueException
+    {
 		if (this.findByName(username) != null)
-			throw new UsernameNotUniqueException();
+			throw new ResourceNotUniqueException();
 
 		UserAccount account = new UserAccount();
 		account.setUsername(username);
@@ -61,23 +60,6 @@ public class UserAccountService {
 
 	public boolean passwordMatchesAccount(final UserAccount account, final String password) {
 		return new Md5PasswordEncoder().isPasswordValid(account.getPassword(), password, null);
-	}
-
-	public UserAccount create() {
-		UserAccount res;
-		res = new UserAccount();
-		final Authority authority = new Authority();
-		final List<Authority> authorities = new ArrayList<Authority>();
-		authority.setAuthority(Authority.HANDYWORKER);
-		authorities.add(authority);
-		res.setAuthorities(authorities);
-
-		return res;
-	}
-
-	public UserAccount save(final UserAccount userAccount) {
-		Assert.notNull(userAccount);
-		return this.repository.save(userAccount);
 	}
 
 }

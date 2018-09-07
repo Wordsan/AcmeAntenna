@@ -16,7 +16,7 @@ import utilities.CheckUtils;
 import domain.Actor;
 import domain.MaintenanceRequest;
 import domain.User;
-import exceptions.UsernameNotUniqueException;
+import exceptions.ResourceNotUniqueException;
 
 @Service
 @Transactional
@@ -44,7 +44,8 @@ public class UserService {
 		return (User) principal;
 	}
 
-	public User createAsNewUser(final User user) throws UsernameNotUniqueException {
+	public User createAsNewUser(final User user) throws ResourceNotUniqueException
+    {
 		CheckUtils.checkUnauthenticated();
 		CheckUtils.checkNotExists(user);
 

@@ -43,8 +43,8 @@ public class ControllerUtils {
 		// Fix root-relative url handling.
 		view.setContextRelative(true);
 
-		// Allow adding query parameters to the ModelAndView.
-		view.setExposeModelAttributes(true);
+		// Do not expose model attributes, use RedirectAttributes instead.
+		view.setExposeModelAttributes(false);
 
 		ModelAndView result = new ModelAndView(view);
 		return result;
@@ -79,5 +79,18 @@ public class ControllerUtils {
 		}
 
 		return result;
+	}
+
+	public static ModelAndView redirectToReturnAction()
+	{
+		String returnAction = null;
+
+		returnAction = HttpServletUtils.getCurrentHttpRequest().getParameter("returnAction");
+
+		if (returnAction == null || returnAction.isEmpty()) {
+			returnAction = "/welcome/index.do";
+		}
+
+		return ControllerUtils.redirect(returnAction);
 	}
 }

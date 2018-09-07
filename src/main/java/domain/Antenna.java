@@ -12,6 +12,8 @@ import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
@@ -140,6 +142,7 @@ public class Antenna extends DomainEntity {
 	}
 
 	@OneToMany(mappedBy = "antenna")
+	@Cascade(CascadeType.DELETE)
 	public Collection<MaintenanceRequest> getRequests() {
 		return this.requests;
 	}

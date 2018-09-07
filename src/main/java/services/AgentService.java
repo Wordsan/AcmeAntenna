@@ -15,7 +15,7 @@ import security.UserAccountService;
 import utilities.CheckUtils;
 import domain.Actor;
 import domain.Agent;
-import exceptions.UsernameNotUniqueException;
+import exceptions.ResourceNotUniqueException;
 
 @Service
 @Transactional
@@ -40,7 +40,8 @@ public class AgentService {
 		return null;
 	}
 
-	public Agent createAsNewAgent(final Agent agent) throws UsernameNotUniqueException {
+	public Agent createAsNewAgent(final Agent agent) throws ResourceNotUniqueException
+    {
 		CheckUtils.checkUnauthenticated();
 		CheckUtils.checkNotExists(agent);
 

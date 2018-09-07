@@ -17,7 +17,7 @@
 </form:form>
 
 <security:authorize access="hasRole('ADMINISTRATOR')">
-    <app:redir-button action="platforms/new.do?cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" code="misc.actions.new" />
+    <app:redir-button action="platforms/new.do?returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" code="misc.actions.new" />
 </security:authorize>
 
 <div>
@@ -32,7 +32,7 @@
 
         <security:authorize access="hasRole('ADMINISTRATOR')">
             <display:column titleKey="misc.actions">
-                <app:redir-button code="misc.actions.edit" action="platforms/edit.do?id=${platform.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
+                <app:redir-button code="misc.actions.edit" action="platforms/edit.do?id=${platform.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
                 <app:delete-button code="misc.actions.delete" action="platforms/delete.do?id=${platform.id}" />
             </display:column>
         </security:authorize>

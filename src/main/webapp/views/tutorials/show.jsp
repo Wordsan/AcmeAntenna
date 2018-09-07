@@ -44,7 +44,7 @@
     <br/>
 
     <c:if test="${principal == tutorial.user}">
-        <app:redir-button code="misc.actions.edit" action="tutorials/edit.do?id=${tutorial.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
+        <app:redir-button code="misc.actions.edit" action="tutorials/edit.do?id=${tutorial.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
     </c:if>
     <security:authorize access="hasRole('ADMINISTRATOR')">
         <app:delete-button code="misc.actions.delete" action="tutorials/delete.do?id=${tutorial.id}" />

@@ -108,7 +108,7 @@ public class ActorController extends AbstractController {
 
 		if (!binding.hasErrors())
 			try {
-				this.actorService.updateOwnPassword(this.getPrincipal(), form.getOldPassword(), form.getNewPassword());
+				this.actorService.updateOwnPassword(form.getOldPassword(), form.getNewPassword());
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 
 				return ControllerUtils.redirect("/welcome/index.do");

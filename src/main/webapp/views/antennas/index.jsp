@@ -11,7 +11,7 @@
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
-<app:redir-button action="antennas/new.do?cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" code="misc.actions.new" />
+<app:redir-button action="antennas/new.do?returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" code="misc.actions.new" />
 <display:table name="antennas"
 	       id="antenna"
 	       pagesize="${displayTagPageSize}"
@@ -23,7 +23,7 @@
     <display:column property="positionForDisplay" titleKey="antennas.position" escapeXml="true" />
     <display:column property="satellite.name" titleKey="antennas.satellite" escapeXml="true" sortable="true" href="satellites/show.do" paramId="id" paramProperty="satellite.id" />
     <display:column titleKey="misc.actions">
-        <app:redir-button code="misc.actions.edit" action="antennas/edit.do?id=${antenna.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
+        <app:redir-button code="misc.actions.edit" action="antennas/edit.do?id=${antenna.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
         <app:delete-button code="misc.actions.delete" action="antennas/delete.do?id=${antenna.id}" />
     </display:column>
 

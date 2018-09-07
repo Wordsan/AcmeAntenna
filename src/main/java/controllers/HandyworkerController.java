@@ -21,7 +21,7 @@ import utilities.CheckUtils;
 import utilities.ControllerUtils;
 import utilities.UserAccountUtils;
 import domain.Handyworker;
-import exceptions.UsernameNotUniqueException;
+import exceptions.ResourceNotUniqueException;
 import forms.NewHandyworkerForm;
 
 @Controller
@@ -76,7 +76,7 @@ public class HandyworkerController extends AbstractController {
 
 				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 				return ControllerUtils.redirect("/welcome/index.do");
-			} catch (final UsernameNotUniqueException ex) {
+			} catch (final ResourceNotUniqueException ex) {
 				globalErrorMessage = "misc.error.usernameNotUnique";
 			} catch (final Throwable oops) {
 				if (ApplicationConfig.DEBUG)

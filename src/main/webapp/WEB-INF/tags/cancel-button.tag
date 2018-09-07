@@ -34,8 +34,8 @@
     <c:set var="code" value="misc.actions.cancel" />
 </c:if>
 
-<c:if test="${action == null && param.cancelAction != null}">
-    <c:set var="action" value="${param.cancelAction}" />
+<c:if test="${action == null && param.returnAction != null}">
+    <c:set var="action" value="${param.returnAction}" />
 </c:if>
 <c:choose>
     <c:when test="${action != null}">

@@ -10,6 +10,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import exceptions.ResourceNotUniqueException;
+import security.Authority;
 import security.UserAccount;
 import security.UserAccountService;
 import services.AgentService;
@@ -43,16 +48,14 @@ public class RegisterAgent extends AbstractTest {
 	//Register to the system as an agent.
 
 	@Test
-	public void RegisterAsAnAgent() {
+	public void RegisterAsAnAgent() throws Exception
+	{
 		this.unauthenticate();
 		final Agent agent = this.agentService.create();
 		agent.setEmail("email@email.com");
 		agent.setName("Agent");
 		agent.setSurname("Agent");
-		final UserAccount ua = this.userAccountService.create();
-		ua.setUsername("Agent23");
-		ua.setPassword("Agent");
-		final UserAccount uaSaved = this.userAccountService.save(ua);
+		final UserAccount uaSaved = userAccountService.create("Agent23", "Agent", Authority.AGENT);
 		agent.setUserAccount(uaSaved);
 		final Agent res = this.agentService.save(agent);
 		Assert.isTrue(this.agentService.findAll().contains(res));

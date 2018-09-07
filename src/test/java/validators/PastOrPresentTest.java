@@ -17,14 +17,14 @@ import utilities.AbstractTest;
 @ContextConfiguration(locations = {"classpath:spring/junit.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class PastWithMarginTest extends AbstractTest {
+public class PastOrPresentTest extends AbstractTest {
     // Test the validator works correctly.
     // Null dates, dates in the past, the present, and up to 30 seconds in the future should be accepted.
     // Everything else should be rejected.
     @Test
     public void test()
     {
-        PastWithMarginValidator v = new PastWithMarginValidator();
+        PastOrPresentValidator v = new PastOrPresentValidator();
         Assert.assertTrue(v.isValid(null, null));
         Assert.assertTrue(v.isValid(new Date(new Date().getTime() - 100000), null));
         Assert.assertTrue(v.isValid(new Date(new Date().getTime() - 1000), null));

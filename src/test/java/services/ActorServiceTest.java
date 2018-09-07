@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import domain.Actor;
 import exceptions.OldPasswordDoesntMatchException;
@@ -68,7 +69,7 @@ public class ActorServiceTest extends AbstractTest {
 
         // Change principal's password.
         Actor principal = getPrincipal();
-        actorService.updateOwnPassword(principal, "user1", "new password");
+        actorService.updateOwnPassword("user1", "new password");
 
         // Flush changes.
         flushTransaction();
@@ -88,21 +89,19 @@ public class ActorServiceTest extends AbstractTest {
         authenticate("user1");
 
         // Attempt to change principal's password, providing wrong password.
-        Actor principal = getPrincipal();
-        actorService.updateOwnPassword(principal, "WRONG PASSWORD", "new password");
+        actorService.updateOwnPassword("WRONG PASSWORD", "new password");
 
         // Shouldn't reach this point.
     }
 
-    // Test actor cannot update other people's password.
-    @Test(expected = AccessDeniedException.class)
-    public void testActorCannotUpdateOwnPasswordIfNotPrincipal() throws OldPasswordDoesntMatchException
+    // Test actor cannot update his own password if he provides the a bad new password.
+    @Test(expected = ConstraintViolationException.class)
+    public void testActorCannotUpdateOwnPasswordIfBadNewPassword() throws OldPasswordDoesntMatchException
     {
         authenticate("user1");
 
-        // Attempt to change admin's password, logged in as user1.
-        Actor admin = getActor("admin");
-        actorService.updateOwnPassword(admin, "admin", "new password");
+        // Attempt to change principal's password, providing a bad (too short) new password.
+        actorService.updateOwnPassword("user1", "1");
 
         // Shouldn't reach this point.
     }

@@ -47,5 +47,5 @@
 	<span class="content"><a href="satellites/show.do?id=<c:out value="${antenna.satellite.id}" />"><c:out value="${antenna.satellite.name}" /></a></span>
 </div>
 
-<app:redir-button code="misc.actions.edit" action="antennas/edit.do?id=${antenna.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
+<app:redir-button code="misc.actions.edit" action="antennas/edit.do?id=${antenna.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
 <app:delete-button code="misc.actions.delete" action="antennas/delete.do?id=${antenna.id}" />

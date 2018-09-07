@@ -16,6 +16,7 @@ import security.UserAccountService;
 import utilities.CheckUtils;
 import domain.Actor;
 import exceptions.OldPasswordDoesntMatchException;
+import utilities.ValidationUtils;
 
 @Service
 @Transactional
@@ -70,17 +71,23 @@ public class ActorService {
 		return this.repository.save(currentActor);
 	}
 
-	public Actor updateOwnPassword(final Actor actor, final String oldPassword, final String newPassword) throws OldPasswordDoesntMatchException {
+	public Actor updateOwnPassword(final String oldPassword, final String newPassword) throws OldPasswordDoesntMatchException
+	{
 		CheckUtils.checkAuthenticated();
-		final Actor currentActor = this.getPrincipal();
-		CheckUtils.checkEquals(currentActor, actor);
-		CheckUtils.checkSameVersion(actor, currentActor);
+		Actor currentActor = getPrincipal();
 
-		if (!this.userAccountService.passwordMatchesAccount(actor.getUserAccount(), oldPassword))
+		if (!userAccountService.passwordMatchesAccount(currentActor.getUserAccount(), oldPassword)) {
 			throw new OldPasswordDoesntMatchException();
+		}
 
-		currentActor.setUserAccount(this.userAccountService.updatePassword(currentActor.getUserAccount(), newPassword));
-		return this.repository.save(currentActor);
+		UserAccount userAccount = currentActor.getUserAccount();
+		userAccount.setPassword(newPassword);
+
+		// Validate and throw if bad entity.
+		ValidationUtils.validateBean(userAccount);
+
+		currentActor.setUserAccount(this.userAccountService.updatePassword(userAccount, newPassword));
+		return repository.save(currentActor);
 	}
 
 	public Collection<Actor> findAll() {

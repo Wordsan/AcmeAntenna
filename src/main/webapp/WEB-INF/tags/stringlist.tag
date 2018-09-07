@@ -20,6 +20,8 @@
 		<spring:message code="${code}" />
 	</form:label>
 
+	<input type="hidden" name="<c:out value="${path}" />" value="" />
+
     <div class="stringlist-items">
 	<spring:bind path="${path}">
         <c:forEach var="item" items="${items}" varStatus="loop">

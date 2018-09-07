@@ -36,6 +36,9 @@ import domain.Actor;
 import domain.Banner;
 import exceptions.ResourceNotFoundException;
 
+import utilities.HttpServletUtils;
+
+
 @Controller
 public class AbstractController {
 
@@ -68,17 +71,16 @@ public class AbstractController {
 		return ApplicationConfig.DISPLAYTAG_PAGE_SIZE;
 	}
 
-	@ModelAttribute("currentRelativeUrl")
-	public String getCurrentRelativeUrl(final HttpServletRequest request) {
-		String relativePath = request.getServletPath();
-		if (relativePath.startsWith("/"))
-			relativePath = relativePath.substring(1);
-		String queryString = request.getQueryString();
-		if (queryString == null)
-			queryString = "";
-		if (!queryString.isEmpty())
-			relativePath += "?" + queryString;
-		return relativePath;
+	@ModelAttribute("currentRequestUri")
+	public String getCurrentRequestUri()
+	{
+		return HttpServletUtils.currentRequestUri();
+	}
+
+	@ModelAttribute("currentRequestUriAndParams")
+	public String getCurrentRequestUriAndParams()
+	{
+		return HttpServletUtils.currentRequestUriAndParams();
 	}
 
 	@InitBinder
@@ -126,6 +128,7 @@ public class AbstractController {
 			// Else the user just doesn't have permissions to do this.
 			return new ModelAndView("misc/403");
 	}
+
 	@ModelAttribute
 	public void randomBanner(final Model model) {
 		if (!this.bannerService.findAll().isEmpty()) {
