@@ -10,18 +10,19 @@ import domain.User;
 @Component
 @Transactional
 public class UserToStringConverter
-implements Converter<User, String> {
-	@Override
-	public String convert(User user)
-	{
-		String result;
+        implements Converter<User, String>
+{
+    @Override
+    public String convert(User user)
+    {
+        String result;
 
-		if (user == null) {
-			result = null;
-		} else {
-			result = String.valueOf(user.getId());
-		}
+        if (user == null) {
+            result = null;
+        } else {
+            result = String.valueOf(user.getId());
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

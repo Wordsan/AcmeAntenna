@@ -16,6 +16,8 @@ import javax.validation.Payload;
 @Constraint(validatedBy = NullOrNotBlankValidator.class)
 public @interface NullOrNotBlank {
     String message() default "{org.hibernate.validator.constraints.NotBlank.message}";
-    Class<?>[] groups() default { };
-    Class<? extends Payload>[] payload() default { };
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
 }

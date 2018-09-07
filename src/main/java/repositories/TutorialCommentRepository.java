@@ -10,6 +10,7 @@ import domain.TutorialComment;
 
 @Repository
 public interface TutorialCommentRepository
-extends JpaRepository<TutorialComment, Integer> {
+        extends JpaRepository<TutorialComment, Integer>
+{
     Page<TutorialComment> findAllByTutorialOrderByCreationTimeDesc(Tutorial tutorial, Pageable pageable);
 }

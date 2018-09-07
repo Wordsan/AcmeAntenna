@@ -23,59 +23,60 @@ import utilities.UserAccountUtils;
 @Controller
 @RequestMapping("/users")
 public class UserController extends AbstractController {
-	@Autowired private UserService userService;
+    @Autowired private UserService userService;
 
-	public UserController()
-	{
-		super();
-	}
+    public UserController()
+    {
+        super();
+    }
 
-	@RequestMapping("/new")
-	public ModelAndView new_()
-	{
-		CheckUtils.checkUnauthenticated();
+    @RequestMapping("/new")
+    public ModelAndView new_()
+    {
+        CheckUtils.checkUnauthenticated();
 
-		return createNewModelAndView(null, null, new NewUserForm());
-	}
+        return createNewModelAndView(null, null, new NewUserForm());
+    }
 
-	public ModelAndView createNewModelAndView(String globalErrorMessage, BindingResult binding, NewUserForm form)
-	{
-		ModelAndView result = ControllerUtils.createViewWithBinding(
-				"users/new",
-				binding,
-				globalErrorMessage
-				);
+    public ModelAndView createNewModelAndView(String globalErrorMessage, BindingResult binding, NewUserForm form)
+    {
+        ModelAndView result = ControllerUtils.createViewWithBinding(
+                "users/new",
+                binding,
+                globalErrorMessage
+        );
 
-		result.addObject("form", form);
+        result.addObject("form", form);
 
-		return result;
-	}
+        return result;
+    }
 
-	@RequestMapping(value="/create", method=RequestMethod.POST)
-	public ModelAndView create(
-			@ModelAttribute("form") @Valid NewUserForm form,
-			BindingResult binding, RedirectAttributes redir)
-	{
-		CheckUtils.checkUnauthenticated();
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ModelAndView create(
+            @ModelAttribute("form") @Valid NewUserForm form,
+            BindingResult binding, RedirectAttributes redir
+    )
+    {
+        CheckUtils.checkUnauthenticated();
 
-		String globalErrorMessage = null;
+        String globalErrorMessage = null;
 
-		if (!binding.hasErrors()) {
-			try {
-				User user = userService.createAsNewUser(form.getUser());
-				UserAccountUtils.setSessionAccount(user.getUserAccount());
+        if (!binding.hasErrors()) {
+            try {
+                User user = userService.createAsNewUser(form.getUser());
+                UserAccountUtils.setSessionAccount(user.getUserAccount());
 
-				redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-				return ControllerUtils.redirect("/welcome/index.do");
-			} catch(ResourceNotUniqueException ex) {
-				binding.rejectValue("username", "misc.error.usernameNotUnique");
-			} catch(Throwable oops) {
-				if (ApplicationConfig.DEBUG) oops.printStackTrace();
-				globalErrorMessage = "misc.commit.error";
-			}
-		}
+                redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+                return ControllerUtils.redirect("/welcome/index.do");
+            } catch (ResourceNotUniqueException ex) {
+                binding.rejectValue("username", "misc.error.usernameNotUnique");
+            } catch (Throwable oops) {
+                if (ApplicationConfig.DEBUG) oops.printStackTrace();
+                globalErrorMessage = "misc.commit.error";
+            }
+        }
 
-		return createNewModelAndView(globalErrorMessage, binding, form);
-	}
+        return createNewModelAndView(globalErrorMessage, binding, form);
+    }
 
 }

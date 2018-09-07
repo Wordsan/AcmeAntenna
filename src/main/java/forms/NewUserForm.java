@@ -31,6 +31,7 @@ public class NewUserForm {
     {
         return user;
     }
+
     public void setUser(User user)
     {
         this.user = user;
@@ -48,6 +49,7 @@ public class NewUserForm {
     {
         return repeatPassword;
     }
+
     public void setRepeatPassword(String repeatPassword)
     {
         this.repeatPassword = repeatPassword;

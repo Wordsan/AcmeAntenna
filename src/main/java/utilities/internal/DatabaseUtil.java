@@ -47,234 +47,266 @@ import utilities.ReflectionUtils;
 
 public class DatabaseUtil {
 
-	// Constructor ------------------------------------------------------------
+    // Constructor ------------------------------------------------------------
 
-	public DatabaseUtil() {
-	}
-
-
-	// Internal state ---------------------------------------------------------
-
-	// private PersistenceProviderResolver	resolver;
-	// private List<PersistenceProvider>	providers;
-	private PersistenceProvider		persistenceProvider;
-	private EntityManagerFactory	entityManagerFactory;
-	private EntityManager			entityManager;
-	private Map<String, Object>		properties;
-	private String					databaseUrl;
-	private String					databaseName;
-	private String					databaseDialectName;
-	private Dialect					databaseDialect;
-	private Configuration			configuration;
-	private EntityTransaction		entityTransaction;
+    public DatabaseUtil()
+    {
+    }
 
 
-	// Internal state ---------------------------------------------------------
+    // Internal state ---------------------------------------------------------
 
-	public String getDatabaseName() {
-		return this.databaseName;
-	}
+    // private PersistenceProviderResolver	resolver;
+    // private List<PersistenceProvider>	providers;
+    private PersistenceProvider persistenceProvider;
+    private EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
+    private Map<String, Object> properties;
+    private String databaseUrl;
+    private String databaseName;
+    private String databaseDialectName;
+    private Dialect databaseDialect;
+    private Configuration configuration;
+    private EntityTransaction entityTransaction;
 
-	public String getDatabaseDialectName() {
-		return this.databaseDialectName;
-	}
 
-	// Business methods -------------------------------------------------------
+    // Internal state ---------------------------------------------------------
 
-	public void initialise() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		// this.resolver = PersistenceProviderResolverHolder.getPersistenceProviderResolver();
-		// this.providers = this.resolver.getPersistenceProviders();
+    public String getDatabaseName()
+    {
+        return this.databaseName;
+    }
 
-		this.persistenceProvider = new HibernatePersistenceProvider();
-		this.entityManagerFactory = this.persistenceProvider.createEntityManagerFactory(DatabaseConfig.PersistenceUnit, null);
-		if (this.entityManagerFactory == null)
-			throw new RuntimeException(String.format("Couldn't create an entity manager factory for persistence unit `%s'", DatabaseConfig.PersistenceUnit));
+    public String getDatabaseDialectName()
+    {
+        return this.databaseDialectName;
+    }
 
-		this.entityManager = this.entityManagerFactory.createEntityManager();
-		if (this.entityManager == null)
-			throw new RuntimeException(String.format("Couldn't create an entity manager for persistence unit `%s'", DatabaseConfig.PersistenceUnit));
-		this.entityManager.setFlushMode(FlushModeType.AUTO);
+    // Business methods -------------------------------------------------------
 
-		this.properties = this.entityManagerFactory.getProperties();
-		// printProperties(properties);
+    public void initialise() throws InstantiationException, IllegalAccessException, ClassNotFoundException
+    {
+        // this.resolver = PersistenceProviderResolverHolder.getPersistenceProviderResolver();
+        // this.providers = this.resolver.getPersistenceProviders();
 
-		this.databaseUrl = this.findProperty("javax.persistence.jdbc.url");
-		this.databaseName = StringUtils.substringAfterLast(this.databaseUrl, "/");
-		this.databaseDialectName = this.findProperty("hibernate.dialect");
-		this.databaseDialect = (Dialect) ReflectHelper.classForName(this.databaseDialectName).newInstance();
+        this.persistenceProvider = new HibernatePersistenceProvider();
+        this.entityManagerFactory = this.persistenceProvider.createEntityManagerFactory(DatabaseConfig.PersistenceUnit, null);
+        if (this.entityManagerFactory == null) {
+            throw new RuntimeException(String.format("Couldn't create an entity manager factory for persistence unit `%s'", DatabaseConfig.PersistenceUnit));
+        }
 
-		this.configuration = this.buildConfiguration();
+        this.entityManager = this.entityManagerFactory.createEntityManager();
+        if (this.entityManager == null) {
+            throw new RuntimeException(String.format("Couldn't create an entity manager for persistence unit `%s'", DatabaseConfig.PersistenceUnit));
+        }
+        this.entityManager.setFlushMode(FlushModeType.AUTO);
 
-		this.entityTransaction = this.entityManager.getTransaction();
-	}
+        this.properties = this.entityManagerFactory.getProperties();
+        // printProperties(properties);
 
-	public void shutdown() {
-		if (this.entityTransaction != null && this.entityTransaction.isActive())
-			this.entityTransaction.rollback();
-		if (this.entityManager != null && this.entityManager.isOpen())
-			this.entityManager.close();
-		if (this.entityManagerFactory != null && this.entityManagerFactory.isOpen())
-			this.entityManagerFactory.close();
-	}
+        this.databaseUrl = this.findProperty("javax.persistence.jdbc.url");
+        this.databaseName = StringUtils.substringAfterLast(this.databaseUrl, "/");
+        this.databaseDialectName = this.findProperty("hibernate.dialect");
+        this.databaseDialect = (Dialect) ReflectHelper.classForName(this.databaseDialectName).newInstance();
 
-	public void recreateDatabase() throws Throwable {
-		List<String> databaseScript;
-		List<String> schemaScript;
-		String[] statements;
+        this.configuration = this.buildConfiguration();
 
-		databaseScript = new ArrayList<String>();
-		databaseScript.add(String.format("drop database `%s`", this.databaseName));
-		databaseScript.add(String.format("create database `%s`", this.databaseName));
-		this.executeScript(databaseScript);
+        this.entityTransaction = this.entityManager.getTransaction();
+    }
 
-		schemaScript = new ArrayList<String>();
-		schemaScript.add(String.format("use `%s`", this.databaseName));
-		statements = this.configuration.generateSchemaCreationScript(this.databaseDialect);
-		schemaScript.addAll(Arrays.asList(statements));
-		this.executeScript(schemaScript);
-	}
+    public void shutdown()
+    {
+        if (this.entityTransaction != null && this.entityTransaction.isActive()) {
+            this.entityTransaction.rollback();
+        }
+        if (this.entityManager != null && this.entityManager.isOpen()) {
+            this.entityManager.close();
+        }
+        if (this.entityManagerFactory != null && this.entityManagerFactory.isOpen()) {
+            this.entityManagerFactory.close();
+        }
+    }
 
-	public void setReadUncommittedIsolationLevel() {
-		List<String> script;
+    public void recreateDatabase() throws Throwable
+    {
+        List<String> databaseScript;
+        List<String> schemaScript;
+        String[] statements;
 
-		script = new ArrayList<String>();
-		script.add("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
+        databaseScript = new ArrayList<String>();
+        databaseScript.add(String.format("drop database `%s`", this.databaseName));
+        databaseScript.add(String.format("create database `%s`", this.databaseName));
+        this.executeScript(databaseScript);
 
-		this.executeScript(script);
-	}
+        schemaScript = new ArrayList<String>();
+        schemaScript.add(String.format("use `%s`", this.databaseName));
+        statements = this.configuration.generateSchemaCreationScript(this.databaseDialect);
+        schemaScript.addAll(Arrays.asList(statements));
+        this.executeScript(schemaScript);
+    }
 
-	public void setReadCommittedIsolationLevel() {
-		List<String> script;
+    public void setReadUncommittedIsolationLevel()
+    {
+        List<String> script;
 
-		script = new ArrayList<String>();
-		script.add("SET TRANSACTION ISOLATION LEVEL READ COMMITTED");
+        script = new ArrayList<String>();
+        script.add("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
 
-		this.executeScript(script);
-	}
+        this.executeScript(script);
+    }
 
-	public void startTransaction() {
-		this.entityTransaction.begin();
-	}
+    public void setReadCommittedIsolationLevel()
+    {
+        List<String> script;
 
-	public void commitTransaction() {
-		this.entityTransaction.commit();
-	}
+        script = new ArrayList<String>();
+        script.add("SET TRANSACTION ISOLATION LEVEL READ COMMITTED");
 
-	public void rollbackTransaction() {
-		this.entityTransaction.rollback();
-	}
+        this.executeScript(script);
+    }
 
-	public void persist(final DomainEntity entity) {
-		this.entityManager.persist(entity);
-	}
+    public void startTransaction()
+    {
+        this.entityTransaction.begin();
+    }
 
-	public int executeUpdate(final String line) {
-		int result;
-		Query query;
+    public void commitTransaction()
+    {
+        this.entityTransaction.commit();
+    }
 
-		this.entityManager.clear();
-		query = this.entityManager.createQuery(line);
-		result = query.executeUpdate();
+    public void rollbackTransaction()
+    {
+        this.entityTransaction.rollback();
+    }
 
-		return result;
-	}
+    public void persist(final DomainEntity entity)
+    {
+        this.entityManager.persist(entity);
+    }
 
-	public List<?> executeSelect(final String line) {
-		List<?> result;
-		Query query;
+    public int executeUpdate(final String line)
+    {
+        int result;
+        Query query;
 
-		this.entityManager.clear();
-		query = this.entityManager.createQuery(line);
-		result = query.getResultList();
+        this.entityManager.clear();
+        query = this.entityManager.createQuery(line);
+        result = query.executeUpdate();
 
-		return result;
-	}
+        return result;
+    }
 
-	public void flush() {
-		this.entityManager.flush();
-	}
+    public List<?> executeSelect(final String line)
+    {
+        List<?> result;
+        Query query;
 
-	// Ancillary methods ------------------------------------------------------
+        this.entityManager.clear();
+        query = this.entityManager.createQuery(line);
+        result = query.getResultList();
 
-	protected Configuration buildConfiguration() {
-		Configuration result;
-		Metamodel metamodel;
-		Collection<EntityType<?>> entities;
-		Collection<EmbeddableType<?>> embeddables;
+        return result;
+    }
 
-		result = new Configuration();
-		metamodel = this.entityManagerFactory.getMetamodel();
+    public void flush()
+    {
+        this.entityManager.flush();
+    }
 
-		entities = metamodel.getEntities();
-		for (final EntityType<?> entity : entities)
-			result.addAnnotatedClass(entity.getJavaType());
+    // Ancillary methods ------------------------------------------------------
 
-		embeddables = metamodel.getEmbeddables();
-		for (final EmbeddableType<?> embeddable : embeddables)
-			result.addAnnotatedClass(embeddable.getJavaType());
+    protected Configuration buildConfiguration()
+    {
+        Configuration result;
+        Metamodel metamodel;
+        Collection<EntityType<?>> entities;
+        Collection<EmbeddableType<?>> embeddables;
 
-		return result;
-	}
+        result = new Configuration();
+        metamodel = this.entityManagerFactory.getMetamodel();
 
-	protected void executeScript(final List<String> script) {
-		Session session;
-		session = this.entityManager.unwrap(Session.class);
-		session.doWork(new Work() {
+        entities = metamodel.getEntities();
+        for (final EntityType<?> entity : entities) {
+            result.addAnnotatedClass(entity.getJavaType());
+        }
 
-			@Override
-			public void execute(final Connection connection) throws SQLException {
-				Statement statement;
+        embeddables = metamodel.getEmbeddables();
+        for (final EmbeddableType<?> embeddable : embeddables) {
+            result.addAnnotatedClass(embeddable.getJavaType());
+        }
 
-				statement = connection.createStatement();
-				for (final String line : script)
-					statement.execute(line);
-				connection.commit();
-			}
-		});
-	}
+        return result;
+    }
 
-	protected String findProperty(final String property) {
-		String result;
-		Object value;
+    protected void executeScript(final List<String> script)
+    {
+        Session session;
+        session = this.entityManager.unwrap(Session.class);
+        session.doWork(new Work() {
 
-		value = this.properties.get(property);
-		if (value == null)
-			throw new RuntimeException(String.format("Property `%s' was not found", property));
-		if (!(value instanceof String))
-			throw new RuntimeException(String.format("Property `%s' is not a string", property));
-		result = (String) value;
-		if (StringUtils.isBlank(result))
-			throw new RuntimeException(String.format("Property `%s' is blank", property));
+            @Override
+            public void execute(final Connection connection) throws SQLException
+            {
+                Statement statement;
 
-		return result;
-	}
+                statement = connection.createStatement();
+                for (final String line : script) {
+                    statement.execute(line);
+                }
+                connection.commit();
+            }
+        });
+    }
 
-	protected void printProperties(final Map<String, Object> properties) {
-		for (final Entry<String, Object> entry : properties.entrySet())
-			System.out.println(String.format("%s=`%s'", entry.getKey(), entry.getValue()));
-	}
+    protected String findProperty(final String property)
+    {
+        String result;
+        Object value;
 
-	// -----------------------------------------------------------------------------------------------
+        value = this.properties.get(property);
+        if (value == null) {
+            throw new RuntimeException(String.format("Property `%s' was not found", property));
+        }
+        if (!(value instanceof String)) {
+            throw new RuntimeException(String.format("Property `%s' is not a string", property));
+        }
+        result = (String) value;
+        if (StringUtils.isBlank(result)) {
+            throw new RuntimeException(String.format("Property `%s' is blank", property));
+        }
 
-	public void recreateLuceneIndex()
-	{
-		boolean hasAnyIndexedEntity = false;
-		for (Class<?> entity : ReflectionUtils.findAllDomainEntityClasses()) {
-			if (entity.isAnnotationPresent(Indexed.class)) {
-				hasAnyIndexedEntity = true;
-				break;
-			}
-		}
+        return result;
+    }
 
-		// Check if there's any indexed entity before doing this to avoid a warning message.
-		if (hasAnyIndexedEntity) {
-			FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+    protected void printProperties(final Map<String, Object> properties)
+    {
+        for (final Entry<String, Object> entry : properties.entrySet()) {
+            System.out.println(String.format("%s=`%s'", entry.getKey(), entry.getValue()));
+        }
+    }
 
-			try {
-				fullTextEntityManager.createIndexer().startAndWait();
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
+    // -----------------------------------------------------------------------------------------------
+
+    public void recreateLuceneIndex()
+    {
+        boolean hasAnyIndexedEntity = false;
+        for (Class<?> entity : ReflectionUtils.findAllDomainEntityClasses()) {
+            if (entity.isAnnotationPresent(Indexed.class)) {
+                hasAnyIndexedEntity = true;
+                break;
+            }
+        }
+
+        // Check if there's any indexed entity before doing this to avoid a warning message.
+        if (hasAnyIndexedEntity) {
+            FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+
+            try {
+                fullTextEntityManager.createIndexer().startAndWait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }

@@ -12,27 +12,24 @@ package controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Controller
 @RequestMapping("/welcome")
 public class WelcomeController extends AbstractController {
 
-	// Constructors -----------------------------------------------------------
+    // Constructors -----------------------------------------------------------
 
-	public WelcomeController() {
-		super();
-	}
+    public WelcomeController()
+    {
+        super();
+    }
 
-	// Index ------------------------------------------------------------------		
+    // Index ------------------------------------------------------------------
 
-	@RequestMapping(value = "/index")
-	public ModelAndView index()
-	{
-		return new ModelAndView("welcome/index");
-	}
+    @RequestMapping(value = "/index")
+    public ModelAndView index()
+    {
+        return new ModelAndView("welcome/index");
+    }
 }

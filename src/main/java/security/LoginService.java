@@ -26,79 +26,82 @@ import org.springframework.util.Assert;
 @Transactional
 public class LoginService implements UserDetailsService {
 
-	// Managed repository -----------------------------------------------------
+    // Managed repository -----------------------------------------------------
 
-	@Autowired
-	UserAccountRepository	userRepository;
+    @Autowired
+    UserAccountRepository userRepository;
 
     // Business methods -------------------------------------------------------
 
-	@Override
-	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		Assert.notNull(username);
+    @Override
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
+    {
+        Assert.notNull(username);
 
-		UserDetails result;
+        UserDetails result;
 
-		result = this.userRepository.findByUsername(username);
-		Assert.notNull(result);
-		// WARNING: The following sentences prevent lazy initialisation problems!
-		Assert.notNull(result.getAuthorities());
-		result.getAuthorities().size();
+        result = this.userRepository.findByUsername(username);
+        Assert.notNull(result);
+        // WARNING: The following sentences prevent lazy initialisation problems!
+        Assert.notNull(result.getAuthorities());
+        result.getAuthorities().size();
 
-		return result;
-	}
+        return result;
+    }
 
-	public static boolean isAuthenticated() {
-		SecurityContext context;
-		Authentication authentication;
+    public static boolean isAuthenticated()
+    {
+        SecurityContext context;
+        Authentication authentication;
 
-		context = SecurityContextHolder.getContext();
-		Assert.notNull(context);
+        context = SecurityContextHolder.getContext();
+        Assert.notNull(context);
 
-		authentication = context.getAuthentication();
+        authentication = context.getAuthentication();
 
-		return authentication != null
-			&& authentication.isAuthenticated()
-			&& !(authentication instanceof AnonymousAuthenticationToken);
-	}
+        return authentication != null
+                && authentication.isAuthenticated()
+                && !(authentication instanceof AnonymousAuthenticationToken);
+    }
 
-	public static UserAccount getPrincipal() {
-		UserAccount result;
-		SecurityContext context;
-		Authentication authentication;
-		Object principal;
+    public static UserAccount getPrincipal()
+    {
+        UserAccount result;
+        SecurityContext context;
+        Authentication authentication;
+        Object principal;
 
-		// If the asserts in this method fail, then you're
-		// likely to have your Tomcat's working directory
-		// corrupt. Please, clear your browser's cache, stop
-		// Tomcat, update your Maven's project configuration,
-		// clean your project, clean Tomcat's working directory,
-		// republish your project, and start it over.
+        // If the asserts in this method fail, then you're
+        // likely to have your Tomcat's working directory
+        // corrupt. Please, clear your browser's cache, stop
+        // Tomcat, update your Maven's project configuration,
+        // clean your project, clean Tomcat's working directory,
+        // republish your project, and start it over.
 
-		context = SecurityContextHolder.getContext();
-		Assert.notNull(context);
-		authentication = context.getAuthentication();
-		Assert.notNull(authentication);
-		principal = authentication.getPrincipal();
-		Assert.isTrue(principal instanceof UserAccount);
-		result = (UserAccount) principal;
-		Assert.notNull(result);
-		Assert.isTrue(result.getId() != 0);
+        context = SecurityContextHolder.getContext();
+        Assert.notNull(context);
+        authentication = context.getAuthentication();
+        Assert.notNull(authentication);
+        principal = authentication.getPrincipal();
+        Assert.isTrue(principal instanceof UserAccount);
+        result = (UserAccount) principal;
+        Assert.notNull(result);
+        Assert.isTrue(result.getId() != 0);
 
-		return result;
-	}
+        return result;
+    }
 
-	public static boolean hasAuthority(String authority)
-	{
-		if (!isAuthenticated()) return false;
+    public static boolean hasAuthority(String authority)
+    {
+        if (!isAuthenticated()) return false;
 
-		UserAccount account = getPrincipal();
-		if (account == null) return false;
+        UserAccount account = getPrincipal();
+        if (account == null) return false;
 
-		for (Authority accountAuthority : account.getAuthorities()) {
-			if (accountAuthority.getAuthority().equals(authority)) return true;
-		}
+        for (Authority accountAuthority : account.getAuthorities()) {
+            if (accountAuthority.getAuthority().equals(authority)) return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

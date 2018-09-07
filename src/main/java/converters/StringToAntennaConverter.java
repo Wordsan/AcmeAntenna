@@ -13,26 +13,27 @@ import repositories.AntennaRepository;
 @Component
 @Transactional
 public class StringToAntennaConverter
-implements Converter<String, Antenna> {
-	@Autowired
-	private AntennaRepository repository;
+        implements Converter<String, Antenna>
+{
+    @Autowired
+    private AntennaRepository repository;
 
-	@Override
-	public Antenna convert(String text)
-	{
-		Antenna result;
+    @Override
+    public Antenna convert(String text)
+    {
+        Antenna result;
 
-		try {
-			if (StringUtils.isEmpty(text)) {
-				result = null;
-			} else {
-				int id = Integer.valueOf(text);
-				result = repository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+        try {
+            if (StringUtils.isEmpty(text)) {
+                result = null;
+            } else {
+                int id = Integer.valueOf(text);
+                result = repository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

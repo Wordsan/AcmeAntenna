@@ -10,19 +10,20 @@ import security.Authority;
 @Component
 @Transactional
 public class StringToAuthorityConverter
-implements Converter<String, Authority> {
-	@Override
-	public Authority convert(String string)
-	{
-		Authority result;
+        implements Converter<String, Authority>
+{
+    @Override
+    public Authority convert(String string)
+    {
+        Authority result;
 
-		if (string == null) {
-			result = null;
-		} else {
-			result = new Authority();
-			result.setAuthority(string);
-		}
+        if (string == null) {
+            result = null;
+        } else {
+            result = new Authority();
+            result.setAuthority(string);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

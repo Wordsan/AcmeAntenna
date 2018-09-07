@@ -22,63 +22,70 @@ import javax.validation.constraints.Pattern;
 @Access(AccessType.PROPERTY)
 public class Authority implements GrantedAuthority {
 
-	// Constructors -----------------------------------------------------------
+    // Constructors -----------------------------------------------------------
 
-	private static final long	serialVersionUID	= 1L;
-
-
-	public Authority() {
-		super();
-	}
+    private static final long serialVersionUID = 1L;
 
 
-	// Values -----------------------------------------------------------------
-
-	public static final String	ADMINISTRATOR	= "ADMINISTRATOR";
-	public static final String	USER			= "USER";
-
-	// Attributes -------------------------------------------------------------
-
-	private String				authority;
+    public Authority()
+    {
+        super();
+    }
 
 
-	@NotBlank
-	@Pattern(regexp = "^" + Authority.ADMINISTRATOR + "|" + Authority.USER + "$")
-	@Override
-	public String getAuthority() {
-		return this.authority;
-	}
+    // Values -----------------------------------------------------------------
 
-	public void setAuthority(final String authority) {
-		this.authority = authority;
-	}
+    public static final String ADMINISTRATOR = "ADMINISTRATOR";
+    public static final String USER = "USER";
 
-	// Object interface -------------------------------------------------------
+    // Attributes -------------------------------------------------------------
 
-	@Override
-	public int hashCode() {
-		return this.getAuthority().hashCode();
-	}
+    private String authority;
 
-	@Override
-	public boolean equals(final Object other) {
-		boolean result;
 
-		if (this == other)
-			result = true;
-		else if (other == null)
-			result = false;
-		else if (!this.getClass().isInstance(other))
-			result = false;
-		else
-			result = (this.getAuthority().equals(((Authority) other).getAuthority()));
+    @NotBlank
+    @Pattern(regexp = "^" + Authority.ADMINISTRATOR + "|" + Authority.USER + "$")
+    @Override
+    public String getAuthority()
+    {
+        return this.authority;
+    }
 
-		return result;
-	}
+    public void setAuthority(final String authority)
+    {
+        this.authority = authority;
+    }
 
-	@Override
-	public String toString() {
-		return this.authority;
-	}
+    // Object interface -------------------------------------------------------
+
+    @Override
+    public int hashCode()
+    {
+        return this.getAuthority().hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other)
+    {
+        boolean result;
+
+        if (this == other) {
+            result = true;
+        } else if (other == null) {
+            result = false;
+        } else if (!this.getClass().isInstance(other)) {
+            result = false;
+        } else {
+            result = (this.getAuthority().equals(((Authority) other).getAuthority()));
+        }
+
+        return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.authority;
+    }
 
 }

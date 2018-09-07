@@ -1,6 +1,5 @@
 package services;
 
-import org.apache.commons.lang.time.FastDateFormat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.transaction.Transactional;
@@ -24,8 +22,8 @@ import utilities.AbstractTest;
 
 /**
  * Tests the following use cases from the requirements document:
- *   - Subscribe to a platform for a period of time by providing a valid credit card. The
- *   subscription results in a key code that must be provided by the system.
+ * - Subscribe to a platform for a period of time by providing a valid credit card. The
+ * subscription results in a key code that must be provided by the system.
  */
 @ContextConfiguration(locations = {
         "classpath:spring/junit.xml"

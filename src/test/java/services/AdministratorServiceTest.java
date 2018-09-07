@@ -8,7 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -20,7 +19,7 @@ import utilities.AbstractTest;
 
 /**
  * Tests the following use cases:
- *
+ * <p>
  * Display a dashboard with the following information:
  * - The average and the standard deviation of the number of antennas per user.
  * - The average and the standard deviation of the quality of the antennas.
@@ -30,7 +29,7 @@ import utilities.AbstractTest;
  * - The average and the standard deviation of the number of tutorials per user.
  * - The average and the standard deviation of the number of comments per tutorial.
  * - The actors who have published a number of tutorials that is above the average
- *   plus the standard deviation.
+ * plus the standard deviation.
  */
 @ContextConfiguration(locations = {
         "classpath:spring/junit.xml"
@@ -40,11 +39,11 @@ import utilities.AbstractTest;
 public class AdministratorServiceTest extends AbstractTest {
     /**
      * Dashboard test mode:
-     *
+     * <p>
      * `true` logs the correct values to console, to be able to quickly verify them
      * and copy them to the checks, and always fails the test to ensure it's changed
      * to false later.
-     *
+     * <p>
      * `false` prints nothing to the console (lecturers don't like tests that print
      * to the console for some reason), and fails the test if it doesn't match.
      */
@@ -164,7 +163,7 @@ public class AdministratorServiceTest extends AbstractTest {
             return String.format("%.3f", Math.round(1000 * (Double) object) / 1000.0);
         } else if (object instanceof Actor) {
             return ((Actor) object).getUserAccount().getUsername();
-        } else if (object instanceof Iterable || object instanceof Object[] ) {
+        } else if (object instanceof Iterable || object instanceof Object[]) {
             StringBuilder sb = new StringBuilder();
             sb.append("[");
             boolean first = true;

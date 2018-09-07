@@ -51,174 +51,190 @@ Prepend all tests with this:
  */
 public abstract class AbstractTest {
 
-	// Supporting services --------------------------------
+    // Supporting services --------------------------------
 
-	@Autowired
-	private LoginService loginService;
-	@Autowired
-	private JpaTransactionManager				transactionManager;
-	@Autowired
-	private ActorService actorService;
+    @Autowired
+    private LoginService loginService;
+    @Autowired
+    private JpaTransactionManager transactionManager;
+    @Autowired
+    private ActorService actorService;
 
-	// Internal state -------------------------------------
+    // Internal state -------------------------------------
 
-	private final DefaultTransactionDefinition	transactionDefinition;
-	private TransactionStatus					currentTransaction;
-	private final Properties					entityMap;
+    private final DefaultTransactionDefinition transactionDefinition;
+    private TransactionStatus currentTransaction;
+    private final Properties entityMap;
 
 
-	@PersistenceContext
-	protected EntityManager entityManager;
+    @PersistenceContext
+    protected EntityManager entityManager;
 
-	// Constructor ----------------------------------------
+    // Constructor ----------------------------------------
 
-	public AbstractTest() {
-		EclipseConsole.fix();
-		LogManager.getLogger("org.hibernate").setLevel(Level.OFF);
-		LogManager.getLogger("cz.jirutka.validator").setLevel(Level.OFF);
+    public AbstractTest()
+    {
+        EclipseConsole.fix();
+        LogManager.getLogger("org.hibernate").setLevel(Level.OFF);
+        LogManager.getLogger("cz.jirutka.validator").setLevel(Level.OFF);
 
-		this.transactionDefinition = new DefaultTransactionDefinition();
-		this.transactionDefinition.setName("TestTransaction");
-		this.transactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        this.transactionDefinition = new DefaultTransactionDefinition();
+        this.transactionDefinition.setName("TestTransaction");
+        this.transactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 
-		try (InputStream stream = new FileInputStream(DatabaseConfig.entityMapFilename)) {
-			this.entityMap = new Properties();
-			this.entityMap.load(stream);
-		} catch (final Throwable oops) {
-			throw new RuntimeException(oops);
-		}
-	}
-	// Set up and tear down -------------------------------
+        try (InputStream stream = new FileInputStream(DatabaseConfig.entityMapFilename)) {
+            this.entityMap = new Properties();
+            this.entityMap.load(stream);
+        } catch (final Throwable oops) {
+            throw new RuntimeException(oops);
+        }
+    }
+    // Set up and tear down -------------------------------
 
-	@Before
-	public void outerSetUp() {
-		startTransaction();
-		setUp();
-	}
-	public void setUp() {}
+    @Before
+    public void outerSetUp()
+    {
+        startTransaction();
+        setUp();
+    }
 
-	@After
-	public void outerTearDown() {
-		tearDown();
-		try {
-			// Clear the entity manager if an exception has already been thrown to prevent another exception from happening here.
-			if (currentTransaction.isRollbackOnly()) {
-				entityManager.clear();
-			}
-			flushTransaction();
-		} finally {
-			try {
-				unauthenticate();
-			} finally {
-				rollbackTransaction();
-			}
-		}
-	}
-	public void tearDown() {}
+    public void setUp() {}
 
-	private static boolean hasPopulatedDatabase = false;
-	@BeforeClass
-	public static void setUpGlobal()
-	{
-		if (!hasPopulatedDatabase) {
-			hasPopulatedDatabase = true;
+    @After
+    public void outerTearDown()
+    {
+        tearDown();
+        try {
+            // Clear the entity manager if an exception has already been thrown to prevent another exception from happening here.
+            if (currentTransaction.isRollbackOnly()) {
+                entityManager.clear();
+            }
+            flushTransaction();
+        } finally {
+            try {
+                unauthenticate();
+            } finally {
+                rollbackTransaction();
+            }
+        }
+    }
 
-			String skip = System.getenv("DNT_SKIP_POPULATE_DATABASE");
-			if (skip == null || !skip.equals("1")) {
-				PopulateDatabase.main(null);
-			}
-		}
+    public void tearDown() {}
 
-	}
+    private static boolean hasPopulatedDatabase = false;
 
-	// Supporting methods ---------------------------------
+    @BeforeClass
+    public static void setUpGlobal()
+    {
+        if (!hasPopulatedDatabase) {
+            hasPopulatedDatabase = true;
 
-	protected void authenticate(final String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+            String skip = System.getenv("DNT_SKIP_POPULATE_DATABASE");
+            if (skip == null || !skip.equals("1")) {
+                PopulateDatabase.main(null);
+            }
+        }
 
-		if (username == null)
-			authenticationToken = null;
-		else {
-			userDetails = this.loginService.loadUserByUsername(username);
-			authenticationToken = new TestingAuthenticationToken(userDetails, null);
-			authenticationToken.setAuthenticated(true);
-		}
+    }
 
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
+    // Supporting methods ---------------------------------
 
-		if (username != null) {
-			Assert.assertEquals(username, ((UserAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		} else {
-			Assert.assertNull(SecurityContextHolder.getContext().getAuthentication());
-		}
-	}
+    protected void authenticate(final String username)
+    {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-	protected void unauthenticate() {
-		this.authenticate(null);
-	}
+        if (username == null) {
+            authenticationToken = null;
+        } else {
+            userDetails = this.loginService.loadUserByUsername(username);
+            authenticationToken = new TestingAuthenticationToken(userDetails, null);
+            authenticationToken.setAuthenticated(true);
+        }
 
-	protected void checkExceptions(final Class<?> expected, final Class<?> caught) {
-		if (expected != null && caught == null)
-			throw new RuntimeException(expected.getName() + " was expected");
-		else if (expected == null && caught != null)
-			throw new RuntimeException(caught.getName() + " was unexpected");
-		else if (expected != null && caught != null && !expected.equals(caught))
-			throw new RuntimeException(expected.getName() + " was expected, but " + caught.getName() + " was thrown");
-	}
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
 
-	protected void startTransaction() {
-		this.currentTransaction = this.transactionManager.getTransaction(this.transactionDefinition);
-	}
+        if (username != null) {
+            Assert.assertEquals(username, ((UserAccount) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        } else {
+            Assert.assertNull(SecurityContextHolder.getContext().getAuthentication());
+        }
+    }
 
-	protected void commitTransaction() {
-		this.transactionManager.commit(this.currentTransaction);
-	}
+    protected void unauthenticate()
+    {
+        this.authenticate(null);
+    }
 
-	protected void rollbackTransaction() {
-		this.transactionManager.rollback(this.currentTransaction);
-	}
+    protected void checkExceptions(final Class<?> expected, final Class<?> caught)
+    {
+        if (expected != null && caught == null) {
+            throw new RuntimeException(expected.getName() + " was expected");
+        } else if (expected == null && caught != null) {
+            throw new RuntimeException(caught.getName() + " was unexpected");
+        } else if (expected != null && caught != null && !expected.equals(caught)) {
+            throw new RuntimeException(expected.getName() + " was expected, but " + caught.getName() + " was thrown");
+        }
+    }
 
-	protected void flushTransaction() {
-		try {
-			this.currentTransaction.flush();
-		} finally {
-			entityManager.clear();
-		}
-	}
+    protected void startTransaction()
+    {
+        this.currentTransaction = this.transactionManager.getTransaction(this.transactionDefinition);
+    }
 
-	protected boolean existsEntity(final String beanName) {
-		assert beanName != null && beanName.matches("^[A-Za-z0-9\\-]+$");
+    protected void commitTransaction()
+    {
+        this.transactionManager.commit(this.currentTransaction);
+    }
 
-		boolean result;
+    protected void rollbackTransaction()
+    {
+        this.transactionManager.rollback(this.currentTransaction);
+    }
 
-		result = this.entityMap.containsKey(beanName);
+    protected void flushTransaction()
+    {
+        try {
+            this.currentTransaction.flush();
+        } finally {
+            entityManager.clear();
+        }
+    }
 
-		return result;
-	}
+    protected boolean existsEntity(final String beanName)
+    {
+        assert beanName != null && beanName.matches("^[A-Za-z0-9\\-]+$");
 
-	protected int getEntityId(final String beanName) {
-		assert beanName != null && beanName.matches("^[A-Za-z0-9\\-]+$");
-		assert this.existsEntity(beanName);
+        boolean result;
 
-		int result;
-		String id;
+        result = this.entityMap.containsKey(beanName);
 
-		id = (String) this.entityMap.get(beanName);
-		result = Integer.valueOf(id);
+        return result;
+    }
 
-		return result;
-	}
+    protected int getEntityId(final String beanName)
+    {
+        assert beanName != null && beanName.matches("^[A-Za-z0-9\\-]+$");
+        assert this.existsEntity(beanName);
 
-	protected Actor getPrincipal()
-	{
-		return actorService.getPrincipal();
-	}
+        int result;
+        String id;
 
-	protected Actor getActor(String username)
-	{
-		return actorService.getByUsername(username);
-	}
+        id = (String) this.entityMap.get(beanName);
+        result = Integer.valueOf(id);
+
+        return result;
+    }
+
+    protected Actor getPrincipal()
+    {
+        return actorService.getPrincipal();
+    }
+
+    protected Actor getActor(String username)
+    {
+        return actorService.getByUsername(username);
+    }
 }

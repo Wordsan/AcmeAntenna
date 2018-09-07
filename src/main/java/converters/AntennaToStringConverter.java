@@ -10,18 +10,19 @@ import domain.Antenna;
 @Component
 @Transactional
 public class AntennaToStringConverter
-implements Converter<Antenna, String> {
-	@Override
-	public String convert(Antenna antenna)
-	{
-		String result;
+        implements Converter<Antenna, String>
+{
+    @Override
+    public String convert(Antenna antenna)
+    {
+        String result;
 
-		if (antenna == null) {
-			result = null;
-		} else {
-			result = String.valueOf(antenna.getId());
-		}
+        if (antenna == null) {
+            result = null;
+        } else {
+            result = String.valueOf(antenna.getId());
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

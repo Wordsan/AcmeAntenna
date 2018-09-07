@@ -13,6 +13,8 @@ import javax.validation.Payload;
 @Constraint(validatedBy = HasCustomValidatorsValidator.class)
 public @interface HasCustomValidators {
     String message() default "{misc.error.unknown}";
-    Class<?>[] groups() default { };
-    Class<? extends Payload>[] payload() default { };
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
 }

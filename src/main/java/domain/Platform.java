@@ -15,13 +15,12 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Indexed(interceptor = Platform.PlatformIndexingInterceptor.class)
 @Access(AccessType.PROPERTY)
 public class Platform
-extends DomainEntity
+        extends DomainEntity
 {
     private String name;
     private String description;
@@ -78,8 +77,7 @@ extends DomainEntity
 
     // This alters the behavior for Lucene.
     // Soft-deleted entities are not to be indexed.
-    public static class PlatformIndexingInterceptor implements EntityIndexingInterceptor<Platform>
-    {
+    public static class PlatformIndexingInterceptor implements EntityIndexingInterceptor<Platform> {
         @Override
         public IndexingOverride onAdd(Platform entity)
         {

@@ -13,26 +13,27 @@ import repositories.TutorialRepository;
 @Component
 @Transactional
 public class StringToTutorialConverter
-implements Converter<String, Tutorial> {
-	@Autowired
-	private TutorialRepository repository;
+        implements Converter<String, Tutorial>
+{
+    @Autowired
+    private TutorialRepository repository;
 
-	@Override
-	public Tutorial convert(String text)
-	{
-		Tutorial result;
+    @Override
+    public Tutorial convert(String text)
+    {
+        Tutorial result;
 
-		try {
-			if (StringUtils.isEmpty(text)) {
-				result = null;
-			} else {
-				int id = Integer.valueOf(text);
-				result = repository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+        try {
+            if (StringUtils.isEmpty(text)) {
+                result = null;
+            } else {
+                int id = Integer.valueOf(text);
+                result = repository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

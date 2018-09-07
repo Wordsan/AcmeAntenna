@@ -15,13 +15,13 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
 @Indexed(interceptor = Satellite.SatelliteIndexingInterceptor.class)
 public class Satellite
-extends DomainEntity {
+        extends DomainEntity
+{
     private String name;
     private String description;
     private List<Platform> platforms = new ArrayList<>();
@@ -77,8 +77,7 @@ extends DomainEntity {
 
     // This alters the behavior for Lucene.
     // Soft-deleted entities are not to be indexed.
-    public static class SatelliteIndexingInterceptor implements EntityIndexingInterceptor<Satellite>
-    {
+    public static class SatelliteIndexingInterceptor implements EntityIndexingInterceptor<Satellite> {
         @Override
         public IndexingOverride onAdd(Satellite entity)
         {

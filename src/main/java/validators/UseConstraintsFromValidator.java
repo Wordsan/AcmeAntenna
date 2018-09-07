@@ -27,7 +27,7 @@ public class UseConstraintsFromValidator implements ConstraintValidator<UseConst
 
         Validator validator = this.validatorFactory.getValidator();
         Set<? extends ConstraintViolation<?>> violations = validator.validateValue(constraintAnnotation.klazz(), constraintAnnotation.property(), value, constraintAnnotation.groups());
-        for (ConstraintViolation<?> violation: violations) {
+        for (ConstraintViolation<?> violation : violations) {
             if (valid) {
                 context.disableDefaultConstraintViolation();
                 valid = false;

@@ -32,6 +32,7 @@ public class JspViewUtils {
     {
         return StringEscapeUtils.escapeEcmaScript(textToEscape);
     }
+
     public static String escapeUrlParam(String textToEscape)
     {
         try {

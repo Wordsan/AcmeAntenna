@@ -20,14 +20,14 @@ import utilities.AbstractTest;
 
 /**
  * Tests the following use cases from the requirements document:
- *   - Browse the list of satellites and [...].
- *   - Search for satellites and platforms using a single key word that must be contained in
+ * - Browse the list of satellites and [...].
+ * - Search for satellites and platforms using a single key word that must be contained in
  * their names or descriptions.
- *
+ * <p>
  * Also tests the following use case given by email by Mr. Carlos Muller:
- *  - An actor who is not authenticated must be able to manage the list of satellites
- *  and platforms, which involves listing, registering, editing, and deleting them.
- *
+ * - An actor who is not authenticated must be able to manage the list of satellites
+ * and platforms, which involves listing, registering, editing, and deleting them.
+ * <p>
  * The complete email is available in the "Documentacion" folder for reference.
  */
 @ContextConfiguration(locations = {
@@ -260,7 +260,6 @@ public class SatelliteServiceTest extends AbstractTest {
 
         // Shouldn't reach this point.
     }
-
 
 
     // Test deletion of a satellite fails if already deleted.

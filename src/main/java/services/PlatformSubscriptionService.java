@@ -20,50 +20,50 @@ import utilities.CheckUtils;
 @Service
 @Transactional
 public class PlatformSubscriptionService {
-	@Autowired private PlatformSubscriptionRepository repository;
-	@Autowired private UserService userService;
-	@PersistenceContext private EntityManager entityManager; // For Lucene.
+    @Autowired private PlatformSubscriptionRepository repository;
+    @Autowired private UserService userService;
+    @PersistenceContext private EntityManager entityManager; // For Lucene.
 
-	public List<PlatformSubscription> findAllForPrincipal()
-	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
-		return repository.findAllByUserOrderByStartDateDesc(userService.getPrincipal());
-	}
+    public List<PlatformSubscription> findAllForPrincipal()
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
+        return repository.findAllByUserOrderByStartDateDesc(userService.getPrincipal());
+    }
 
-	public List<PlatformSubscription> findAllForPrincipalAndPlatform(Platform platform)
-	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
-		return repository.findAllByUserAndPlatformOrderByStartDateDesc(userService.getPrincipal(), platform);
-	}
+    public List<PlatformSubscription> findAllForPrincipalAndPlatform(Platform platform)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
+        return repository.findAllByUserAndPlatformOrderByStartDateDesc(userService.getPrincipal(), platform);
+    }
 
-	public PlatformSubscription create(PlatformSubscription platformSubscription) throws OverlappingPlatformSubscriptionException
-	{
-		CheckUtils.checkPrincipalAuthority(Authority.USER);
-		CheckUtils.checkIsPrincipal(platformSubscription.getUser());
-		CheckUtils.checkNotExists(platformSubscription);
+    public PlatformSubscription create(PlatformSubscription platformSubscription) throws OverlappingPlatformSubscriptionException
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
+        CheckUtils.checkIsPrincipal(platformSubscription.getUser());
+        CheckUtils.checkNotExists(platformSubscription);
 
-		// Check for overlapping subscriptions.
-		List<PlatformSubscription> overlapping = repository.findOverlapping(platformSubscription.getUser(), platformSubscription.getPlatform(), platformSubscription.getStartDate(), platformSubscription.getEndDate());
-		if (overlapping.size() > 0) {
-			throw new OverlappingPlatformSubscriptionException(overlapping.get(0));
-		}
+        // Check for overlapping subscriptions.
+        List<PlatformSubscription> overlapping = repository.findOverlapping(platformSubscription.getUser(), platformSubscription.getPlatform(), platformSubscription.getStartDate(), platformSubscription.getEndDate());
+        if (overlapping.size() > 0) {
+            throw new OverlappingPlatformSubscriptionException(overlapping.get(0));
+        }
 
-		assignNewGeneratedKeycode(platformSubscription);
+        assignNewGeneratedKeycode(platformSubscription);
 
-		return repository.save(platformSubscription);
-	}
+        return repository.save(platformSubscription);
+    }
 
-	private void assignNewGeneratedKeycode(PlatformSubscription platformSubscription)
-	{
-		SecureRandom secureRandom = new SecureRandom();
+    private void assignNewGeneratedKeycode(PlatformSubscription platformSubscription)
+    {
+        SecureRandom secureRandom = new SecureRandom();
 
-		StringBuilder sb = new StringBuilder(PlatformSubscription.KEYCODE_LENGTH);
-		for (int i = 0; i < PlatformSubscription.KEYCODE_LENGTH; i++) {
-			sb.append(PlatformSubscription.KEYCODE_ALPHABET.charAt(secureRandom.nextInt(PlatformSubscription.KEYCODE_ALPHABET.length())));
+        StringBuilder sb = new StringBuilder(PlatformSubscription.KEYCODE_LENGTH);
+        for (int i = 0; i < PlatformSubscription.KEYCODE_LENGTH; i++) {
+            sb.append(PlatformSubscription.KEYCODE_ALPHABET.charAt(secureRandom.nextInt(PlatformSubscription.KEYCODE_ALPHABET.length())));
 
-		}
+        }
 
-		platformSubscription.setKeyCode(sb.toString());
-	}
+        platformSubscription.setKeyCode(sb.toString());
+    }
 
 }

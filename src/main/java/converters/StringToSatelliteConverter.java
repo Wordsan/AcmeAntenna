@@ -13,26 +13,27 @@ import repositories.SatelliteRepository;
 @Component
 @Transactional
 public class StringToSatelliteConverter
-implements Converter<String, Satellite> {
-	@Autowired
-	private SatelliteRepository repository;
+        implements Converter<String, Satellite>
+{
+    @Autowired
+    private SatelliteRepository repository;
 
-	@Override
-	public Satellite convert(String text)
-	{
-		Satellite result;
+    @Override
+    public Satellite convert(String text)
+    {
+        Satellite result;
 
-		try {
-			if (StringUtils.isEmpty(text)) {
-				result = null;
-			} else {
-				int id = Integer.valueOf(text);
-				result = repository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+        try {
+            if (StringUtils.isEmpty(text)) {
+                result = null;
+            } else {
+                int id = Integer.valueOf(text);
+                result = repository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

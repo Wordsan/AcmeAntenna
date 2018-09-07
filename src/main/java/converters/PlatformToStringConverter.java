@@ -10,18 +10,19 @@ import domain.Platform;
 @Component
 @Transactional
 public class PlatformToStringConverter
-implements Converter<Platform, String> {
-	@Override
-	public String convert(Platform platform)
-	{
-		String result;
+        implements Converter<Platform, String>
+{
+    @Override
+    public String convert(Platform platform)
+    {
+        String result;
 
-		if (platform == null) {
-			result = null;
-		} else {
-			result = String.valueOf(platform.getId());
-		}
+        if (platform == null) {
+            result = null;
+        } else {
+            result = String.valueOf(platform.getId());
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

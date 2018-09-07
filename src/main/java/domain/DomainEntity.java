@@ -25,77 +25,86 @@ import javax.persistence.Version;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class DomainEntity {
 
-	// Constructors -----------------------------------------------------------
+    // Constructors -----------------------------------------------------------
 
-	public DomainEntity() {
-		super();
-	}
-
-
-	// Identification ---------------------------------------------------------
-
-	private int	id;
-	private int	version;
+    public DomainEntity()
+    {
+        super();
+    }
 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	public int getId() {
-		return this.id;
-	}
+    // Identification ---------------------------------------------------------
 
-	public void setId(final int id) {
-		this.id = id;
-	}
+    private int id;
+    private int version;
 
-	@Version
-	public int getVersion() {
-		return this.version;
-	}
 
-	public void setVersion(final int version) {
-		this.version = version;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    public int getId()
+    {
+        return this.id;
+    }
 
-	// Object interface -------------------------------------------------------
+    public void setId(final int id)
+    {
+        this.id = id;
+    }
 
-	@Override
-	public int hashCode() {
-		return this.getId();
-	}
+    @Version
+    public int getVersion()
+    {
+        return this.version;
+    }
 
-	@Override
-	public boolean equals(final Object other) {
-		boolean result;
+    public void setVersion(final int version)
+    {
+        this.version = version;
+    }
 
-		if (this == other)
-			result = true;
-		else if (other == null)
-			result = false;
-		else if (other instanceof Integer)
-			result = (this.getId() == (Integer) other);
-		else if (!this.getClass().isInstance(other) && !other.getClass().isInstance(this))
-			result = false;
-		else
-			result = (this.getId() == ((DomainEntity) other).getId());
+    // Object interface -------------------------------------------------------
 
-		return result;
-	}
+    @Override
+    public int hashCode()
+    {
+        return this.getId();
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder result;
+    @Override
+    public boolean equals(final Object other)
+    {
+        boolean result;
 
-		result = new StringBuilder();
-		result.append(this.getClass().getName());
-		result.append("{");
-		result.append("id=");
-		result.append(this.getId());
-		result.append(", version=");
-		result.append(this.getVersion());
-		result.append("}");
+        if (this == other) {
+            result = true;
+        } else if (other == null) {
+            result = false;
+        } else if (other instanceof Integer) {
+            result = (this.getId() == (Integer) other);
+        } else if (!this.getClass().isInstance(other) && !other.getClass().isInstance(this)) {
+            result = false;
+        } else {
+            result = (this.getId() == ((DomainEntity) other).getId());
+        }
 
-		return result.toString();
-	}
+        return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result;
+
+        result = new StringBuilder();
+        result.append(this.getClass().getName());
+        result.append("{");
+        result.append("id=");
+        result.append(this.getId());
+        result.append(", version=");
+        result.append(this.getVersion());
+        result.append("}");
+
+        return result.toString();
+    }
 
 }

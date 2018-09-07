@@ -15,66 +15,73 @@ import java.io.OutputStream;
 
 public class EclipseStream extends OutputStream {
 
-	// Constructors -----------------------------------------------------------
+    // Constructors -----------------------------------------------------------
 
-	public EclipseStream(final OutputStream originalStream) {
-		assert originalStream != null;
+    public EclipseStream(final OutputStream originalStream)
+    {
+        assert originalStream != null;
 
-		this.target = originalStream;
-	}
-
-
-	// Internal state ---------------------------------------------------------
-
-	private final OutputStream	target;
-	private static OutputStream	lastStream;
+        this.target = originalStream;
+    }
 
 
-	// OutputStream interface -------------------------------------------------
+    // Internal state ---------------------------------------------------------
 
-	@Override
-	public void close() throws IOException {
-		this.target.close();
-	}
+    private final OutputStream target;
+    private static OutputStream lastStream;
 
-	@Override
-	public void flush() throws IOException {
-		this.target.flush();
-	}
 
-	@Override
-	public void write(final byte[] buffer) throws IOException {
-		assert buffer != null;
+    // OutputStream interface -------------------------------------------------
 
-		this.swap();
-		this.target.write(buffer);
-	}
+    @Override
+    public void close() throws IOException
+    {
+        this.target.close();
+    }
 
-	@Override
-	public void write(final byte[] buffer, final int offset, final int length) throws IOException {
-		assert buffer != null;
-		assert offset >= 0 && offset < buffer.length;
-		assert offset + length - 1 < buffer.length;
+    @Override
+    public void flush() throws IOException
+    {
+        this.target.flush();
+    }
 
-		this.swap();
-		this.target.write(buffer, offset, length);
-	}
+    @Override
+    public void write(final byte[] buffer) throws IOException
+    {
+        assert buffer != null;
 
-	@Override
-	public void write(final int datum) throws IOException {
-		this.swap();
-		this.target.write(datum);
-	}
+        this.swap();
+        this.target.write(buffer);
+    }
 
-	// Ancillary methods ------------------------------------------------------
-	protected void swap() throws IOException {
-		if (EclipseStream.lastStream != this && EclipseStream.lastStream != null) {
-			EclipseStream.lastStream.flush();
-			try {
-				Thread.sleep(250);
-			} catch (final InterruptedException oops) {
-			}
-		}
-		EclipseStream.lastStream = this;
-	}
+    @Override
+    public void write(final byte[] buffer, final int offset, final int length) throws IOException
+    {
+        assert buffer != null;
+        assert offset >= 0 && offset < buffer.length;
+        assert offset + length - 1 < buffer.length;
+
+        this.swap();
+        this.target.write(buffer, offset, length);
+    }
+
+    @Override
+    public void write(final int datum) throws IOException
+    {
+        this.swap();
+        this.target.write(datum);
+    }
+
+    // Ancillary methods ------------------------------------------------------
+    protected void swap() throws IOException
+    {
+        if (EclipseStream.lastStream != this && EclipseStream.lastStream != null) {
+            EclipseStream.lastStream.flush();
+            try {
+                Thread.sleep(250);
+            } catch (final InterruptedException oops) {
+            }
+        }
+        EclipseStream.lastStream = this;
+    }
 }

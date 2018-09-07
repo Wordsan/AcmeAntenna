@@ -67,11 +67,12 @@ public class TutorialController extends AbstractController {
         return result;
     }
 
-    @RequestMapping(value="/create", method=RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView create(
             @ModelAttribute("tutorial") @Valid Tutorial tutorial,
             BindingResult binding,
-            RedirectAttributes redir)
+            RedirectAttributes redir
+    )
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
 
@@ -85,7 +86,7 @@ public class TutorialController extends AbstractController {
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 
                 return ControllerUtils.redirect("/tutorials/show.do");
-            } catch(Throwable oops) {
+            } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
             }
@@ -103,10 +104,11 @@ public class TutorialController extends AbstractController {
         return createEditModelAndView("tutorials/edit", "tutorials/update.do", null, null, tutorial);
     }
 
-    @RequestMapping(value="/update", method=RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView update(
             @ModelAttribute("tutorial") @Valid Tutorial tutorial,
-            BindingResult binding, RedirectAttributes redir)
+            BindingResult binding, RedirectAttributes redir
+    )
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
 
@@ -119,7 +121,7 @@ public class TutorialController extends AbstractController {
                 redir.addAttribute("id", tutorial.getId());
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
                 return ControllerUtils.redirect("/tutorials/show.do");
-            } catch(Throwable oops) {
+            } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
             }
@@ -148,7 +150,7 @@ public class TutorialController extends AbstractController {
         return result;
     }
 
-    @RequestMapping(value="/create_comment", method= RequestMethod.POST)
+    @RequestMapping(value = "/create_comment", method = RequestMethod.POST)
     public ModelAndView createComment(@ModelAttribute("tutorialComment") @Valid TutorialComment tutorialComment, BindingResult binding, RedirectAttributes redir)
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
@@ -172,7 +174,7 @@ public class TutorialController extends AbstractController {
         return result;
     }
 
-    @RequestMapping(value="/delete_comment", method=RequestMethod.POST)
+    @RequestMapping(value = "/delete_comment", method = RequestMethod.POST)
     public ModelAndView deleteComment(@RequestParam("id") int id, RedirectAttributes redir)
     {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
@@ -192,7 +194,7 @@ public class TutorialController extends AbstractController {
         return result;
     }
 
-    @RequestMapping(value="/delete", method=RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ModelAndView delete(@RequestParam("id") int id, RedirectAttributes redir)
     {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);

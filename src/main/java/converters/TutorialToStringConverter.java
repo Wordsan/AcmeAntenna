@@ -10,18 +10,19 @@ import domain.Tutorial;
 @Component
 @Transactional
 public class TutorialToStringConverter
-implements Converter<Tutorial, String> {
-	@Override
-	public String convert(Tutorial tutorial)
-	{
-		String result;
+        implements Converter<Tutorial, String>
+{
+    @Override
+    public String convert(Tutorial tutorial)
+    {
+        String result;
 
-		if (tutorial == null) {
-			result = null;
-		} else {
-			result = String.valueOf(tutorial.getId());
-		}
+        if (tutorial == null) {
+            result = null;
+        } else {
+            result = String.valueOf(tutorial.getId());
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

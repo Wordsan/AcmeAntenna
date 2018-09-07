@@ -26,7 +26,8 @@ import validators.PastOrPresent;
 @Entity
 @Access(AccessType.PROPERTY)
 public class TutorialComment
-extends DomainEntity {
+        extends DomainEntity
+{
     private User user;
     private Tutorial tutorial;
     private String title;

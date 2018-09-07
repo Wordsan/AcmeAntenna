@@ -8,6 +8,7 @@ import security.UserAccount;
 
 @Repository
 public interface UserRepository
-extends JpaRepository<User, Integer> {
+        extends JpaRepository<User, Integer>
+{
     User findByUserAccount(UserAccount userAccount);
 }

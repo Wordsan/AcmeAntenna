@@ -115,7 +115,7 @@ public class CheckUtils {
 
         boolean authorized = false;
 
-        for (String authorityExpected: expectedAuthorities) {
+        for (String authorityExpected : expectedAuthorities) {
             for (Authority accountAuthority : account.getAuthorities()) {
                 if (accountAuthority.getAuthority().equals(authorityExpected)) {
                     authorized = true;

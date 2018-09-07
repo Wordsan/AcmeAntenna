@@ -71,10 +71,11 @@ public class PlatformSubscriptionController extends AbstractController {
         return result;
     }
 
-    @RequestMapping(value="/create", method= RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView create(
             @ModelAttribute("platformSubscription") @Valid PlatformSubscription platformSubscription,
-            BindingResult binding, RedirectAttributes redir)
+            BindingResult binding, RedirectAttributes redir
+    )
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
 
@@ -84,9 +85,9 @@ public class PlatformSubscriptionController extends AbstractController {
                 platformSubscription = service.create(platformSubscription);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
                 return ControllerUtils.redirect("/platform_subscriptions/index.do");
-            } catch(OverlappingPlatformSubscriptionException ex) {
+            } catch (OverlappingPlatformSubscriptionException ex) {
                 globalErrorMessage = "platform_subscription.error.overlapping";
-            } catch(Throwable oops) {
+            } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
             }

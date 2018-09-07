@@ -12,8 +12,9 @@ import javax.validation.Valid;
 @Entity
 @Access(AccessType.PROPERTY)
 public class User
-extends Actor {
-	private List<Antenna> antennas = new ArrayList<>();
+        extends Actor
+{
+    private List<Antenna> antennas = new ArrayList<>();
     private List<Tutorial> tutorials = new ArrayList<>();
     private List<PlatformSubscription> platformSubscriptions = new ArrayList<>();
 
@@ -23,6 +24,7 @@ extends Actor {
     {
         return antennas;
     }
+
     public void setAntennas(List<Antenna> antennas)
     {
         if (antennas == null) antennas = new ArrayList<>();
@@ -35,6 +37,7 @@ extends Actor {
     {
         return tutorials;
     }
+
     public void setTutorials(List<Tutorial> tutorials)
     {
         if (tutorials == null) tutorials = new ArrayList<>();
@@ -47,6 +50,7 @@ extends Actor {
     {
         return platformSubscriptions;
     }
+
     public void setPlatformSubscriptions(List<PlatformSubscription> platformSubscriptions)
     {
         if (platformSubscriptions == null) platformSubscriptions = new ArrayList<>();

@@ -19,7 +19,7 @@ import utilities.AbstractTest;
 
 /**
  * Tests the following use cases from the requirements document:
- *   - Register to the system as a user.
+ * - Register to the system as a user.
  */
 @ContextConfiguration(locations = {
         "classpath:spring/junit.xml"

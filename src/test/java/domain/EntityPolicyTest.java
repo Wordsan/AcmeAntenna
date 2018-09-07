@@ -40,7 +40,7 @@ public class EntityPolicyTest extends AbstractTest {
         boolean ok = true;
         Collection<? extends Class<?>> entities = ReflectionUtils.findAllDomainEntityClasses();
         for (Class<?> entity : entities) {
-            for (Method method: entity.getDeclaredMethods()) {
+            for (Method method : entity.getDeclaredMethods()) {
                 // If it's a getter:
                 if (method.getName().startsWith("get") || method.getName().startsWith("is")) {
                     ok &= checkEntityGetterFollowsPolicy(entity, method);

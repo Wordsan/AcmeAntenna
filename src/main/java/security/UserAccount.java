@@ -32,106 +32,120 @@ import domain.DomainEntity;
 @Access(AccessType.PROPERTY)
 public class UserAccount extends DomainEntity implements UserDetails {
 
-	// Constructors -----------------------------------------------------------
+    // Constructors -----------------------------------------------------------
 
-	private static final long	serialVersionUID	= 7254823034213841482L;
-
-
-	public UserAccount() {
-		super();
-
-		this.authorities = new ArrayList<Authority>();
-	}
-	
-	public UserAccount(String username, String password, String authority) {
-		this();
-		setUsername(username);
-		setPassword(password);
-		Authority a = new Authority();
-		a.setAuthority(authority);
-		addAuthority(a);
-	}
+    private static final long serialVersionUID = 7254823034213841482L;
 
 
-	// Attributes -------------------------------------------------------------
+    public UserAccount()
+    {
+        super();
 
-	// UserDetails interface --------------------------------------------------
+        this.authorities = new ArrayList<Authority>();
+    }
 
-	private String					username;
-	private String					password;
-	private Collection<Authority>	authorities;
+    public UserAccount(String username, String password, String authority)
+    {
+        this();
+        setUsername(username);
+        setPassword(password);
+        Authority a = new Authority();
+        a.setAuthority(authority);
+        addAuthority(a);
+    }
 
 
-	@Size(min = 4, max = 32)
-	@Column(unique = true)
-	@Override
-	public String getUsername() {
-		return this.username;
-	}
+    // Attributes -------------------------------------------------------------
 
-	public void setUsername(final String username) {
-		this.username = username;
-	}
+    // UserDetails interface --------------------------------------------------
 
-	@Size(min = 4, max = 32)
-	@Override
-	public String getPassword() {
-		return this.password;
-	}
+    private String username;
+    private String password;
+    private Collection<Authority> authorities;
 
-	public void setPassword(final String password) {
-		this.password = password;
-	}
 
-	@NotEmpty
-	@Valid
-	@ElementCollection
-	@Override
-	public Collection<Authority> getAuthorities() {
-		// WARNING: Should return an unmodifiable copy, but it's not possible with hibernate!
-		return this.authorities;
-	}
+    @Size(min = 4, max = 32)
+    @Column(unique = true)
+    @Override
+    public String getUsername()
+    {
+        return this.username;
+    }
 
-	public void setAuthorities(final Collection<Authority> authorities) {
-		this.authorities = authorities;
-	}
+    public void setUsername(final String username)
+    {
+        this.username = username;
+    }
 
-	public void addAuthority(final Authority authority) {
-		Assert.notNull(authority);
-		Assert.isTrue(!this.authorities.contains(authority));
+    @Size(min = 4, max = 32)
+    @Override
+    public String getPassword()
+    {
+        return this.password;
+    }
 
-		this.authorities.add(authority);
-	}
+    public void setPassword(final String password)
+    {
+        this.password = password;
+    }
 
-	public void removeAuthority(final Authority authority) {
-		Assert.notNull(authority);
-		Assert.isTrue(this.authorities.contains(authority));
+    @NotEmpty
+    @Valid
+    @ElementCollection
+    @Override
+    public Collection<Authority> getAuthorities()
+    {
+        // WARNING: Should return an unmodifiable copy, but it's not possible with hibernate!
+        return this.authorities;
+    }
 
-		this.authorities.remove(authority);
-	}
+    public void setAuthorities(final Collection<Authority> authorities)
+    {
+        this.authorities = authorities;
+    }
 
-	@Transient
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    public void addAuthority(final Authority authority)
+    {
+        Assert.notNull(authority);
+        Assert.isTrue(!this.authorities.contains(authority));
 
-	@Transient
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+        this.authorities.add(authority);
+    }
 
-	@Transient
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+    public void removeAuthority(final Authority authority)
+    {
+        Assert.notNull(authority);
+        Assert.isTrue(this.authorities.contains(authority));
 
-	@Transient
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+        this.authorities.remove(authority);
+    }
+
+    @Transient
+    @Override
+    public boolean isAccountNonExpired()
+    {
+        return true;
+    }
+
+    @Transient
+    @Override
+    public boolean isAccountNonLocked()
+    {
+        return true;
+    }
+
+    @Transient
+    @Override
+    public boolean isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    @Transient
+    @Override
+    public boolean isEnabled()
+    {
+        return true;
+    }
 
 }

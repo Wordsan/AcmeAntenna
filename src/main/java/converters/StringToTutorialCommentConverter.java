@@ -13,26 +13,27 @@ import repositories.TutorialCommentRepository;
 @Component
 @Transactional
 public class StringToTutorialCommentConverter
-implements Converter<String, TutorialComment> {
-	@Autowired
-	private TutorialCommentRepository repository;
+        implements Converter<String, TutorialComment>
+{
+    @Autowired
+    private TutorialCommentRepository repository;
 
-	@Override
-	public TutorialComment convert(String text)
-	{
-		TutorialComment result;
+    @Override
+    public TutorialComment convert(String text)
+    {
+        TutorialComment result;
 
-		try {
-			if (StringUtils.isEmpty(text)) {
-				result = null;
-			} else {
-				int id = Integer.valueOf(text);
-				result = repository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+        try {
+            if (StringUtils.isEmpty(text)) {
+                result = null;
+            } else {
+                int id = Integer.valueOf(text);
+                result = repository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

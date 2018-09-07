@@ -31,148 +31,154 @@ import utilities.internal.ThrowablePrinter;
 
 public class PopulateDatabase {
 
-	public static void main(final String[] args) {
-		DatabaseUtil databaseUtil;
-		ApplicationContext populationContext;
-		Map<String, DomainEntity> entityMap;
-		List<Entry<String, DomainEntity>> sortedEntities;
+    public static void main(final String[] args)
+    {
+        DatabaseUtil databaseUtil;
+        ApplicationContext populationContext;
+        Map<String, DomainEntity> entityMap;
+        List<Entry<String, DomainEntity>> sortedEntities;
 
-		EclipseConsole.fix();
-		LogManager.getLogger("org.hibernate").setLevel(Level.OFF);
-		LogManager.getLogger("cz.jirutka.validator").setLevel(Level.ERROR);
-		databaseUtil = null;
+        EclipseConsole.fix();
+        LogManager.getLogger("org.hibernate").setLevel(Level.OFF);
+        LogManager.getLogger("cz.jirutka.validator").setLevel(Level.ERROR);
+        databaseUtil = null;
 
-		try {
-			System.out.println("PopulateDatabase 1.12");
-			System.out.println("---------------------");
-			System.out.println();
+        try {
+            System.out.println("PopulateDatabase 1.12");
+            System.out.println("---------------------");
+            System.out.println();
 
-			System.out.printf("Initialising persistence context `%s'.%n", DatabaseConfig.PersistenceUnit);
-			databaseUtil = new DatabaseUtil();
-			databaseUtil.initialise();
+            System.out.printf("Initialising persistence context `%s'.%n", DatabaseConfig.PersistenceUnit);
+            databaseUtil = new DatabaseUtil();
+            databaseUtil.initialise();
 
-			System.out.printf("Creating database `%s' (%s).%n", databaseUtil.getDatabaseName(), databaseUtil.getDatabaseDialectName());
-			databaseUtil.recreateDatabase();
+            System.out.printf("Creating database `%s' (%s).%n", databaseUtil.getDatabaseName(), databaseUtil.getDatabaseDialectName());
+            databaseUtil.recreateDatabase();
 
-			System.out.println("Recreating Lucene index if required.");
-			databaseUtil.recreateLuceneIndex();
+            System.out.println("Recreating Lucene index if required.");
+            databaseUtil.recreateLuceneIndex();
 
-			System.out.printf("Reading web of entities from `%s'.", DatabaseConfig.entitySpecificationFilename);
-			populationContext = new ClassPathXmlApplicationContext("classpath:PopulateDatabase.xml");
-			entityMap = populationContext.getBeansOfType(DomainEntity.class);
-			System.out.printf(" (%d entities found).%n", entityMap.size());
+            System.out.printf("Reading web of entities from `%s'.", DatabaseConfig.entitySpecificationFilename);
+            populationContext = new ClassPathXmlApplicationContext("classpath:PopulateDatabase.xml");
+            entityMap = populationContext.getBeansOfType(DomainEntity.class);
+            System.out.printf(" (%d entities found).%n", entityMap.size());
 
-			System.out.printf("Computing a topological order for your entities.%n");
-			sortedEntities = PopulateDatabase.sort(databaseUtil, entityMap);
+            System.out.printf("Computing a topological order for your entities.%n");
+            sortedEntities = PopulateDatabase.sort(databaseUtil, entityMap);
 
-			System.out.printf("Trying to save the best order found.  What out for exceptions!%n");
-			PopulateDatabase.persist(databaseUtil, sortedEntities);
+            System.out.printf("Trying to save the best order found.  What out for exceptions!%n");
+            PopulateDatabase.persist(databaseUtil, sortedEntities);
 
-			System.out.printf("Saving entity map to `%s'.%n", DatabaseConfig.entityMapFilename);
-			PopulateDatabase.saveEntityMap(databaseUtil, sortedEntities);
-		} catch (final Throwable oops) {
-			ThrowablePrinter.print(oops);
-		} finally {
-			if (databaseUtil != null) {
-				System.out.printf("Shutting persistence context `%s' down.%n", DatabaseConfig.PersistenceUnit);
-				databaseUtil.shutdown();
-			}
-		}
-	}
+            System.out.printf("Saving entity map to `%s'.%n", DatabaseConfig.entityMapFilename);
+            PopulateDatabase.saveEntityMap(databaseUtil, sortedEntities);
+        } catch (final Throwable oops) {
+            ThrowablePrinter.print(oops);
+        } finally {
+            if (databaseUtil != null) {
+                System.out.printf("Shutting persistence context `%s' down.%n", DatabaseConfig.PersistenceUnit);
+                databaseUtil.shutdown();
+            }
+        }
+    }
 
-	protected static List<Entry<String, DomainEntity>> sort(final DatabaseUtil databaseUtil, final Map<String, DomainEntity> entityMap) {
-		LinkedList<Entry<String, DomainEntity>> result;
-		LinkedList<Entry<String, DomainEntity>> cache;
-		Entry<String, DomainEntity> entry;
-		DomainEntity entity;
-		int passCounter;
-		boolean done;
+    protected static List<Entry<String, DomainEntity>> sort(final DatabaseUtil databaseUtil, final Map<String, DomainEntity> entityMap)
+    {
+        LinkedList<Entry<String, DomainEntity>> result;
+        LinkedList<Entry<String, DomainEntity>> cache;
+        Entry<String, DomainEntity> entry;
+        DomainEntity entity;
+        int passCounter;
+        boolean done;
 
-		result = new LinkedList<Entry<String, DomainEntity>>();
-		result.addAll(entityMap.entrySet());
-		cache = new LinkedList<Entry<String, DomainEntity>>();
-		passCounter = 0;
+        result = new LinkedList<Entry<String, DomainEntity>>();
+        result.addAll(entityMap.entrySet());
+        cache = new LinkedList<Entry<String, DomainEntity>>();
+        passCounter = 0;
 
-		do {
-			try {
-				databaseUtil.startTransaction();
-				PopulateDatabase.cleanEntities(result);
+        do {
+            try {
+                databaseUtil.startTransaction();
+                PopulateDatabase.cleanEntities(result);
 
-				while (!result.isEmpty()) {
-					entry = result.getFirst();
-					entity = entry.getValue();
-					databaseUtil.persist(entity);
-					result.removeFirst();
-					cache.addLast(entry);
-				}
-				databaseUtil.rollbackTransaction();
-				done = true;
-				result.addAll(cache);
-				cache.clear();
-			} catch (final Throwable oops) {
-				databaseUtil.rollbackTransaction();
-				done = (passCounter >= entityMap.size() - 1);
-				entry = result.removeFirst();
-				cache.addAll(result);
-				cache.addLast(entry);
-				result.clear();
-				result.addAll(cache);
-				cache.clear();
-			}
-			passCounter++;
-		} while (!done);
+                while (!result.isEmpty()) {
+                    entry = result.getFirst();
+                    entity = entry.getValue();
+                    databaseUtil.persist(entity);
+                    result.removeFirst();
+                    cache.addLast(entry);
+                }
+                databaseUtil.rollbackTransaction();
+                done = true;
+                result.addAll(cache);
+                cache.clear();
+            } catch (final Throwable oops) {
+                databaseUtil.rollbackTransaction();
+                done = (passCounter >= entityMap.size() - 1);
+                entry = result.removeFirst();
+                cache.addAll(result);
+                cache.addLast(entry);
+                result.clear();
+                result.addAll(cache);
+                cache.clear();
+            }
+            passCounter++;
+        }
+        while (!done);
 
-		PopulateDatabase.cleanEntities(result);
+        PopulateDatabase.cleanEntities(result);
 
-		return result;
-	}
+        return result;
+    }
 
-	protected static void persist(final DatabaseUtil databaseUtil, final List<Entry<String, DomainEntity>> sortedEntities) {
-		String name;
-		DomainEntity entity;
+    protected static void persist(final DatabaseUtil databaseUtil, final List<Entry<String, DomainEntity>> sortedEntities)
+    {
+        String name;
+        DomainEntity entity;
 
-		System.out.println();
-		databaseUtil.startTransaction();
-		for (final Entry<String, DomainEntity> entry : sortedEntities) {
-			name = entry.getKey();
-			entity = entry.getValue();
+        System.out.println();
+        databaseUtil.startTransaction();
+        for (final Entry<String, DomainEntity> entry : sortedEntities) {
+            name = entry.getKey();
+            entity = entry.getValue();
 
-			System.out.printf("> %s = ", name);
-			databaseUtil.persist(entity);
-			SchemaPrinter.print(entity);
-		}
-		databaseUtil.commitTransaction();
-		System.out.println();
-	}
+            System.out.printf("> %s = ", name);
+            databaseUtil.persist(entity);
+            SchemaPrinter.print(entity);
+        }
+        databaseUtil.commitTransaction();
+        System.out.println();
+    }
 
-	private static void saveEntityMap(final DatabaseUtil databaseUtil, final List<Entry<String, DomainEntity>> sortedEntities) {
-		Properties map;
+    private static void saveEntityMap(final DatabaseUtil databaseUtil, final List<Entry<String, DomainEntity>> sortedEntities)
+    {
+        Properties map;
 
-		map = new Properties();
-		for (final Entry<String, DomainEntity> entry : sortedEntities) {
-			String key, value;
+        map = new Properties();
+        for (final Entry<String, DomainEntity> entry : sortedEntities) {
+            String key, value;
 
-			key = entry.getKey();
-			value = Integer.toString(entry.getValue().getId());
+            key = entry.getKey();
+            value = Integer.toString(entry.getValue().getId());
 
-			map.put(key, value);
-		}
+            map.put(key, value);
+        }
 
-		try (OutputStream stream = new FileOutputStream(DatabaseConfig.entityMapFilename)) {
-			map.store(stream, DatabaseConfig.entityMapFilename);
-		} catch (final Throwable oops) {
-			throw new RuntimeException(oops);
-		}
-	}
+        try (OutputStream stream = new FileOutputStream(DatabaseConfig.entityMapFilename)) {
+            map.store(stream, DatabaseConfig.entityMapFilename);
+        } catch (final Throwable oops) {
+            throw new RuntimeException(oops);
+        }
+    }
 
-	protected static void cleanEntities(final LinkedList<Entry<String, DomainEntity>> result) {
-		for (final Entry<String, DomainEntity> entry : result) {
-			DomainEntity entity;
+    protected static void cleanEntities(final LinkedList<Entry<String, DomainEntity>> result)
+    {
+        for (final Entry<String, DomainEntity> entry : result) {
+            DomainEntity entity;
 
-			entity = entry.getValue();
-			entity.setId(0);
-			entity.setVersion(0);
-		}
-	}
+            entity = entry.getValue();
+            entity.setId(0);
+            entity.setVersion(0);
+        }
+    }
 
 }

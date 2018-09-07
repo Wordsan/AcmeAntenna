@@ -22,118 +22,112 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
 import domain.Actor;
-import domain.Administrator;
-import domain.User;
 import exceptions.ResourceNotFoundException;
-import security.Authority;
 import security.LoginService;
-import security.UserAccount;
 import services.ActorService;
-import services.UserService;
 import utilities.ApplicationConfig;
 import utilities.ControllerUtils;
 import utilities.HttpServletUtils;
 
 @Controller
 public class AbstractController {
-	private @Autowired ActorService actorService;
+    private @Autowired ActorService actorService;
 
-	private HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+    private HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
 
-	@ModelAttribute("principal")
-	public Actor findPrincipal()
-	{
-		Actor principal = actorService.findPrincipal();
-		return principal;
-	}
+    @ModelAttribute("principal")
+    public Actor findPrincipal()
+    {
+        Actor principal = actorService.findPrincipal();
+        return principal;
+    }
 
-	protected Actor getPrincipal()
-	{
-		Actor principal = actorService.getPrincipal();
-		return principal;
-	}
+    protected Actor getPrincipal()
+    {
+        Actor principal = actorService.getPrincipal();
+        return principal;
+    }
 
-	@ModelAttribute("locale")
-	public String getLocale()
-	{
-		return LocaleContextHolder.getLocale().toLanguageTag();
-	}
+    @ModelAttribute("locale")
+    public String getLocale()
+    {
+        return LocaleContextHolder.getLocale().toLanguageTag();
+    }
 
-	@ModelAttribute("displayTagPageSize")
-	public int getDisplayTagPageSize()
-	{
-		return ApplicationConfig.DISPLAYTAG_PAGE_SIZE;
-	}
+    @ModelAttribute("displayTagPageSize")
+    public int getDisplayTagPageSize()
+    {
+        return ApplicationConfig.DISPLAYTAG_PAGE_SIZE;
+    }
 
-	@ModelAttribute("currentRequestUri")
-	public String getCurrentRequestUri()
-	{
-		return HttpServletUtils.currentRequestUri();
-	}
+    @ModelAttribute("currentRequestUri")
+    public String getCurrentRequestUri()
+    {
+        return HttpServletUtils.currentRequestUri();
+    }
 
-	@ModelAttribute("currentRequestUriAndParams")
-	public String getCurrentRequestUriAndParams()
-	{
-		return HttpServletUtils.currentRequestUriAndParams();
-	}
+    @ModelAttribute("currentRequestUriAndParams")
+    public String getCurrentRequestUriAndParams()
+    {
+        return HttpServletUtils.currentRequestUriAndParams();
+    }
 
 
-	@InitBinder
-	public void configEmptyStringAsNull(WebDataBinder binder )
-	{
-		// Tell spring to set empty values as null instead of empty string.
-		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
-	}
+    @InitBinder
+    public void configEmptyStringAsNull(WebDataBinder binder)
+    {
+        // Tell spring to set empty values as null instead of empty string.
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
 
-		// Panic handler ----------------------------------------------------------
+    // Panic handler ----------------------------------------------------------
 
-	@ExceptionHandler(Throwable.class)
-	public ModelAndView panic(Throwable oops, HttpServletRequest request)
-	{
-		// We throw this exception ourselves and expect it to be handled gracefully, so do so.
-		if (oops instanceof AccessDeniedException) {
-			return handleAccessDeniedException(request);
-		}
-		if (oops instanceof ResourceNotFoundException) {
-			return handle404(request);
-		}
+    @ExceptionHandler(Throwable.class)
+    public ModelAndView panic(Throwable oops, HttpServletRequest request)
+    {
+        // We throw this exception ourselves and expect it to be handled gracefully, so do so.
+        if (oops instanceof AccessDeniedException) {
+            return handleAccessDeniedException(request);
+        }
+        if (oops instanceof ResourceNotFoundException) {
+            return handle404(request);
+        }
 
-		ModelAndView result;
+        ModelAndView result;
 
-		result = new ModelAndView("misc/panic");
-		result.addObject("name", ClassUtils.getShortName(oops.getClass()));
-		result.addObject("exception", oops.getMessage());
-		result.addObject("stackTrace", ExceptionUtils.getStackTrace(oops));
+        result = new ModelAndView("misc/panic");
+        result.addObject("name", ClassUtils.getShortName(oops.getClass()));
+        result.addObject("exception", oops.getMessage());
+        result.addObject("stackTrace", ExceptionUtils.getStackTrace(oops));
 
-		if (ApplicationConfig.DEBUG) oops.printStackTrace();
+        if (ApplicationConfig.DEBUG) oops.printStackTrace();
 
-		return result;
-	}
+        return result;
+    }
 
-	private ModelAndView handle404(HttpServletRequest request)
-	{
-		return new ModelAndView("misc/404");
-	}
+    private ModelAndView handle404(HttpServletRequest request)
+    {
+        return new ModelAndView("misc/404");
+    }
 
-	private ModelAndView handleAccessDeniedException(HttpServletRequest request)
-	{
-		if (!LoginService.isAuthenticated()) {
-			// If we are not authenticated, redirect to login page, and save the current request
-			// so that Spring will replay it on authentication success.
-			// Only save the request if it's a GET request. Otherwise the user must do it again.
-			if (request.getMethod().equalsIgnoreCase("GET")) {
-				requestCache.saveRequest(request, null);
-			}
-			return ControllerUtils.redirect("/security/login.do");
-		} else {
-			// Else the user just doesn't have permissions to do this.
-			return new ModelAndView("misc/403");
-		}
-	}
+    private ModelAndView handleAccessDeniedException(HttpServletRequest request)
+    {
+        if (!LoginService.isAuthenticated()) {
+            // If we are not authenticated, redirect to login page, and save the current request
+            // so that Spring will replay it on authentication success.
+            // Only save the request if it's a GET request. Otherwise the user must do it again.
+            if (request.getMethod().equalsIgnoreCase("GET")) {
+                requestCache.saveRequest(request, null);
+            }
+            return ControllerUtils.redirect("/security/login.do");
+        } else {
+            // Else the user just doesn't have permissions to do this.
+            return new ModelAndView("misc/403");
+        }
+    }
 }
