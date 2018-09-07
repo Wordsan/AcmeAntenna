@@ -12,7 +12,6 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <form:form action="agents/create.do" modelAttribute="form">
-    <form:hidden path="agent.userAccount.authorities[0]" />
     <app:textbox path="agent.userAccount.username" code="actors.username" />
     <app:password path="agent.userAccount.password" code="actors.password" />
     <app:password path="repeatPassword" code="actors.repeatPassword" />
@@ -21,13 +20,11 @@
 
     <app:actor-editor path="agent" />
 
+    <app:checkbox path="agreesToTerms" code="users.iAgreeToTerms" />
+
     <div>
         <app:submit name="submit" code="misc.actions.create" />
         <app:cancel-button code="misc.actions.cancel" />
     </div>
-
-    <br/>
-
-    <div class="multiline"><spring:message code="agents.termsAndConditions" /></div>
 </form:form>
 

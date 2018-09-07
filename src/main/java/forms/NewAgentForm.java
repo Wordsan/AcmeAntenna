@@ -4,6 +4,7 @@ package forms;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.validation.Valid;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 
 import security.Authority;
@@ -19,7 +20,7 @@ public class NewAgentForm {
 
 	private Agent	agent			= new Agent();
 	private String	repeatPassword	= "";
-
+	private boolean agreesToTerms;
 
 	public NewAgentForm() {
 		this.agent.setUserAccount(new UserAccount("", "", Authority.AGENT));
@@ -47,5 +48,16 @@ public class NewAgentForm {
 	}
 	public void setRepeatPassword(final String repeatPassword) {
 		this.repeatPassword = repeatPassword;
+	}
+
+	@AssertTrue(message = "{users.mustAgreeToTerms}")
+	public boolean getAgreesToTerms()
+	{
+		return agreesToTerms;
+	}
+
+	public void setAgreesToTerms(boolean agreesToTerms)
+	{
+		this.agreesToTerms = agreesToTerms;
 	}
 }

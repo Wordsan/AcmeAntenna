@@ -12,7 +12,6 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <form:form action="handyworkers/create.do" modelAttribute="form">
-    <form:hidden path="handyworker.userAccount.authorities[0]" />
     <app:textbox path="handyworker.userAccount.username" code="actors.username" />
     <app:password path="handyworker.userAccount.password" code="actors.password" />
     <app:password path="repeatPassword" code="actors.repeatPassword" />
@@ -21,13 +20,11 @@
 
     <app:actor-editor path="handyworker" />
 
+    <app:checkbox path="agreesToTerms" code="users.iAgreeToTerms" />
+
     <div>
         <app:submit name="submit" code="misc.actions.create" />
         <app:cancel-button code="misc.actions.cancel" />
     </div>
-
-    <br/>
-
-    <div class="multiline"><spring:message code="handyworkers.termsAndConditions" /></div>
 </form:form>
 
