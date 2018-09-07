@@ -10,8 +10,9 @@ import java.util.Collection;
 
 import javax.transaction.Transactional;
 
-import exceptions.UsernameNotUniqueException;
+import exceptions.ResourceNotUniqueException;
 import utilities.CheckUtils;
+
 
 @Service
 @Transactional
@@ -28,12 +29,13 @@ public class UserAccountService {
 		return repository.findByUsername(username);
 	}
 
+
 	public UserAccount create(String username,
 			String password,
-			String authority) throws UsernameNotUniqueException
+			String authority) throws ResourceNotUniqueException
 	{
 		if (findByName(username) != null) {
-			throw new UsernameNotUniqueException();
+			throw new ResourceNotUniqueException();
 		}
 
 		UserAccount account = new UserAccount();
@@ -41,7 +43,7 @@ public class UserAccountService {
 		account.setPassword(new Md5PasswordEncoder().encodePassword(
 					password, null));
 
-		Collection<Authority> authorities = new ArrayList<Authority>();
+		Collection<Authority> authorities = new ArrayList<>();
 		Authority auth = new Authority();
 		auth.setAuthority(authority);
 		authorities.add(auth);
@@ -66,4 +68,5 @@ public class UserAccountService {
 	{
 		return new Md5PasswordEncoder().isPasswordValid(account.getPassword(), password, null);
 	}
+
 }

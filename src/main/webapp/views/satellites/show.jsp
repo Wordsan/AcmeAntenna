@@ -24,7 +24,7 @@
 
 <c:if test="${not satellite.deleted}">
 <security:authorize access="hasRole('ADMINISTRATOR')">
-    <app:redir-button code="misc.actions.edit" action="satellites/edit.do?id=${satellite.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
+    <app:redir-button code="misc.actions.edit" action="satellites/edit.do?id=${satellite.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
     <app:delete-button code="misc.actions.delete" action="satellites/delete.do?id=${satellite.id}" />
 </security:authorize>
 </c:if>

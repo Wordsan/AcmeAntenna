@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
 import cz.jirutka.validator.collection.constraints.EachNotBlank;
 import cz.jirutka.validator.collection.constraints.EachNotNull;
 import cz.jirutka.validator.collection.constraints.EachURL;
-import validators.PastWithMargin;
+import validators.PastOrPresent;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -46,7 +46,7 @@ extends DomainEntity {
     }
 
     @NotNull
-    @PastWithMargin
+    @PastOrPresent
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     public Date getLastUpdateTime()

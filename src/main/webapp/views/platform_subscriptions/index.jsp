@@ -11,7 +11,7 @@
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
-<app:redir-button action="platform_subscriptions/new.do?cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" code="misc.actions.new" />
+<app:redir-button action="platform_subscriptions/new.do?returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" code="misc.actions.new" />
 
 <display:table name="platformSubscriptions"
 	       id="platformSubscription"

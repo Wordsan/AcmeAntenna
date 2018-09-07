@@ -6,12 +6,12 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.ValidatorFactory;
 
-public class PastWithMarginValidator implements ConstraintValidator<PastWithMargin, Date> {
-    private PastWithMargin constraintAnnotation;
+public class PastOrPresentValidator implements ConstraintValidator<PastOrPresent, Date> {
+    private PastOrPresent constraintAnnotation;
     private ValidatorFactory validatorFactory;
 
     @Override
-    public void initialize(PastWithMargin constraintAnnotation)
+    public void initialize(PastOrPresent constraintAnnotation)
     {
         this.constraintAnnotation = constraintAnnotation;
     }

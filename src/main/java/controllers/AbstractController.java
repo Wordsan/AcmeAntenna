@@ -38,6 +38,7 @@ import services.ActorService;
 import services.UserService;
 import utilities.ApplicationConfig;
 import utilities.ControllerUtils;
+import utilities.HttpServletUtils;
 
 @Controller
 public class AbstractController {
@@ -70,17 +71,16 @@ public class AbstractController {
 		return ApplicationConfig.DISPLAYTAG_PAGE_SIZE;
 	}
 
-	@ModelAttribute("currentRelativeUrl")
-	public String getCurrentRelativeUrl(HttpServletRequest request)
+	@ModelAttribute("currentRequestUri")
+	public String getCurrentRequestUri()
 	{
-		String relativePath = request.getServletPath();
-		if (relativePath.startsWith("/")) relativePath = relativePath.substring(1);
-		String queryString = request.getQueryString();
-		if (queryString == null) queryString = "";
-		if (!queryString.isEmpty()) {
-			relativePath += "?" + queryString;
-		}
-		return relativePath;
+		return HttpServletUtils.currentRequestUri();
+	}
+
+	@ModelAttribute("currentRequestUriAndParams")
+	public String getCurrentRequestUriAndParams()
+	{
+		return HttpServletUtils.currentRequestUriAndParams();
 	}
 
 

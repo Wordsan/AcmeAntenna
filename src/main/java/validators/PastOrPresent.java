@@ -32,8 +32,8 @@ import javax.validation.Payload;
 
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PastWithMarginValidator.class)
-public @interface PastWithMargin {
+@Constraint(validatedBy = PastOrPresentValidator.class)
+public @interface PastOrPresent {
     String message() default "{javax.validation.constraints.Past.message}";
     Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default { };

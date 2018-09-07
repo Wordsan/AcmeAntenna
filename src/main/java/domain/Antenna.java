@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Antenna
-extends DomainEntity {
+public class Antenna extends DomainEntity {
+
     private User user;
     private String serialNumber;
     private String model;
@@ -25,57 +25,54 @@ extends DomainEntity {
     private double signalQuality;
     private Satellite satellite;
 
+
     @Valid
     @ManyToOne(optional = false)
-    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+    @NotNull
+    // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public User getUser()
     {
-        return user;
+        return this.user;
     }
 
     @NotBlank
     public String getSerialNumber()
     {
-        return serialNumber;
+        return this.serialNumber;
     }
 
     @NotBlank
     public String getModel()
     {
-        return model;
+        return this.model;
     }
 
     /**
      * Longitude angle of the position of the antenna.
-     *
+     * <p>
      * Positive longitude indicates EAST, negative indicates WEST.
      */
     @Range(min = -180, max = 180)
     public double getPositionLongitude()
     {
-        return positionLongitude;
+        return this.positionLongitude;
     }
 
     /**
      * Latitude angle of the position of the antenna.
-     *
+     * <p>
      * Positive latitude indicates NORTH, negative indicates SOUTH.
      */
     @Range(min = -90, max = 90)
     public double getPositionLatitude()
     {
-        return positionLatitude;
+        return this.positionLatitude;
     }
 
     @Transient
     public String getPositionForDisplay()
     {
-        return String.format("%.4f°%s %.4f°%s",
-                      Math.abs(getPositionLatitude()),
-                      getPositionLatitude() > 0 ? "N" : "S",
-                      Math.abs(getPositionLongitude()),
-                      getPositionLongitude() > 0 ? "E" : "W"
-                      );
+        return String.format("%.4f°%s %.4f°%s", Math.abs(this.getPositionLatitude()), this.getPositionLatitude() > 0 ? "N" : "S", Math.abs(this.getPositionLongitude()), this.getPositionLongitude() > 0 ? "E" : "W");
     }
 
     /**
@@ -84,7 +81,7 @@ extends DomainEntity {
     @Range(min = 0, max = 360)
     public double getRotationAzimuth()
     {
-        return rotationAzimuth;
+        return this.rotationAzimuth;
     }
 
     /**
@@ -93,65 +90,67 @@ extends DomainEntity {
     @Range(min = 0, max = 90)
     public double getRotationElevation()
     {
-        return rotationElevation;
+        return this.rotationElevation;
     }
 
     @Range(min = 0, max = 100)
     public double getSignalQuality()
     {
-        return signalQuality;
+        return this.signalQuality;
     }
 
     @Valid
     @ManyToOne(optional = false)
-    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+    @NotNull
+    // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public Satellite getSatellite()
     {
-        return satellite;
+        return this.satellite;
     }
 
-    public void setUser(User user)
+    public void setUser(final User user)
     {
         this.user = user;
     }
 
-    public void setSerialNumber(String serialNumber)
+    public void setSerialNumber(final String serialNumber)
     {
         this.serialNumber = serialNumber;
     }
 
-    public void setModel(String model)
+    public void setModel(final String model)
     {
         this.model = model;
     }
 
-    public void setPositionLongitude(double positionLongitude)
+    public void setPositionLongitude(final double positionLongitude)
     {
         this.positionLongitude = positionLongitude;
     }
 
-    public void setPositionLatitude(double positionLatitude)
+    public void setPositionLatitude(final double positionLatitude)
     {
         this.positionLatitude = positionLatitude;
     }
 
-    public void setRotationAzimuth(double rotationAzimuth)
+    public void setRotationAzimuth(final double rotationAzimuth)
     {
         this.rotationAzimuth = rotationAzimuth;
     }
 
-    public void setRotationElevation(double rotationElevation)
+    public void setRotationElevation(final double rotationElevation)
     {
         this.rotationElevation = rotationElevation;
     }
 
-    public void setSignalQuality(double signalQuality)
+    public void setSignalQuality(final double signalQuality)
     {
         this.signalQuality = signalQuality;
     }
 
-    public void setSatellite(Satellite satellite)
+    public void setSatellite(final Satellite satellite)
     {
         this.satellite = satellite;
     }
+
 }

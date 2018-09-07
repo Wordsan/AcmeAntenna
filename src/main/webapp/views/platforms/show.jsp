@@ -24,7 +24,7 @@
 
 <c:if test="${not platform.deleted}">
 <security:authorize access="hasRole('ADMINISTRATOR')">
-    <app:redir-button code="misc.actions.edit" action="platforms/edit.do?id=${platform.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
+    <app:redir-button code="misc.actions.edit" action="platforms/edit.do?id=${platform.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
     <app:delete-button code="misc.actions.delete" action="platforms/delete.do?id=${platform.id}" />
 </security:authorize>
 </c:if>
@@ -45,7 +45,7 @@
 
 <security:authorize access="hasRole('USER')">
     <br/>
-    <app:redir-button code="platforms.subscribe" action="platform_subscriptions/new.do?platformId=${platform.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
+    <app:redir-button code="platforms.subscribe" action="platform_subscriptions/new.do?platformId=${platform.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
     <h3><spring:message code="platforms.platform_subscription.history" /></h3>
 
     <display:table name="platformSubscriptions"

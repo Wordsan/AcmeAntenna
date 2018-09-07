@@ -7,13 +7,10 @@ import org.springframework.util.Assert;
 import javax.transaction.Transactional;
 
 import domain.Actor;
-import domain.Administrator;
 import domain.User;
-import exceptions.UsernameNotUniqueException;
+import exceptions.ResourceNotUniqueException;
 import repositories.UserRepository;
 import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import security.UserAccountService;
 import utilities.CheckUtils;
 
@@ -41,8 +38,8 @@ public class UserService {
 		return (User) principal;
 	}
 
-	public User createAsNewUser(User user) throws UsernameNotUniqueException
-	{
+	public User createAsNewUser(User user) throws ResourceNotUniqueException
+    {
 		CheckUtils.checkUnauthenticated();
 		CheckUtils.checkNotExists(user);
 

@@ -12,7 +12,7 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <security:authorize access="hasRole('USER')">
-    <app:redir-button action="tutorials/new.do?cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" code="misc.actions.new" />
+    <app:redir-button action="tutorials/new.do?returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" code="misc.actions.new" />
 </security:authorize>
 
 <display:table name="tutorials"
@@ -27,7 +27,7 @@
     <security:authorize access="isAuthenticated()">
         <display:column titleKey="misc.actions">
             <c:if test="${tutorial.user == principal}">
-                <app:redir-button code="misc.actions.edit" action="tutorials/edit.do?id=${tutorial.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
+                <app:redir-button code="misc.actions.edit" action="tutorials/edit.do?id=${tutorial.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
             </c:if>
             <security:authorize access="hasRole('ADMINISTRATOR')">
                 <app:delete-button code="misc.actions.delete" action="tutorials/delete.do?id=${tutorial.id}" />

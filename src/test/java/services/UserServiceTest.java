@@ -8,15 +8,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import java.util.Date;
-
 import javax.transaction.Transactional;
 
-import domain.Tutorial;
 import domain.User;
-import exceptions.UsernameNotUniqueException;
-import repositories.TutorialRepository;
-import repositories.UserRepository;
+import exceptions.ResourceNotUniqueException;
 import security.Authority;
 import security.UserAccount;
 import security.UserAccountService;
@@ -37,7 +32,7 @@ public class UserServiceTest extends AbstractTest {
 
     // Test successful creation of an user.
     @Test
-    public void testCreateUser() throws UsernameNotUniqueException
+    public void testCreateUser() throws ResourceNotUniqueException
     {
         unauthenticate();
 
@@ -64,7 +59,7 @@ public class UserServiceTest extends AbstractTest {
 
     // Test creation of an user fails if already logged in.
     @Test(expected = AccessDeniedException.class)
-    public void testCreateUserFailsIfLoggedIn() throws UsernameNotUniqueException
+    public void testCreateUserFailsIfLoggedIn() throws ResourceNotUniqueException
     {
         authenticate("user1");
 
@@ -82,8 +77,8 @@ public class UserServiceTest extends AbstractTest {
     }
 
     // Test creation of an user fails if username is not unique.
-    @Test(expected = UsernameNotUniqueException.class)
-    public void testCreateUserFailsIfUsernameNotUnique() throws UsernameNotUniqueException
+    @Test(expected = ResourceNotUniqueException.class)
+    public void testCreateUserFailsIfUsernameNotUnique() throws ResourceNotUniqueException
     {
         unauthenticate();
 

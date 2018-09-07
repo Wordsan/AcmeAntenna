@@ -17,7 +17,7 @@
 </form:form>
 
 <security:authorize access="hasRole('ADMINISTRATOR')">
-    <app:redir-button action="satellites/new.do?cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" code="misc.actions.new" />
+    <app:redir-button action="satellites/new.do?returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" code="misc.actions.new" />
 </security:authorize>
 
 <div>
@@ -31,7 +31,7 @@
     <display:column property="description" titleKey="satellites.description" escapeXml="true" sortable="true" />
     <security:authorize access="hasRole('ADMINISTRATOR')">
         <display:column titleKey="misc.actions">
-            <app:redir-button code="misc.actions.edit" action="satellites/edit.do?id=${satellite.id}&cancelAction=${appfn:escapeUrlParam(currentRelativeUrl)}" />
+            <app:redir-button code="misc.actions.edit" action="satellites/edit.do?id=${satellite.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
             <app:delete-button code="misc.actions.delete" action="satellites/delete.do?id=${satellite.id}" />
         </display:column>
     </security:authorize>

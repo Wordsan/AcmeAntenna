@@ -13,6 +13,7 @@ import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
 import utilities.CheckUtils;
+import utilities.ValidationUtils;
 
 @Service
 @Transactional
@@ -66,18 +67,22 @@ public class ActorService {
 		return repository.save(currentActor);
 	}
 
-	public Actor updateOwnPassword(Actor actor, String oldPassword, String newPassword) throws OldPasswordDoesntMatchException
+	public Actor updateOwnPassword(final String oldPassword, final String newPassword) throws OldPasswordDoesntMatchException
 	{
 		CheckUtils.checkAuthenticated();
 		Actor currentActor = getPrincipal();
-		CheckUtils.checkEquals(currentActor, actor);
-		CheckUtils.checkSameVersion(actor, currentActor);
 
-		if (!userAccountService.passwordMatchesAccount(actor.getUserAccount(), oldPassword)) {
+		if (!userAccountService.passwordMatchesAccount(currentActor.getUserAccount(), oldPassword)) {
 			throw new OldPasswordDoesntMatchException();
 		}
 
-		currentActor.setUserAccount(userAccountService.updatePassword(currentActor.getUserAccount(), newPassword));
+		UserAccount userAccount = currentActor.getUserAccount();
+		userAccount.setPassword(newPassword);
+
+		// Validate and throw if bad entity.
+		ValidationUtils.validateBean(userAccount);
+
+		currentActor.setUserAccount(this.userAccountService.updatePassword(userAccount, newPassword));
 		return repository.save(currentActor);
 	}
 }
