@@ -10,20 +10,21 @@
 
 	<util:list id="tiles">
 		<value>/views/actors/tiles.xml</value>
+		<value>/views/maintenanceRequests/tiles.xml</value>
+		<value>/views/banners/tiles.xml</value>
 		<value>/views/antennas/tiles.xml</value>
 		<value>/views/users/tiles.xml</value>
-		<value>/views/handyworkers/tiles.xml</value>
-		<value>/views/agents/tiles.xml</value>
+		<value>/views/legal/tiles.xml</value>
 		<value>/views/tutorials/tiles.xml</value>
 		<value>/views/master-page/tiles.xml</value>
 		<value>/views/misc/tiles.xml</value>
 		<value>/views/security/tiles.xml</value>
+		<value>/views/handyworkers/tiles.xml</value>
+		<value>/views/agents/tiles.xml</value>
 		<value>/views/satellites/tiles.xml</value>
 		<value>/views/platforms/tiles.xml</value>
 		<value>/views/administrators/tiles.xml</value>
 		<value>/views/platform_subscriptions/tiles.xml</value>
-		<value>/views/maintenanceRequests/tiles.xml</value>
-		<value>/views/banners/tiles.xml</value>
 		<value>/views/welcome/tiles.xml</value>
 	</util:list>
 

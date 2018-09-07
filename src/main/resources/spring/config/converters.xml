@@ -9,9 +9,13 @@
 	">
 
 	<util:list id="converters">
+		<bean class="converters.HandyworkerToStringConverter" />
+		<bean class="converters.StringToBannerConverter" />
 		<bean class="converters.AntennaToStringConverter" />
 		<bean class="converters.StringToAuthorityConverter" />
+		<bean class="converters.AgentToStringConverter" />
 		<bean class="converters.UserToStringConverter" />
+		<bean class="converters.BannerToStringConverter" />
 		<bean class="converters.StringToAdministratorConverter" />
 		<bean class="converters.StringToAntennaConverter" />
 		<bean class="converters.StringToActorConverter" />
@@ -20,23 +24,18 @@
 		<bean class="converters.StringToTutorialCommentConverter" />
 		<bean class="converters.TutorialCommentToStringConverter" />
 		<bean class="converters.PlatformToStringConverter" />
+		<bean class="converters.MaintenanceRequestToStringConverter" />
+		<bean class="converters.StringToHandyworkerConverter" />
 		<bean class="converters.StringToPlatformConverter" />
 		<bean class="converters.TutorialToStringConverter" />
+		<bean class="converters.StringToMaintenanceRequestConverter" />
 		<bean class="converters.StringToSatelliteConverter" />
 		<bean class="converters.AdministratorToStringConverter" />
 		<bean class="converters.ActorToStringConverter" />
+		<bean class="converters.StringToAgentConverter" />
 		<bean class="converters.StringToTutorialConverter" />
 		<bean class="converters.StringToUserConverter" />
 		<bean class="converters.StringToPlatformSubscriptionConverter" />
-		<bean class="converters.MaintenanceRequestToStringConverter"/>
-		<bean class="converters.StringToMaintenanceRequestConverter"/>
-		<bean class="converters.HandyworkerToStringConverter"/>
-		<bean class="converters.StringToHandyworkerConverter"/>
-		<bean class="converters.BannerToStringConverter"/>
-		<bean class="converters.StringToBannerConverter"/>
-		<bean class="converters.AgentToStringConverter"/>
-		<bean class="converters.StringToAgentConverter"/>
-
 	</util:list>
 
 </beans>

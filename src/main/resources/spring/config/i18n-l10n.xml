@@ -10,20 +10,21 @@
 
 	<util:list id="messages">
 		<value>/views/actors/messages</value>
+		<value>/views/maintenanceRequests/messages</value>
+		<value>/views/banners/messages</value>
 		<value>/views/antennas/messages</value>
 		<value>/views/users/messages</value>
-		<value>/views/handyworkers/messages</value>
-		<value>/views/agents/messages</value>
+		<value>/views/legal/messages</value>
 		<value>/views/tutorials/messages</value>
 		<value>/views/master-page/messages</value>
 		<value>/views/misc/messages</value>
 		<value>/views/security/messages</value>
+		<value>/views/handyworkers/messages</value>
+		<value>/views/agents/messages</value>
 		<value>/views/satellites/messages</value>
 		<value>/views/platforms/messages</value>
 		<value>/views/administrators/messages</value>
 		<value>/views/platform_subscriptions/messages</value>
-		<value>/views/maintenanceRequests/messages</value>
-		<value>/views/banners/messages</value>
 		<value>/views/welcome/messages</value>
 	</util:list>
 
