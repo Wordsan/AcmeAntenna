@@ -24,8 +24,8 @@
 
 <c:if test="${not platform.deleted}">
 <security:authorize access="hasRole('ADMINISTRATOR')">
-    <app:redir-button code="misc.actions.edit" action="platforms/edit.do?id=${platform.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
-    <app:delete-button code="misc.actions.delete" action="platforms/delete.do?id=${platform.id}" />
+    <app:redir-button code="misc.actions.edit" action="platforms/edit.do?id=${platform.id}&returnAction=${appfn:escapeUrlParam(returnActionForHere)}" />
+    <app:delete-button code="misc.actions.delete" action="platforms/delete.do?id=${platform.id}&returnAction=platforms/index.do" />
 </security:authorize>
 </c:if>
 

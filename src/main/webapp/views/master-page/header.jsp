@@ -92,8 +92,8 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="actors/edit_own_password.do"><spring:message code="master.page.actor.edit_own_password" /> </a></li>
-                    <li><a href="actors/edit.do"><spring:message code="master.page.actor.edit" /> </a></li>
+					<li><a href="actors/edit_own_password.do?returnAction=${appfn:escapeUrlParam(returnActionForHere)}"><spring:message code="master.page.actor.edit_own_password" /> </a></li>
+                    <li><a href="actors/edit.do?returnAction=${appfn:escapeUrlParam(returnActionForHere)}"><spring:message code="master.page.actor.edit" /> </a></li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

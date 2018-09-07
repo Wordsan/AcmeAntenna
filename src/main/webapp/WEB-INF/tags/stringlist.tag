@@ -13,6 +13,7 @@
 
 <%@attribute name="path" required="true" %>
 <%@attribute name="items" type="java.util.List" required="true" %>
+<%@attribute name="items" type="java.util.List" required="true" %>
 <%@attribute name="code" required="true" %>
 
 <div class="stringlist">

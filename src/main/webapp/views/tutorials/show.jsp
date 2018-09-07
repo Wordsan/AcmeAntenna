@@ -44,10 +44,10 @@
     <br/>
 
     <c:if test="${principal == tutorial.user}">
-        <app:redir-button code="misc.actions.edit" action="tutorials/edit.do?id=${tutorial.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
+        <app:redir-button code="misc.actions.edit" action="tutorials/edit.do?id=${tutorial.id}&returnAction=${appfn:escapeUrlParam(returnActionForHere)}" />
     </c:if>
     <security:authorize access="hasRole('ADMINISTRATOR')">
-        <app:delete-button code="misc.actions.delete" action="tutorials/delete.do?id=${tutorial.id}" />
+        <app:delete-button code="misc.actions.delete" action="tutorials/delete.do?id=${tutorial.id}&returnAction=tutorials/index.do" />
     </security:authorize>
 </div>
 

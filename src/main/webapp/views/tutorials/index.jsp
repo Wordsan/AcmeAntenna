@@ -27,10 +27,10 @@
     <security:authorize access="isAuthenticated()">
         <display:column titleKey="misc.actions">
             <c:if test="${tutorial.user == principal}">
-                <app:redir-button code="misc.actions.edit" action="tutorials/edit.do?id=${tutorial.id}&returnAction=${appfn:escapeUrlParam(currentRequestUriAndParams)}" />
+                <app:redir-button code="misc.actions.edit" action="tutorials/edit.do?id=${tutorial.id}&returnAction=${appfn:escapeUrlParam(returnActionForHere)}" />
             </c:if>
             <security:authorize access="hasRole('ADMINISTRATOR')">
-                <app:delete-button code="misc.actions.delete" action="tutorials/delete.do?id=${tutorial.id}" />
+                <app:delete-button code="misc.actions.delete" action="tutorials/delete.do?id=${tutorial.id}&returnAction=${appfn:escapeUrlParam(appfn:withoutDisplayTagParams(currentRequestUriAndParams, 'tutorial'))}" />
             </security:authorize>
         </display:column>
     </security:authorize>

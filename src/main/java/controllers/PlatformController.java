@@ -68,12 +68,13 @@ public class PlatformController extends AbstractController {
     {
         ModelAndView result = ControllerUtils.createViewWithBinding(
                 viewName,
+                "platform",
+                platform,
                 binding,
                 globalErrorMessage
         );
 
         result.addObject("formAction", formAction);
-        result.addObject("platform", platform);
         result.addObject("satellites", satelliteService.findAllForIndex());
 
         return result;
@@ -93,8 +94,9 @@ public class PlatformController extends AbstractController {
             try {
                 platform = platformService.create(platform);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+                redir.addAttribute("id", platform.getId());
 
-                return ControllerUtils.redirect("/platforms/index.do");
+                return ControllerUtils.redirect("/platforms/show.do");
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
@@ -128,7 +130,7 @@ public class PlatformController extends AbstractController {
                 platform = platformService.update(platform);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 
-                return ControllerUtils.redirect("/platforms/index.do");
+                return ControllerUtils.redirectToReturnAction();
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
@@ -143,7 +145,6 @@ public class PlatformController extends AbstractController {
     {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-        ModelAndView result = ControllerUtils.redirect("/platforms/index.do");
         try {
             platformService.delete(id);
             redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
@@ -151,6 +152,6 @@ public class PlatformController extends AbstractController {
             if (ApplicationConfig.DEBUG) oops.printStackTrace();
             redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
         }
-        return result;
+        return ControllerUtils.redirectToReturnAction();
     }
 }

@@ -11,6 +11,4 @@
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
-<input type="hidden" name="${fn:substring(nestedPath, 0, fn:length(nestedPath) - 1)}" value="${requestScope[fn:substring(nestedPath, 0, fn:length(nestedPath) - 1)].id}" />
-<form:hidden path="id" />
-<form:hidden path="version" />
+<input type="hidden" name="returnAction" value="<c:out value="${param.returnAction}" />" />

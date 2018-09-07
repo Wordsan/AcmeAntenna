@@ -28,8 +28,10 @@
 <%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
 <%@ attribute name="items" required="true" type="java.util.Collection" %>
-<%@ attribute name="itemLabel" required="true" %>
+<%@ attribute name="itemLabel" required="false" %>
+<%@ attribute name="itemCodePrefix" required="false" %>
 <%@ attribute name="optional" required="false" %>
+<%@ attribute name="readonly" required="false" %>
 
 <%@ attribute name="id" required="false" %>
 <%@ attribute name="onChange" required="false" %>
@@ -48,11 +50,19 @@
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>
-	<form:select id="${id}" path="${path}" onchange="${onChange}">
+	<form:select id="${id}" path="${path}" onchange="${onChange}" disabled="${readonly != null and readonly == true}">
 	    <c:if test="${optional != null && optional == true}">
 		    <form:option value="0" label="----" />
 		</c:if>
-		<form:options items="${items}" itemValue="id" itemLabel="${itemLabel}" />
+		<c:if test="${itemCodePrefix == null}">
+		    <form:options items="${items}" itemValue="id" itemLabel="${itemLabel}" />
+		</c:if>
+		<c:if test="${itemCodePrefix != null}">
+            <c:forEach var="item" items="${items}">
+                <spring:message code="${itemCodePrefix}.${item}" var="label" />
+                <form:option value="${item}" label="${label}" />
+            </c:forEach>
+        </c:if>
 	</form:select>
 	<form:errors path="${path}" cssClass="error" />
 </div>

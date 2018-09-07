@@ -12,6 +12,7 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <form:form action="actors/update_own_password.do" modelAttribute="form">
+    <app:preserve-return-action />
     <app:password path="oldPassword" code="actors.oldPassword" />
     <app:password path="newPassword" code="actors.newPassword" />
     <app:password path="repeatNewPassword" code="actors.repeatNewPassword" />

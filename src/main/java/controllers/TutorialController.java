@@ -57,12 +57,13 @@ public class TutorialController extends AbstractController {
     {
         ModelAndView result = ControllerUtils.createViewWithBinding(
                 viewName,
+                "tutorial",
+                tutorial,
                 binding,
                 globalErrorMessage
         );
 
         result.addObject("formAction", formAction);
-        result.addObject("tutorial", tutorial);
 
         return result;
     }
@@ -118,9 +119,8 @@ public class TutorialController extends AbstractController {
             try {
                 tutorial = service.update(tutorial);
 
-                redir.addAttribute("id", tutorial.getId());
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-                return ControllerUtils.redirect("/tutorials/show.do");
+                return ControllerUtils.redirectToReturnAction();
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
@@ -179,11 +179,6 @@ public class TutorialController extends AbstractController {
     {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
 
-        TutorialComment comment = tutorialCommentService.getByIdForDelete(id);
-
-        Tutorial tutorial = comment.getTutorial();
-        ModelAndView result = ControllerUtils.redirect("/tutorials/show.do");
-        redir.addAttribute("id", tutorial.getId());
         try {
             tutorialCommentService.delete(id);
             redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
@@ -191,7 +186,7 @@ public class TutorialController extends AbstractController {
             if (ApplicationConfig.DEBUG) oops.printStackTrace();
             redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
         }
-        return result;
+        return ControllerUtils.redirectToReturnAction();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
@@ -206,6 +201,6 @@ public class TutorialController extends AbstractController {
             if (ApplicationConfig.DEBUG) oops.printStackTrace();
             redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
         }
-        return ControllerUtils.redirect("/tutorials/index.do");
+        return ControllerUtils.redirectToReturnAction();
     }
 }

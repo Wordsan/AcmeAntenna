@@ -12,7 +12,8 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <form:form action="${formAction}" modelAttribute="platformSubscription">
-    <app:model-editor />
+    <app:preserve-return-action />
+    <app:entity-editor />
     <form:hidden path="user" />
     <form:hidden path="keyCode" />
     <app:select path="platform" items="${platforms}" itemLabel="name" code="platform_subscriptions.platform" />
