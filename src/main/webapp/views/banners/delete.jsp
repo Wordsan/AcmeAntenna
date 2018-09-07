@@ -23,6 +23,11 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
+	<form:hidden path="targetPage" />
+	<form:hidden path="creditCard" />
+	<form:hidden path="agent" />
+	<form:hidden path="pictureUrl" />
+	
 	 
 	<input type="submit" name="delete"
 			value="<spring:message code="banners.delete" />"

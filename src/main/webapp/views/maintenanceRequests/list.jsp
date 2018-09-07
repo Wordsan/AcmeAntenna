@@ -10,7 +10,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 
-<display:table pagesize="5" class="displaytag" keepStatus="true"
+<display:table pagesize="3" class="displaytag" keepStatus="true"
 	name="maintenanceRequests" requestURI="${requestURI}" id="row">
 	
 	

@@ -1,8 +1,5 @@
-package services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
+package services;
 
 import java.util.List;
 
@@ -10,41 +7,48 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import domain.Antenna;
-import domain.User;
-import exceptions.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
 import repositories.AntennaRepository;
 import security.Authority;
 import utilities.CheckUtils;
+import domain.Antenna;
+import domain.User;
+import exceptions.ResourceNotFoundException;
 
 @Service
 @Transactional
 public class AntennaService {
-	@Autowired private AntennaRepository repository;
-	@Autowired private UserService userService;
 
-	@PersistenceContext private EntityManager entityManager;
+	@Autowired
+	private AntennaRepository	repository;
+	@Autowired
+	private UserService			userService;
 
-	public Antenna create(Antenna submittedAntenna)
-	{
+	@PersistenceContext
+	private EntityManager		entityManager;
+
+
+	public Antenna create(final Antenna submittedAntenna) {
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 		CheckUtils.checkIsPrincipal(submittedAntenna.getUser());
 		CheckUtils.checkNotExists(submittedAntenna);
 
 		CheckUtils.checkFalse(submittedAntenna.getSatellite().getDeleted());
 
-		return repository.save(submittedAntenna);
+		return this.repository.save(submittedAntenna);
 	}
 
-	public Antenna update(Antenna submittedAntenna)
-	{
+	public Antenna update(final Antenna submittedAntenna) {
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
 		CheckUtils.checkIsPrincipal(submittedAntenna.getUser());
 		CheckUtils.checkExists(submittedAntenna);
 
 		// Ensure we get the old antenna and not the same one we submitted.
-		entityManager.detach(submittedAntenna);
-		Antenna oldAntenna = repository.findOne(submittedAntenna.getId());
+		this.entityManager.detach(submittedAntenna);
+		final Antenna oldAntenna = this.repository.findOne(submittedAntenna.getId());
 		Assert.isTrue(submittedAntenna != oldAntenna);
 
 		CheckUtils.checkExists(oldAntenna);
@@ -52,41 +56,43 @@ public class AntennaService {
 
 		CheckUtils.checkTrue(!submittedAntenna.getSatellite().getDeleted() || (submittedAntenna.getSatellite().equals(oldAntenna.getSatellite())));
 
-		return repository.save(submittedAntenna);
+		return this.repository.save(submittedAntenna);
 	}
 
-	public Antenna getByIdForEdit(int id)
-	{
-		return getByIdForShow(id);
+	public Antenna getByIdForEdit(final int id) {
+		return this.getByIdForShow(id);
 	}
 
-	public void delete(int id)
-	{
+	public void delete(final int id) {
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
-		Antenna antenna = getById(id);
+		final Antenna antenna = this.getById(id);
 		CheckUtils.checkIsPrincipal(antenna.getUser());
-		repository.delete(antenna);
+		this.repository.delete(antenna);
 	}
 
-	public List<Antenna> findAllForPrincipal()
-	{
+	public List<Antenna> findAllForPrincipal() {
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
-		User user = userService.getPrincipal();
-		return repository.findAllByUserOrderBySerialNumberAsc(user);
+		final User user = this.userService.getPrincipal();
+		return this.repository.findAllByUserOrderBySerialNumberAsc(user);
 	}
 
-	public Antenna getByIdForShow(int id)
-	{
+	public List<Antenna> findAll() {
+
+		return this.repository.findAll();
+	}
+
+	public Antenna getByIdForShow(final int id) {
 		CheckUtils.checkPrincipalAuthority(Authority.USER);
-		Antenna antenna = getById(id);
+		final Antenna antenna = this.getById(id);
 		CheckUtils.checkIsPrincipal(antenna.getUser());
 		return antenna;
 	}
 
-	private Antenna getById(int id)
-	{
-		Antenna antenna = repository.findOne(id);
-		if (antenna == null) throw new ResourceNotFoundException();
+	private Antenna getById(final int id) {
+		final Antenna antenna = this.repository.findOne(id);
+		if (antenna == null)
+			throw new ResourceNotFoundException();
 		return antenna;
 	}
+
 }

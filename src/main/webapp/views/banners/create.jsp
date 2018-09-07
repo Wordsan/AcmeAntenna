@@ -13,7 +13,6 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="targetPage"/>
 	<form:hidden path="agent"/>
 	
 
@@ -24,12 +23,20 @@
 	<form:errors cssClass="error" path="pictureUrl" />
 	<br />
 	
+	<form:label path="targetPage">
+		<spring:message code="banners.targetPage" />:
+	</form:label>
+	<form:input path="targetPage" />
+	<form:errors cssClass="error" path="targetPage" />
+	<br />
+	
 	<form:label path="creditCard">
 		<spring:message code="banners.creditCard" />:
 	</form:label>
 	<form:input path="creditCard" />
 	<form:errors cssClass="error" path="creditCard" />
 	<br />
+	
 	
 
 	<input type="submit" name="save"

@@ -8,6 +8,10 @@
  * http://www.tdg-seville.info/License.html
  --%>
 
+<%@page import="org.springframework.beans.factory.annotation.Autowired"%>
+<%@page import="services.BannerService"%>
+<%@page import="domain.Banner"%>
+
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -24,7 +28,10 @@
 <div>
 	<img src="images/logo.png" alt="Acme Antenna, Inc." />
 </div>
+<div>
 
+<a href="${targetPage}" target="_blank"><img src="${image}" width="50%"/></a>
+</div>
 <div>
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->

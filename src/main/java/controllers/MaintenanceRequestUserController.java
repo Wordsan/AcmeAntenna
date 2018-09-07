@@ -1,14 +1,16 @@
 
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,7 +25,7 @@ import domain.User;
 
 @Controller
 @RequestMapping("/maintenanceRequests/user")
-public class MaintenanceRequestUserController {
+public class MaintenanceRequestUserController extends AbstractController {
 
 	@Autowired
 	private MaintenanceRequestService	maintenanceRequestService;
@@ -41,8 +43,7 @@ public class MaintenanceRequestUserController {
 	public ModelAndView listNotServiced() {
 		ModelAndView result;
 		final User user = this.userService.findPrincipal();
-		final Collection<MaintenanceRequest> all = this.maintenanceRequestService.findAll();
-		final Collection<MaintenanceRequest> maintenanceRequests = this.getNotServiced(user, all);
+		final Collection<MaintenanceRequest> maintenanceRequests = this.userService.findNotServedMainteinanceRequest(user);
 
 		result = new ModelAndView("maintenanceRequests/list");
 		result.addObject("requestURI", "maintenanceRequests/user/listNotServiced.do");
@@ -51,22 +52,12 @@ public class MaintenanceRequestUserController {
 		return result;
 	}
 
-	private Collection<MaintenanceRequest> getNotServiced(final User user, final Collection<MaintenanceRequest> list) {
-
-		final Collection<MaintenanceRequest> res = new ArrayList<MaintenanceRequest>();
-		for (final MaintenanceRequest mr : list)
-			if (mr.getDoneTime() == null && user.getRequests().contains(mr))
-				res.add(mr);
-		return res;
-
-	}
-
 	@RequestMapping(value = "/listServiced", method = RequestMethod.GET)
 	public ModelAndView listServiced() {
 		ModelAndView result;
 		final User user = this.userService.findPrincipal();
-		final Collection<MaintenanceRequest> all = this.maintenanceRequestService.findAll();
-		final Collection<MaintenanceRequest> maintenanceRequests = this.getServiced(user, all);
+
+		final Collection<MaintenanceRequest> maintenanceRequests = this.userService.findServedMainteinanceRequest(user);
 		final boolean done = true;
 
 		result = new ModelAndView("maintenanceRequests/list");
@@ -77,21 +68,13 @@ public class MaintenanceRequestUserController {
 		return result;
 	}
 
-	private Collection<MaintenanceRequest> getServiced(final User user, final Collection<MaintenanceRequest> list) {
-
-		final Collection<MaintenanceRequest> res = new ArrayList<MaintenanceRequest>();
-		for (final MaintenanceRequest mr : list)
-			if (mr.getDoneTime() != null && user.getRequests().contains(mr))
-				res.add(mr);
-		return res;
-	}
-
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	public ModelAndView create(@CookieValue(required = false) final String creditCard) {
 		ModelAndView result;
 		MaintenanceRequest maintenanceRequest;
 
 		maintenanceRequest = this.maintenanceRequestService.create();
+		maintenanceRequest.setCreditCard(creditCard);
 		result = this.createEditModelAndView(maintenanceRequest);
 
 		return result;
@@ -122,7 +105,7 @@ public class MaintenanceRequestUserController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final MaintenanceRequest maintenanceRequest, final BindingResult binding) {
+	public ModelAndView save(@Valid final MaintenanceRequest maintenanceRequest, final BindingResult binding, final HttpServletResponse response) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
@@ -132,6 +115,7 @@ public class MaintenanceRequestUserController {
 			try {
 				this.maintenanceRequestService.save(maintenanceRequest);
 				result = new ModelAndView("redirect:listNotServiced.do");
+				response.addCookie(new Cookie("creditCard", maintenanceRequest.getCreditCard()));
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(maintenanceRequest, "maintenanceRequest.commit.error");
 			}

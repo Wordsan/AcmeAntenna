@@ -231,6 +231,8 @@
         	<list>
         		<ref bean="maintenanceRequest_1"/>
         		<ref bean="maintenanceRequest_2"/>
+        		<ref bean="maintenanceRequest_5"/>
+        		<ref bean="maintenanceRequest_6"/>
         	</list>
         </property>
         <property name="banned" value="false"/>
@@ -1130,6 +1132,8 @@
     		<list>
     			<ref bean="maintenanceRequest_1"/>
     			<ref bean="maintenanceRequest_2"/>
+    			<ref bean="maintenanceRequest_5"/>
+    			<ref bean="maintenanceRequest_6"/>
     		</list>
     	</property>
     	<property name="banned" value="false"/>
@@ -1205,6 +1209,24 @@
     	<property name="doneTime" value="2017/07/29"/>
     	<property name="resultsDescription" value="This is the description of 
     	the results of request 4"/>
+    </bean>
+    
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_5">
+    	<property name="user" ref="user_user1"/>
+    	<property name="handyworker" ref="handyworker_handy1"/>
+    	<property name="creditCard" value="5105105105105100"/>
+    	<property name="creationTime" value="2018/07/28"/>
+    	<property name="description" value="This is the description of request 5"/>
+    	<property name="antenna" ref="antenna_3"/>
+    </bean>
+    
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_6">
+    	<property name="user" ref="user_user1"/>
+    	<property name="handyworker" ref="handyworker_handy1"/>
+    	<property name="creditCard" value="5105105105105100"/>
+    	<property name="creationTime" value="2018/07/28"/>
+    	<property name="description" value="This is the description of request 6"/>
+    	<property name="antenna" ref="antenna_5"/>
     </bean>
     
     <!-- Agents -->
@@ -1296,42 +1318,42 @@
     
     <bean class="domain.Banner" id="banner_1">
     	<property name="pictureUrl" value="https://institucional.telecom.com.ar/antenas/images/header_antenas.jpg"/>
-    	<property name="targetPage" value="1"/>
+    	<property name="targetPage" value="http://www.google.es"/>
     	<property name="creditCard" value="3566002020360505"/>
     	<property name="agent" ref="agent_agent1"/>
     </bean>
     
     <bean class="domain.Banner" id="banner_2">
     	<property name="pictureUrl" value="https://www.winncom.com/images/WinncomProductsBanner.jpg"/>
-    	<property name="targetPage" value="2"/>
+    	<property name="targetPage" value="http://www.elcorteingles.es"/>
     	<property name="creditCard" value="3566002020360505"/>
     	<property name="agent" ref="agent_agent1"/>
     </bean>
     
     <bean class="domain.Banner" id="banner_3">
     	<property name="pictureUrl" value="https://reparacion-instalacion.es/wp-content/uploads/2016/01/banner.png"/>
-    	<property name="targetPage" value="3"/>
+    	<property name="targetPage" value="http://www.instagram.es"/>
     	<property name="creditCard" value="3566002020360505"/>
     	<property name="agent" ref="agent_agent1"/>
     </bean>
     
     <bean class="domain.Banner" id="banner_4">
     	<property name="pictureUrl" value="https://static.miweb.padigital.es/var/m_7/72/722/14898/272703-banner.jpg"/>
-    	<property name="targetPage" value="4"/>
+    	<property name="targetPage" value="http://www.mediamarkt.es"/>
     	<property name="creditCard" value="3566002020360505"/>
     	<property name="agent" ref="agent_agent2"/>
     </bean>
     
     <bean class="domain.Banner" id="banner_5">
     	<property name="pictureUrl" value="http://satelec.esy.es/wp-content/uploads/2015/10/banner-antenas.jpg"/>
-    	<property name="targetPage" value="5"/>
+    	<property name="targetPage" value="http://www.worten.es"/>
     	<property name="creditCard" value="3566002020360505"/>
     	<property name="agent" ref="agent_agent2"/>
     </bean>
     
     <bean class="domain.Banner" id="banner_6">
     	<property name="pictureUrl" value="https://static.miweb.padigital.es/var/m_9/94/94b/15922/287772-banner.jpg"/>
-    	<property name="targetPage" value="6"/>
+    	<property name="targetPage" value="http://www.nike.com"/>
     	<property name="creditCard" value="3566002020360505"/>
     	<property name="agent" ref="agent_agent3"/>
     </bean>

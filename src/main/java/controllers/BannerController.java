@@ -18,7 +18,7 @@ import domain.Banner;
 
 @Controller
 @RequestMapping("/banners")
-public class BannerController {
+public class BannerController extends AbstractController {
 
 	@Autowired
 	private BannerService	bannerService;

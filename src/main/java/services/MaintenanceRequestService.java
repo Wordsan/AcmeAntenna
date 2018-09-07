@@ -24,6 +24,8 @@ public class MaintenanceRequestService {
 	private MaintenanceRequestRepository	maintenanceRequestRepository;
 	@Autowired
 	private UserService						userService;
+	@Autowired
+	private HandyworkerService				handyworkerService;
 
 
 	public MaintenanceRequest create() {
@@ -49,10 +51,16 @@ public class MaintenanceRequestService {
 
 	public MaintenanceRequest save(final MaintenanceRequest maintenanceRequest) {
 		Assert.notNull(maintenanceRequest);
-
+		Assert.notNull(maintenanceRequest.getUser());
+		Assert.notNull(maintenanceRequest.getDescription());
+		Assert.isTrue(!maintenanceRequest.getDescription().isEmpty());
+		Assert.notNull(maintenanceRequest.getAntenna());
+		Assert.notNull(maintenanceRequest.getHandyworker());
 		final MaintenanceRequest res = this.maintenanceRequestRepository.save(maintenanceRequest);
 		Assert.notNull(res);
+
 		final User u = res.getUser();
+
 		final Handyworker h = res.getHandyworker();
 		final Antenna a = res.getAntenna();
 		h.getRequests().add(res);
@@ -69,7 +77,8 @@ public class MaintenanceRequestService {
 
 	public MaintenanceRequest service(final MaintenanceRequest maintenanceRequest) {
 		Assert.notNull(maintenanceRequest);
-
+		final Handyworker worker = this.handyworkerService.findByPrincipal();
+		Assert.isTrue(worker.equals(maintenanceRequest.getHandyworker()));
 		final MaintenanceRequest res = this.maintenanceRequestRepository.save(maintenanceRequest);
 		Assert.notNull(res);
 		final Date now = new Date();
@@ -77,7 +86,6 @@ public class MaintenanceRequestService {
 
 		return res;
 	}
-
 	public void delete(final MaintenanceRequest maintenanceRequest) {
 		Assert.notNull(maintenanceRequest);
 		Assert.isTrue(maintenanceRequest.getId() != 0);

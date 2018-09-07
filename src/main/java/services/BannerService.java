@@ -1,10 +1,13 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -17,9 +20,11 @@ import domain.Banner;
 public class BannerService {
 
 	@Autowired
-	private BannerRepository	bannerRepository;
+	private BannerRepository		bannerRepository;
 	@Autowired
-	private AgentService		agentService;
+	private AgentService			agentService;
+	@Autowired
+	private AdministratorService	administratorService;
 
 
 	public BannerService() {
@@ -28,20 +33,9 @@ public class BannerService {
 
 	public Banner create() {
 		final Banner res = new Banner();
-		final Collection<Banner> banners = this.findAll();
-		final Integer max = this.maxPage(banners);
-		final Integer targetPage = max + 1;
-		res.setTargetPage(targetPage);
+
+		res.setTargetPage("");
 		res.setAgent(this.agentService.findPrincipal());
-
-		return res;
-	}
-
-	private Integer maxPage(final Collection<Banner> banners) {
-		Integer res = 0;
-		for (final Banner b : banners)
-			if (b.getTargetPage() > res)
-				res = b.getTargetPage();
 
 		return res;
 	}
@@ -62,7 +56,7 @@ public class BannerService {
 
 	public Banner save(final Banner banner) {
 		Assert.notNull(banner);
-
+		Assert.notNull(banner.getAgent());
 		final Banner res = this.bannerRepository.save(banner);
 
 		return res;
@@ -71,8 +65,14 @@ public class BannerService {
 	public void delete(final Banner banner) {
 		Assert.notNull(banner);
 		Assert.isTrue(banner.getId() != 0);
-
+		Assert.isTrue(banner.getAgent().equals(this.agentService.findPrincipal()) || this.administratorService.findPrincipal() != null);
 		this.bannerRepository.delete(banner);
+	}
+
+	public Banner randomBanner() {
+		final List<Banner> banners = new ArrayList<Banner>(this.findAll());
+		final Integer random = RandomUtils.nextInt(banners.size());
+		return banners.get(random);
 	}
 
 }

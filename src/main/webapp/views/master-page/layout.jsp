@@ -31,11 +31,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="shortcut icon" href="favicon.ico"/>
-
+<script type="text/javascript" src="scripts/Chart.bundle.js"></script>
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui.js"></script>
 <script type="text/javascript" src="scripts/jquery-redirect.js"></script>
-<script type="text/javascript" src="scripts/Chart.bundle.js"></script>
 <script type="text/javascript" src="scripts/pallete.js"></script>
 <script type="text/javascript" src="scripts/jmenu.js"></script>
 <script type="text/javascript" src="scripts/datepicker-${pageContext.response.locale}.js"></script>

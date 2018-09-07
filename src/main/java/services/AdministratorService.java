@@ -41,8 +41,12 @@ public class AdministratorService {
 	}
 
 	public void ban(final int actorId) {
+		final Authority admin = new Authority();
+		admin.setAuthority(Authority.ADMINISTRATOR);
+
 		Assert.isTrue(actorId != 0);
 
+		Assert.isTrue(this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(admin));
 		final Actor actor = this.actorService.findOne(actorId);
 		Assert.notNull(actor);
 		actor.setBanned(true);
@@ -51,8 +55,10 @@ public class AdministratorService {
 	}
 
 	public void unban(final int actorId) {
+		final Authority admin = new Authority();
+		admin.setAuthority(Authority.ADMINISTRATOR);
 		Assert.isTrue(actorId != 0);
-
+		Assert.isTrue(this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(admin));
 		final Actor actor = this.actorService.findOne(actorId);
 		Assert.notNull(actor);
 		actor.setBanned(false);
@@ -62,12 +68,20 @@ public class AdministratorService {
 
 	public double findAvgAntennaCountPerUser() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findAvgAntennaCountPerUser();
+		final Double res = this.repository.findAvgAntennaCountPerUser();
+		if (res != null)
+			return this.repository.findAvgAntennaCountPerUser();
+		else
+			return 0.0;
 	}
 
 	public double findStdDevAntennaCountPerUser() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findStdDevAntennaCountPerUser();
+		final Double res = this.repository.findStdDevAntennaCountPerUser();
+		if (res != null)
+			return this.repository.findStdDevAntennaCountPerUser();
+		else
+			return 0.0;
 	}
 
 	public List<Object[]> findAntennaCountPerModel() {
@@ -82,32 +96,62 @@ public class AdministratorService {
 
 	public double findAvgAntennaSignalQuality() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findAvgAntennaSignalQuality();
+		final Double res = this.repository.findAvgAntennaSignalQuality();
+
+		if (res != null)
+			return this.repository.findAvgAntennaSignalQuality();
+		else
+			return 0.0;
 	}
 
 	public double findStdDevAntennaSignalQuality() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findStdDevAntennaSignalQuality();
+		final Double res = this.repository.findStdDevAntennaSignalQuality();
+
+		if (res != null)
+			return this.repository.findStdDevAntennaSignalQuality();
+		else
+			return 0.0;
 	}
 
 	public double findAvgTutorialCountPerUser() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findAvgTutorialCountPerUser();
+		final Double res = this.repository.findAvgTutorialCountPerUser();
+
+		if (res != null)
+			return this.repository.findAvgTutorialCountPerUser();
+		else
+			return 0.0;
 	}
 
 	public double findStdDevTutorialCountPerUser() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findStdDevTutorialCountPerUser();
+		final Double res = this.repository.findStdDevTutorialCountPerUser();
+
+		if (res != null)
+			return this.repository.findStdDevTutorialCountPerUser();
+		else
+			return 0.0;
 	}
 
 	public double findAvgCommentCountPerTutorial() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findAvgCommentCountPerTutorial();
+		final Double res = this.repository.findAvgCommentCountPerTutorial();
+
+		if (res != null)
+			return this.repository.findAvgCommentCountPerTutorial();
+		else
+			return 0.0;
 	}
 
 	public double findStdDevCommentCountPerTutorial() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findStdDevCommentCountPerTutorial();
+		final Double res = this.repository.findStdDevCommentCountPerTutorial();
+
+		if (res != null)
+			return this.repository.findStdDevCommentCountPerTutorial();
+		else
+			return 0.0;
 	}
 
 	public List<User> findTopTutorialContributors() {
@@ -117,27 +161,52 @@ public class AdministratorService {
 
 	public double findAvgRequestCountPerUser() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findAvgRequestCountPerUser();
+		final Double res = this.repository.findAvgRequestCountPerUser();
+
+		if (res != null)
+			return this.repository.findAvgRequestCountPerUser();
+		else
+			return 0.0;
 	}
 
 	public double findStdDevRequestCountPerUser() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findStdDevRequestCountPerUser();
+		final Double res = this.repository.findStdDevRequestCountPerUser();
+
+		if (res != null)
+			return this.repository.findStdDevRequestCountPerUser();
+		else
+			return 0.0;
 	}
 
 	public double findAvgRatioServicedRequestsPerUser() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findAvgRatioServicedRequestsPerUser();
+		final Double res = this.repository.findAvgRatioServicedRequestsPerUser();
+
+		if (res != null)
+			return this.repository.findAvgRatioServicedRequestsPerUser();
+		else
+			return 0.0;
 	}
 
 	public double findAvgRatioServicedRequestsPerHandyworker() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findAvgRatioServicedRequestsPerHandyworker();
+		final Double res = this.repository.findAvgRatioServicedRequestsPerHandyworker();
+
+		if (res != null)
+			return this.repository.findAvgRatioServicedRequestsPerHandyworker();
+		else
+			return 0.0;
 	}
 
 	public double findAvgBannerCountPerAgent() {
 		CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
-		return this.repository.findAvgBannerCountPerAgent();
+		final Double res = this.repository.findAvgBannerCountPerAgent();
+
+		if (res != null)
+			return this.repository.findAvgBannerCountPerAgent();
+		else
+			return 0.0;
 	}
 
 	public List<Object[]> findMostPopularAgentsByBanners() {

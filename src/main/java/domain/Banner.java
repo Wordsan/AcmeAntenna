@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.URL;
 public class Banner extends DomainEntity {
 
 	private String	pictureUrl;
-	private Integer	targetPage;
+	private String	targetPage;
 	private String	creditCard;
 	private Agent	agent;
 
@@ -34,11 +34,11 @@ public class Banner extends DomainEntity {
 		this.pictureUrl = pictureUrl;
 	}
 
-	public Integer getTargetPage() {
+	public String getTargetPage() {
 		return this.targetPage;
 	}
 
-	public void setTargetPage(final Integer targetPage) {
+	public void setTargetPage(final String targetPage) {
 		this.targetPage = targetPage;
 	}
 

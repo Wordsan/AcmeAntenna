@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import security.Authority;
 import security.UserAccountService;
 import utilities.CheckUtils;
 import domain.Actor;
+import domain.MaintenanceRequest;
 import domain.User;
 import exceptions.UsernameNotUniqueException;
 
@@ -55,6 +58,17 @@ public class UserService {
 		final User res = this.repository.save(user);
 		Assert.notNull(res);
 		return res;
+	}
+	public List<MaintenanceRequest> findServedMainteinanceRequest(final User user) {
+		Assert.notNull(user);
+		return this.repository.findServedMaintenanceRequest(user);
+
+	}
+
+	public List<MaintenanceRequest> findNotServedMainteinanceRequest(final User user) {
+		Assert.notNull(user);
+		return this.repository.findNotServedMaintenanceRequest(user);
+
 	}
 
 }

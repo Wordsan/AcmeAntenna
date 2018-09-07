@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -17,6 +18,7 @@ import security.UserAccountService;
 import utilities.CheckUtils;
 import domain.Actor;
 import domain.Handyworker;
+import domain.MaintenanceRequest;
 import exceptions.UsernameNotUniqueException;
 
 @Service
@@ -24,7 +26,7 @@ import exceptions.UsernameNotUniqueException;
 public class HandyworkerService {
 
 	@Autowired
-	private HandyworkerRepository	handyworkerRepository;
+	private HandyworkerRepository	repository;
 	@Autowired
 	private UserAccountService		userAccountService;
 	@Autowired
@@ -48,7 +50,7 @@ public class HandyworkerService {
 	}
 
 	public Collection<Handyworker> findAll() {
-		final Collection<Handyworker> res = this.handyworkerRepository.findAll();
+		final Collection<Handyworker> res = this.repository.findAll();
 		return res;
 	}
 
@@ -63,14 +65,15 @@ public class HandyworkerService {
 	public Handyworker findByUserAccount(final UserAccount userAccount) {
 		Assert.notNull(userAccount);
 
-		final Handyworker res = this.handyworkerRepository.findByUserAccount(userAccount.getId());
+		final Handyworker res = this.repository.findByUserAccount(userAccount.getId());
 
 		return res;
 	}
 
 	public Handyworker save(final Handyworker handyworker) {
 		Assert.notNull(handyworker);
-		final Handyworker res = this.handyworkerRepository.save(handyworker);
+		Assert.notNull(handyworker.getUserAccount());
+		final Handyworker res = this.repository.save(handyworker);
 
 		return res;
 	}
@@ -81,7 +84,18 @@ public class HandyworkerService {
 
 		handyworker.setUserAccount(this.userAccountService.create(handyworker.getUserAccount().getUsername(), handyworker.getUserAccount().getPassword(), Authority.HANDYWORKER));
 
-		return this.handyworkerRepository.save(handyworker);
+		return this.repository.save(handyworker);
+	}
+	public List<MaintenanceRequest> findServedMainteinanceRequest(final Handyworker worker) {
+		Assert.notNull(worker);
+		return this.repository.findServedMaintenanceRequest(worker);
+
+	}
+
+	public List<MaintenanceRequest> findNotServedMainteinanceRequest(final Handyworker worker) {
+		Assert.notNull(worker);
+		return this.repository.findNotServedMaintenanceRequest(worker);
+
 	}
 
 }

@@ -75,4 +75,9 @@ public class UserAccountService {
 		return res;
 	}
 
+	public UserAccount save(final UserAccount userAccount) {
+		Assert.notNull(userAccount);
+		return this.repository.save(userAccount);
+	}
+
 }

@@ -1,7 +1,6 @@
 
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -20,7 +19,7 @@ import domain.MaintenanceRequest;
 
 @Controller
 @RequestMapping("/maintenanceRequests/handyworker")
-public class MaintenanceRequestHandyworkerController {
+public class MaintenanceRequestHandyworkerController extends AbstractController {
 
 	@Autowired
 	private MaintenanceRequestService	maintenanceRequestService;
@@ -36,8 +35,8 @@ public class MaintenanceRequestHandyworkerController {
 	public ModelAndView listNotServiced() {
 		ModelAndView result;
 		final Handyworker handyworker = this.handyworkerService.findPrincipal();
-		final Collection<MaintenanceRequest> all = this.maintenanceRequestService.findAll();
-		final Collection<MaintenanceRequest> maintenanceRequests = this.getNotServiced(handyworker, all);
+
+		final Collection<MaintenanceRequest> maintenanceRequests = this.handyworkerService.findNotServedMainteinanceRequest(handyworker);
 		final boolean check = true;
 
 		result = new ModelAndView("maintenanceRequests/list");
@@ -48,22 +47,12 @@ public class MaintenanceRequestHandyworkerController {
 		return result;
 	}
 
-	private Collection<MaintenanceRequest> getNotServiced(final Handyworker handyworker, final Collection<MaintenanceRequest> list) {
-
-		final Collection<MaintenanceRequest> res = new ArrayList<MaintenanceRequest>();
-		for (final MaintenanceRequest mr : list)
-			if (mr.getDoneTime() == null && handyworker.getRequests().contains(mr))
-				res.add(mr);
-		return res;
-
-	}
-
 	@RequestMapping(value = "/listServiced", method = RequestMethod.GET)
 	public ModelAndView listServiced() {
 		ModelAndView result;
 		final Handyworker handyworker = this.handyworkerService.findPrincipal();
-		final Collection<MaintenanceRequest> all = this.maintenanceRequestService.findAll();
-		final Collection<MaintenanceRequest> maintenanceRequests = this.getServiced(handyworker, all);
+
+		final Collection<MaintenanceRequest> maintenanceRequests = this.handyworkerService.findServedMainteinanceRequest(handyworker);
 		final boolean done = true;
 
 		result = new ModelAndView("maintenanceRequests/list");
@@ -72,16 +61,6 @@ public class MaintenanceRequestHandyworkerController {
 		result.addObject("done", done);
 
 		return result;
-	}
-
-	private Collection<MaintenanceRequest> getServiced(final Handyworker handyworker, final Collection<MaintenanceRequest> list) {
-
-		final Collection<MaintenanceRequest> res = new ArrayList<MaintenanceRequest>();
-		for (final MaintenanceRequest mr : list)
-			if (mr.getDoneTime() != null && handyworker.getRequests().contains(mr))
-				res.add(mr);
-		return res;
-
 	}
 
 	@RequestMapping(value = "/service", method = RequestMethod.GET)

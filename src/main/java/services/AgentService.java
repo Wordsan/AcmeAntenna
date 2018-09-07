@@ -1,10 +1,13 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.AgentRepository;
 import security.Authority;
@@ -44,6 +47,24 @@ public class AgentService {
 		agent.setUserAccount(this.userAccountService.create(agent.getUserAccount().getUsername(), agent.getUserAccount().getPassword(), Authority.AGENT));
 
 		return this.agentRepository.save(agent);
+	}
+
+	public Agent create() {
+		final Agent a = new Agent();
+		a.setBanned(false);
+
+		return a;
+	}
+
+	public Agent save(final Agent agent) {
+		Assert.notNull(agent);
+		Assert.notNull(agent.getUserAccount());
+		return this.agentRepository.save(agent);
+	}
+
+	public Collection<Agent> findAll() {
+
+		return this.agentRepository.findAll();
 	}
 
 }
