@@ -41,10 +41,9 @@ public class NewAgentForm {
     @CustomValidator(message = "{misc.error.passwordDoesNotMatch}", applyOn = "repeatPassword")
     public boolean isValidPasswordsMatch()
     {
-        if (this.agent == null || this.agent.getUserAccount() == null || this.getRepeatPassword() == null) {
-            return false;
-        }
-        return this.getRepeatPassword().equals(this.agent.getUserAccount().getPassword());
+        if (agent == null || agent.getUserAccount() == null) return false;
+        if (getRepeatPassword() == null) return agent.getUserAccount().getPassword() == null;
+        return getRepeatPassword().equals(agent.getUserAccount().getPassword());
     }
 
     @UseConstraintsFrom(klazz = UserAccount.class, property = "password")

@@ -41,10 +41,9 @@ public class NewHandyworkerForm {
     @CustomValidator(message = "{misc.error.passwordDoesNotMatch}", applyOn = "repeatPassword")
     public boolean isValidPasswordsMatch()
     {
-        if (this.handyworker == null || this.handyworker.getUserAccount() == null || this.getRepeatPassword() == null) {
-            return false;
-        }
-        return this.getRepeatPassword().equals(this.handyworker.getUserAccount().getPassword());
+        if (handyworker == null || handyworker.getUserAccount() == null) return false;
+        if (getRepeatPassword() == null) return handyworker.getUserAccount().getPassword() == null;
+        return getRepeatPassword().equals(handyworker.getUserAccount().getPassword());
     }
 
     @UseConstraintsFrom(klazz = UserAccount.class, property = "password")
