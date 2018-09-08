@@ -28,7 +28,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         Actor principal = actorService.findPrincipal();
 
         // Redirect blocked users to the blocked page.
-        if (principal.isBanned() && !request.getServletPath().equals("/welcome/blocked.do")) {
+        if (principal != null && principal.isBanned() && !request.getServletPath().equals("/welcome/blocked.do")) {
             response.sendRedirect(request.getContextPath()+"/welcome/blocked.do");
             return false;
         }

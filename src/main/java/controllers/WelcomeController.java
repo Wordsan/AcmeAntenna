@@ -47,7 +47,7 @@ public class WelcomeController extends AbstractController {
     public ModelAndView blocked()
     {
         Actor principal = findPrincipal();
-        if (principal.isBanned()) {
+        if (principal != null && principal.isBanned()) {
             ModelAndView result = new ModelAndView("welcome/blocked");
 
             // Log user out.
