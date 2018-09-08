@@ -28,6 +28,7 @@ public class JspViewUtils {
         url = withUrlParam(url, encoder.encodeParameterName("p"), null);
         url = withUrlParam(url, encoder.encodeParameterName("s"), null);
         url = withUrlParam(url, encoder.encodeParameterName("d"), null);
+        url = withUrlParam(url, encoder.encodeParameterName("o"), null);
         return url;
     }
 
