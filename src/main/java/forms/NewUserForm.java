@@ -40,7 +40,8 @@ public class NewUserForm {
     @CustomValidator(message = "{misc.error.passwordDoesNotMatch}", applyOn = "repeatPassword")
     public boolean isValidPasswordsMatch()
     {
-        if (user == null || user.getUserAccount() == null || getRepeatPassword() == null) return false;
+        if (user == null || user.getUserAccount() == null) return false;
+        if (getRepeatPassword() == null) return user.getUserAccount().getPassword() == null;
         return getRepeatPassword().equals(user.getUserAccount().getPassword());
     }
 
