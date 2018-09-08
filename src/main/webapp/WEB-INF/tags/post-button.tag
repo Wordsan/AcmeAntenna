@@ -1,5 +1,5 @@
 <%--
- * index.jsp
+ * cancel.tag
  *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
@@ -7,9 +7,11 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  --%>
+ 
+<%@ tag language="java" body-content="empty" %>
+ 
+ <%-- Taglibs --%>
 
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -21,4 +23,23 @@
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
-<p><spring:message code="welcome.greeting" /></p>
+<%-- Attributes --%>
+
+<%@ attribute name="code" required="true" %>
+<%@ attribute name="action" required="true" %>
+<%@ attribute name="confirmCode" required="false" %>
+
+<%-- Definition --%>
+
+<c:choose>
+    <c:when test="${confirmCode == null}">
+        <button type="button" onclick='$.redirect("${appfn:escapeJs(action)}", {}, "POST")' >
+            <spring:message code="${code}" />
+        </button>
+    </c:when>
+    <c:otherwise>
+        <button type="button" onclick='if (confirm("<spring:message code="${confirmCode}" />")) { $.redirect("${appfn:escapeJs(action)}", {}, "POST") }' >
+            <spring:message code="${code}" />
+        </button>
+    </c:otherwise>
+</c:choose>

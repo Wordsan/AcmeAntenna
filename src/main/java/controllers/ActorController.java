@@ -3,10 +3,10 @@ package controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import domain.Actor;
 import exceptions.OldPasswordDoesntMatchException;
 import forms.EditOwnPasswordForm;
+import security.Authority;
 import services.ActorService;
 import utilities.ApplicationConfig;
 import utilities.CheckUtils;
@@ -35,13 +36,13 @@ public class ActorController extends AbstractController {
         super();
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list()
+    @RequestMapping("/index")
+    public ModelAndView index()
     {
-        final ModelAndView result = new ModelAndView("actors/list");
+        final ModelAndView result = new ModelAndView("actors/index");
         final Collection<Actor> actors = this.actorService.findAll();
         actors.remove(this.actorService.findPrincipal());
-        result.addObject("requestURI", "actors/list.do");
+        result.addObject("requestURI", "actors/index.do");
         result.addObject("actors", actors);
 
         return result;
@@ -66,12 +67,13 @@ public class ActorController extends AbstractController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(@ModelAttribute("actor") @Valid Actor actor, final BindingResult binding, final RedirectAttributes redir)
+    public ModelAndView update(@ModelAttribute("actor") Actor actor, final BindingResult binding, final RedirectAttributes redir)
     {
         CheckUtils.checkAuthenticated();
 
         String globalErrorMessage = null;
 
+        actor = actorService.bindForUpdate(actor, binding);
 		if (!binding.hasErrors()) {
 			try {
 				actor = this.actorService.updateOwnProfile(actor);
@@ -128,5 +130,23 @@ public class ActorController extends AbstractController {
         }
 
         return this.createEditOwnPasswordModelAndView(form, binding, globalErrorMessage);
+    }
+
+    @RequestMapping(value = "/set_banned", method = RequestMethod.POST)
+    public ModelAndView setBanned(@RequestParam("id") int id, @RequestParam("banned") int banned, RedirectAttributes redir)
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+
+        try {
+            actorService.setBanned(id, banned != 0);
+            redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+            return ControllerUtils.redirectToReturnAction();
+        } catch (final Throwable oops) {
+            if (ApplicationConfig.DEBUG) {
+                oops.printStackTrace();
+            }
+            redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
+            return ControllerUtils.redirectToReturnAction();
+        }
     }
 }

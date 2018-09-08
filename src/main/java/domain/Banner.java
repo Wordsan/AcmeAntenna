@@ -36,6 +36,8 @@ public class Banner extends DomainEntity {
         this.pictureUrl = pictureUrl;
     }
 
+    @NotBlank
+    @URL
     public String getTargetPage()
     {
         return this.targetPage;
@@ -46,6 +48,7 @@ public class Banner extends DomainEntity {
         this.targetPage = targetPage;
     }
 
+    @NotBlank
     @CreditCardNumber
     public String getCreditCard()
     {

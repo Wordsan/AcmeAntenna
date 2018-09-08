@@ -15,8 +15,7 @@ import utilities.CheckUtils;
 @RequestMapping("/administrators")
 public class AdministratorController extends AbstractController {
 
-    private @Autowired
-    AdministratorService service;
+    private @Autowired AdministratorService service;
 
 
     @RequestMapping("/dashboard")
@@ -42,41 +41,6 @@ public class AdministratorController extends AbstractController {
         result.addObject("avgRatioServicedRequestsPerHandyworker", this.service.findAvgRatioServicedRequestsPerHandyworker());
         result.addObject("avgBannerCountPerAgent", this.service.findAvgBannerCountPerAgent());
         result.addObject("mostPopularAgents", this.service.findMostPopularAgentsByBanners());
-        return result;
-    }
-
-    @RequestMapping(value = "/ban", method = RequestMethod.GET)
-    public ModelAndView ban(@RequestParam final int actorId)
-    {
-        ModelAndView result;
-
-        try {
-            this.service.ban(actorId);
-            result = new ModelAndView("redirect:/actors/list.do");
-            result.addObject("message", "administrator.commit.ok");
-        } catch (final Throwable oops) {
-            result = new ModelAndView("redirect:/actors/list.do");
-            result.addObject("message", "administrator.commit.error");
-        }
-
-        return result;
-    }
-
-    @RequestMapping(value = "/unban", method = RequestMethod.GET)
-    public ModelAndView unblock(@RequestParam final int actorId)
-    {
-        ModelAndView result;
-
-        try {
-            this.service.unban(actorId);
-            ;
-            result = new ModelAndView("redirect:/actors/list.do");
-            result.addObject("message", "administrator.commit.ok");
-        } catch (final Throwable oops) {
-            result = new ModelAndView("redirect:/actors/list.do");
-            result.addObject("message", "administrator.commit.error");
-        }
-
         return result;
     }
 }

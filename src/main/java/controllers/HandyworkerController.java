@@ -38,7 +38,7 @@ public class HandyworkerController extends AbstractController {
         super();
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping("/list")
     public ModelAndView list()
     {
         final ModelAndView result = new ModelAndView("handyworkers/list");

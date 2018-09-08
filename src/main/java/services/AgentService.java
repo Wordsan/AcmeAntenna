@@ -42,6 +42,14 @@ public class AgentService {
         return null;
     }
 
+    public Agent getPrincipal()
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.AGENT);
+        Agent principal = findPrincipal();
+        Assert.notNull(principal);
+        return principal;
+    }
+
     public Agent createAsNewAgent(final Agent agent) throws ResourceNotUniqueException
     {
         CheckUtils.checkUnauthenticated();

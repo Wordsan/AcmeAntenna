@@ -68,8 +68,8 @@
         </property>
     </bean>
     <bean class="security.UserAccount" id="userAccount_handy1">
-        <property name="username" value="handy1"/>
-        <property name="password" value="3b6c343a81c39cad30afdeea96c677c0"/>
+        <property name="username" value="handyworker1"/>
+        <property name="password" value="3d0e201c52a6e13f27d22b6777711541"/>
         <property name="authorities">
             <list value-type="security.Authority">
                 <bean class="security.Authority">
@@ -79,8 +79,8 @@
         </property>
     </bean>
      <bean class="security.UserAccount" id="userAccount_handy2">
-        <property name="username" value="handy2"/>
-        <property name="password" value="63f19f866943da7a621905c7518a8ba9"/>
+        <property name="username" value="handyworker2"/>
+        <property name="password" value="549dbd77d30ecab6ca4c047cd795333f"/>
         <property name="authorities">
             <list value-type="security.Authority">
                 <bean class="security.Authority">

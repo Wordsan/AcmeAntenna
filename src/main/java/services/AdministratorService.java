@@ -42,34 +42,6 @@ public class AdministratorService {
         return (Administrator) principal;
     }
 
-    public void ban(final int actorId)
-    {
-        final Authority admin = new Authority();
-        admin.setAuthority(Authority.ADMINISTRATOR);
-
-        Assert.isTrue(actorId != 0);
-
-        Assert.isTrue(this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(admin));
-        final Actor actor = this.actorService.findOne(actorId);
-        Assert.notNull(actor);
-        actor.setBanned(true);
-
-        this.actorService.save(actor);
-    }
-
-    public void unban(final int actorId)
-    {
-        final Authority admin = new Authority();
-        admin.setAuthority(Authority.ADMINISTRATOR);
-        Assert.isTrue(actorId != 0);
-        Assert.isTrue(this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(admin));
-        final Actor actor = this.actorService.findOne(actorId);
-        Assert.notNull(actor);
-        actor.setBanned(false);
-
-        this.actorService.save(actor);
-    }
-
     public double findAvgAntennaCountPerUser()
     {
         CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);

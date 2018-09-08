@@ -43,13 +43,13 @@ public class RegisterBanner extends AbstractTest {
     public void RegisterBannerBeingAgent()
     {
         this.unauthenticate();
-        final Banner banner = this.bannerService.create();
+        final Banner banner = new Banner();
         this.authenticate("agent1");
         banner.setAgent(this.agentService.findPrincipal());
         banner.setPictureUrl("https://i.imgur.com/S4LGdiI.jpg");
         banner.setTargetPage("http://nike.com");
         banner.setCreditCard("4559960410324422");
-        final Banner saved = this.bannerService.save(banner);
+        final Banner saved = this.bannerService.create(banner);
 
         Assert.isTrue(this.bannerService.findAll().contains(saved));
 
@@ -61,13 +61,13 @@ public class RegisterBanner extends AbstractTest {
     public void RegisterBannerBeingAnUser() throws IllegalArgumentException
     {
         this.unauthenticate();
-        final Banner banner = this.bannerService.create();
+        final Banner banner = new Banner();
         this.authenticate("user1");
         banner.setAgent(this.agentService.findPrincipal());
         banner.setPictureUrl("https://i.imgur.com/S4LGdiI.jpg");
         banner.setTargetPage("http://nike.com");
         banner.setCreditCard("4559960410324422");
-        final Banner saved = this.bannerService.save(banner);
+        final Banner saved = this.bannerService.create(banner);
 
         Assert.isTrue(this.bannerService.findAll().contains(saved));
 
@@ -78,7 +78,7 @@ public class RegisterBanner extends AbstractTest {
     @Test(expected = IllegalArgumentException.class)
     public void RegisterBannerWithoutCreditCard() throws IllegalArgumentException
     {
-        final Banner saved = this.bannerService.save(null);
+        final Banner saved = this.bannerService.create(null);
 
         Assert.isTrue(this.bannerService.findAll().contains(saved));
 

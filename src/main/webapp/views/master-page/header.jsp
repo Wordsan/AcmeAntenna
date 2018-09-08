@@ -103,18 +103,16 @@
         </li>
 
         <security:authorize access="hasRole('ADMINISTRATOR')">
-        	<li><a class="fNiv" href="actors/list.do"><spring:message code="master.page.actors" /></a></li>
-        	<li><a class="fNiv" href="banners/list.do"><spring:message code="master.page.banners" /></a></li>
+        	<li><a class="fNiv" href="actors/index.do"><spring:message code="master.page.actors" /></a></li>
+        	<li><a class="fNiv" href="banners/index.do"><spring:message code="master.page.banners" /></a></li>
             <li><a class="fNiv" href="administrators/dashboard.do"><spring:message code="master.page.administrator_dashboard" /></a></li>
         </security:authorize>
 
 		<security:authorize access="hasRole('AGENT')">
-			<li><a class="fNiv" href="banners/list.do"><spring:message code="master.page.banners" /></a></li>
+			<li><a class="fNiv" href="banners/index.do"><spring:message code="master.page.banners" /></a></li>
 		</security:authorize>
 
-		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv" href="handyworkers/list.do"><spring:message code="master.page.handyworkers" /></a></li>
-		</security:authorize>
+		<li><a class="fNiv" href="handyworkers/list.do"><spring:message code="master.page.handyworkers" /></a></li>
 
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>

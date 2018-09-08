@@ -6,20 +6,13 @@
 
 <tiles-definitions>
 
-	 <definition name="banners/list" extends="master.page">
+	 <definition name="banners/index" extends="master.page">
 		<put-attribute name="title" value="Lista de banners" />
-		<put-attribute name="body" value="/views/banners/list.jsp" />
+		<put-attribute name="body" value="/views/banners/index.jsp" />
 	</definition> 
 	
-	<definition name="banners/create" extends="master.page">
-		<put-attribute name="title" value="Realizar banner" />
-		<put-attribute name="body" value="/views/banners/create.jsp" />
+	<definition name="banners/new" extends="master.page">
+		<put-attribute name="title" value="Nuevo banner" />
+		<put-attribute name="body" value="/views/banners/new.jsp" />
 	</definition>
-	
-	<definition name="banners/delete" extends="master.page">
-		<put-attribute name="title" value="Eliminar banner" />
-		<put-attribute name="body" value="/views/banners/delete.jsp" />
-	</definition>
-	
-	
 </tiles-definitions>

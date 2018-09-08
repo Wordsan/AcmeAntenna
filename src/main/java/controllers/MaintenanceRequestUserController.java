@@ -39,7 +39,7 @@ public class MaintenanceRequestUserController extends AbstractController {
         super();
     }
 
-    @RequestMapping(value = "/listNotServiced", method = RequestMethod.GET)
+    @RequestMapping("/listNotServiced")
     public ModelAndView listNotServiced()
     {
         ModelAndView result;
@@ -53,7 +53,7 @@ public class MaintenanceRequestUserController extends AbstractController {
         return result;
     }
 
-    @RequestMapping(value = "/listServiced", method = RequestMethod.GET)
+    @RequestMapping("/listServiced")
     public ModelAndView listServiced()
     {
         ModelAndView result;
@@ -70,7 +70,7 @@ public class MaintenanceRequestUserController extends AbstractController {
         return result;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    @RequestMapping("/create")
     public ModelAndView create(@CookieValue(required = false) final String creditCard)
     {
         ModelAndView result;

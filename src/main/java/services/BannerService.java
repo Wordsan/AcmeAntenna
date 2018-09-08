@@ -11,67 +11,45 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import domain.Agent;
 import domain.Banner;
+import domain.Platform;
+import domain.Satellite;
 import repositories.BannerRepository;
+import security.Authority;
+import utilities.CheckUtils;
 
 @Service
 @Transactional
 public class BannerService {
+    @Autowired private BannerRepository repository;
+    @Autowired private AgentService agentService;
 
-    @Autowired
-    private BannerRepository bannerRepository;
-    @Autowired
-    private AgentService agentService;
-    @Autowired
-    private AdministratorService administratorService;
-
-
-    public BannerService()
+    public List<Banner> findAll()
     {
-        super();
+        return repository.findAll();
     }
 
-    public Banner create()
+    public List<Banner> findAllForIndex()
     {
-        final Banner res = new Banner();
-
-        res.setTargetPage("");
-        res.setAgent(this.agentService.findPrincipal());
-
-        return res;
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+        return findAll();
     }
 
-    public Collection<Banner> findAll()
+    public Banner create(Banner banner)
     {
-        final Collection<Banner> res = this.bannerRepository.findAll();
-        Assert.notNull(res);
+        CheckUtils.checkPrincipalAuthority(Authority.AGENT);
+        CheckUtils.checkNotExists(banner);
 
-        return res;
+        banner.setAgent(agentService.getPrincipal());
+
+        return repository.save(banner);
     }
 
-    public Banner findOne(final int Id)
+    public void delete(int id)
     {
-        final Banner res = this.bannerRepository.findOne(Id);
-        Assert.notNull(res);
-
-        return res;
-    }
-
-    public Banner save(final Banner banner)
-    {
-        Assert.notNull(banner);
-        Assert.notNull(banner.getAgent());
-        final Banner res = this.bannerRepository.save(banner);
-
-        return res;
-    }
-
-    public void delete(final Banner banner)
-    {
-        Assert.notNull(banner);
-        Assert.isTrue(banner.getId() != 0);
-        Assert.isTrue(banner.getAgent().equals(this.agentService.findPrincipal()) || this.administratorService.findPrincipal() != null);
-        this.bannerRepository.delete(banner);
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+        repository.delete(id);
     }
 
     public Banner randomBanner()
@@ -81,4 +59,11 @@ public class BannerService {
         return banners.get(random);
     }
 
+    public List<Banner> findMyBanners()
+    {
+        CheckUtils.checkPrincipalAuthority(Authority.AGENT);
+        Agent principal = agentService.getPrincipal();
+
+        return repository.findByAgent(principal);
+    }
 }

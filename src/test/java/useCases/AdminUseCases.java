@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.transaction.Transactional;
 
 import domain.Actor;
 import domain.Banner;
+import exceptions.ResourceNotFoundException;
 import services.ActorService;
 import services.AdministratorService;
 import services.AntennaService;
@@ -55,33 +57,33 @@ public class AdminUseCases extends AbstractTest {
         this.authenticate("admin");
         final List<Actor> actors = new ArrayList<Actor>(this.actorService.findAll());
         //A random actor is banned
-        this.administratorService.ban(actors.get(4).getId());
+        this.actorService.setBanned(actors.get(4).getId(), true);
         //Checking if that actor that we select previously is now banned
-        Assert.isTrue(this.actorService.findOne(actors.get(4).getId()).isBanned());
+        Assert.isTrue(this.actorService.findById(actors.get(4).getId()).isBanned());
 
     }
 
     //Ban/unban another actor.
     //test getting the requests already serviced from an user
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AccessDeniedException.class)
     public void BanAnUserNotBeingAnAdmin() throws IllegalArgumentException
     {
         this.unauthenticate();
         //Auth as an user
         this.authenticate("user1");
-        this.administratorService.ban(5);
+        this.actorService.setBanned(5, true);
 
     }
 
     //Ban/unban another actor.
     //Banning a non existing actor
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = ResourceNotFoundException.class)
     public void BanAnNonExistingId() throws IllegalArgumentException
     {
         this.unauthenticate();
         //Auth as an admin
         this.authenticate("admin");
-        this.administratorService.ban(-1);
+        this.actorService.setBanned(-1, true);
 
     }
 
@@ -93,7 +95,7 @@ public class AdminUseCases extends AbstractTest {
         //Auth as an admin
         this.authenticate("admin");
         final List<Banner> banners = new ArrayList<Banner>(this.bannerService.findAll());
-        this.bannerService.delete(banners.get(0));
+        this.bannerService.delete(banners.get(0).getId());
         Assert.isTrue(!this.bannerService.findAll().contains(banners.get(0)));
 
     }
@@ -107,13 +109,13 @@ public class AdminUseCases extends AbstractTest {
         //Auth as an user
         this.authenticate("user1");
         final List<Banner> banners = new ArrayList<Banner>(this.bannerService.findAll());
-        this.bannerService.delete(banners.get(0));
+        this.bannerService.delete(banners.get(0).getId());
         Assert.isTrue(!this.bannerService.findAll().contains(banners.get(0)));
 
     }
 
     //Admin: Remove banners that he or she thinks are inappropriate.
-    //Remove a null banner
+    //Remove a non existing banner
     @Test(expected = IllegalArgumentException.class)
     public void RemoveANullBanner() throws IllegalArgumentException
     {
@@ -121,7 +123,7 @@ public class AdminUseCases extends AbstractTest {
         //Auth as an user
         this.authenticate("user1");
 
-        this.bannerService.delete(null);
+        this.bannerService.delete(-1);
 
     }
 

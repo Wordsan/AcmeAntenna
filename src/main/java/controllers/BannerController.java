@@ -3,17 +3,27 @@ package controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.validation.Valid;
 
+import domain.Actor;
+import domain.Administrator;
+import domain.Agent;
 import domain.Banner;
+import domain.Satellite;
+import security.Authority;
 import services.BannerService;
+import utilities.ApplicationConfig;
+import utilities.CheckUtils;
+import utilities.ControllerUtils;
 
 @Controller
 @RequestMapping("/banners")
@@ -28,135 +38,89 @@ public class BannerController extends AbstractController {
         super();
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list()
+    @RequestMapping("/index")
+    public ModelAndView index()
     {
-        ModelAndView result;
-        final Collection<Banner> banners = this.bannerService.findAll();
-        result = new ModelAndView("banners/list");
-        result.addObject("requestURI", "banners/list.do");
+        CheckUtils.checkPrincipalAuthority(Authority.AGENT, Authority.ADMINISTRATOR);
+
+        List<Banner> banners;
+        Actor principal = findPrincipal();
+        if (principal instanceof Administrator) {
+            banners = bannerService.findAllForIndex();
+        } else {
+            banners = bannerService.findMyBanners();
+        }
+
+        ModelAndView result = new ModelAndView("banners/index");
         result.addObject("banners", banners);
 
         return result;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView create()
+    @RequestMapping("/new")
+    public ModelAndView new_()
     {
-        ModelAndView result;
-        Banner b;
+        CheckUtils.checkPrincipalAuthority(Authority.AGENT);
 
-        b = this.bannerService.create();
-        result = this.createEditModelAndView(b);
-
-        return result;
-
+        Banner banner = new Banner();
+        return createEditModelAndView("banners/new", "banners/create.do", null, null, banner);
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public ModelAndView delete(@RequestParam final int bannerId)
+    private ModelAndView createEditModelAndView(String viewName, String formAction, String globalErrorMessage, BindingResult binding, Banner banner)
     {
-        ModelAndView result;
-        final Banner banner = this.bannerService.findOne(bannerId);
+        ModelAndView result = ControllerUtils.createViewWithBinding(
+                viewName,
+                "banner",
+                banner,
+                binding,
+                globalErrorMessage
+        );
 
-        result = new ModelAndView("banners/delete");
-        result.addObject("banner", banner);
+        result.addObject("formAction", formAction);
 
         return result;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-    public ModelAndView save(@Valid final Banner b, final BindingResult binding)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ModelAndView create(
+            @ModelAttribute("banner") @Valid Banner banner,
+            BindingResult binding,
+            RedirectAttributes redir
+    )
     {
-        ModelAndView result;
+        CheckUtils.checkPrincipalAuthority(Authority.AGENT);
 
-        if (binding.hasErrors()) {
-            System.out.println(binding.getAllErrors());
-            result = this.createEditModelAndView(b);
-        } else {
+        String globalErrorMessage = null;
+        if (!binding.hasErrors()) {
             try {
-                this.bannerService.save(b);
-                result = new ModelAndView("redirect:list.do");
-            } catch (final Throwable oops) {
-                result = this.createEditModelAndView(b, "banner.commit.error");
+                banner = bannerService.create(banner);
+                redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+
+                return ControllerUtils.redirect("/banners/index.do");
+            } catch (Throwable oops) {
+                if (ApplicationConfig.DEBUG) oops.printStackTrace();
+                globalErrorMessage = "misc.commit.error";
             }
         }
 
-        return result;
+        return createEditModelAndView("banners/new", "banners/create.do", globalErrorMessage, binding, banner);
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST, params = "delete")
-    public ModelAndView delete(final Banner b, final BindingResult binding)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ModelAndView delete(@RequestParam("id") int id, RedirectAttributes redir)
     {
-        ModelAndView result;
-        if (binding.hasErrors()) {
-            System.out.println(binding.getAllErrors());
-            result = this.createEditModelAndView(b);
-        } else {
-            try {
-                this.bannerService.delete(b);
-                result = new ModelAndView("redirect:list.do");
-            } catch (final Throwable oops) {
-                result = this.createEditModelAndView(b, "banner.commit.error");
+        CheckUtils.checkPrincipalAuthority(Authority.ADMINISTRATOR);
+
+        try {
+            bannerService.delete(id);
+            redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+            return ControllerUtils.redirectToReturnAction();
+        } catch (final Throwable oops) {
+            if (ApplicationConfig.DEBUG) {
+                oops.printStackTrace();
             }
+            redir.addFlashAttribute("globalErrorMessage", "misc.commit.error");
+            return ControllerUtils.redirectToReturnAction();
         }
-
-        return result;
     }
-
-    protected ModelAndView createEditModelAndView(final Banner b)
-    {
-        ModelAndView result;
-
-        result = this.createEditModelAndView(b, null);
-
-        return result;
-    }
-
-    protected ModelAndView createEditModelAndView(final Banner banner, final String message)
-    {
-        ModelAndView result;
-
-        result = new ModelAndView("banners/create");
-        result.addObject("banner", banner);
-        result.addObject("message", message);
-
-        return result;
-    }
-
-	/*
-	 * @RequestMapping(value = "/randomBanner", method = RequestMethod.GET)
-	 * public ModelAndView randomBanner() {
-	 * ModelAndView result;
-	 * final Collection<Banner> banners = this.bannerService.findAll();
-	 * final String banner = this.randomPicture(banners);
-	 * result = new ModelAndView("master.page");
-	 * result.addObject("banner", banner);
-	 * 
-	 * return result;
-	 * }
-	 * 
-	 * private String randomPicture(final Collection<Banner> list) {
-	 * String res = null;
-	 * final Integer aux = (int) Math.random() * (this.maxPage(list) + 1);
-	 * for (final Banner b : list)
-	 * if (b.getTargetPage() == aux) {
-	 * res = b.getPictureUrl();
-	 * break;
-	 * }
-	 * return res;
-	 * 
-	 * }
-	 * 
-	 * private Integer maxPage(final Collection<Banner> list) {
-	 * Integer res = 0;
-	 * for (final Banner b : list) {
-	 * final Integer aux = b.getTargetPage();
-	 * if (aux >= res)
-	 * res = aux;
-	 * }
-	 * return res;
-	 * }
-	 */
-
 }

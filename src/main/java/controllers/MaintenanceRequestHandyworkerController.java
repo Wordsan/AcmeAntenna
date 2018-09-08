@@ -31,7 +31,7 @@ public class MaintenanceRequestHandyworkerController extends AbstractController 
         super();
     }
 
-    @RequestMapping(value = "/listNotServiced", method = RequestMethod.GET)
+    @RequestMapping("/listNotServiced")
     public ModelAndView listNotServiced()
     {
         ModelAndView result;
@@ -48,7 +48,7 @@ public class MaintenanceRequestHandyworkerController extends AbstractController 
         return result;
     }
 
-    @RequestMapping(value = "/listServiced", method = RequestMethod.GET)
+    @RequestMapping("/listServiced")
     public ModelAndView listServiced()
     {
         ModelAndView result;

@@ -55,7 +55,6 @@
 		<security:intercept-url pattern="/platforms/new.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/platforms/create.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/platforms/update.do" access="hasRole('ADMINISTRATOR')" />
-		<security:intercept-url pattern="/platforms/create.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/platforms/delete.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/platforms/edit.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/platforms/show.do" access="permitAll" />
@@ -65,7 +64,8 @@
 		<security:intercept-url pattern="/actors/update.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/actors/edit_own_password.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/actors/update_own_password.do" access="isAuthenticated()" />
-		<security:intercept-url pattern="/actors/list.do" access="hasRole('ADMINISTRATOR')"/>
+		<security:intercept-url pattern="/actors/index.do" access="hasRole('ADMINISTRATOR')"/>
+		<security:intercept-url pattern="/actors/set_banned.do" access="hasRole('ADMINISTRATOR')"/>
 
 		<security:intercept-url pattern="/administrators/**" access="hasRole('ADMINISTRATOR')" />
 
@@ -100,18 +100,20 @@
 		<security:intercept-url pattern="/legal/cookies.do" access="permitAll" />
 		<security:intercept-url pattern="/legal/privacy.do" access="permitAll" />
 
-		<security:intercept-url pattern="/handyworkers/**" access="!isAuthenticated()"/>
+		<security:intercept-url pattern="/handyworkers/list.do" access="permitAll"/>
+		<security:intercept-url pattern="/handyworkers/new.do" access="isAnonymous()"/>
+		<security:intercept-url pattern="/handyworkers/create.do" access="isAnonymous()"/>
 		
 		<security:intercept-url pattern="/maintenanceRequests/user/**" access="hasRole('USER')"/>
 		<security:intercept-url pattern="/maintenanceRequests/handyworker/**" access="hasRole('HANDYWORKER')"/>
 
-		<security:intercept-url pattern="/agents/**" access="!isAuthenticated()"/>
+		<security:intercept-url pattern="/agents/new.do" access="isAnonymous()"/>
+		<security:intercept-url pattern="/agents/create.do" access="isAnonymous()"/>
 		
-		<security:intercept-url pattern="/banners/list.do" access="permitAll"/>
+		<security:intercept-url pattern="/banners/index.do" access="hasRole('AGENT') || hasRole('ADMINISTRATOR')"/>
+		<security:intercept-url pattern="/banners/new.do" access="hasRole('AGENT')"/>
 		<security:intercept-url pattern="/banners/create.do" access="hasRole('AGENT')"/>
 		<security:intercept-url pattern="/banners/delete.do" access="hasRole('ADMINISTRATOR')"/>
-
-
 
 		<security:intercept-url pattern="/**" access="denyAll" />
 
