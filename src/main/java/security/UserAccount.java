@@ -10,6 +10,7 @@
 
 package security;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
@@ -64,6 +65,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
     private Collection<Authority> authorities;
 
 
+    @NotBlank
     @Size(min = 4, max = 32)
     @Column(unique = true)
     @Override
@@ -77,6 +79,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
         this.username = username;
     }
 
+    @NotBlank
     @Size(min = 4, max = 32)
     @Override
     public String getPassword()
