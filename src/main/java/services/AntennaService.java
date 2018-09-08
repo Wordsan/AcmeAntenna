@@ -10,7 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import domain.Actor;
 import domain.Antenna;
+import domain.Handyworker;
 import domain.User;
 import exceptions.ResourceNotFoundException;
 import repositories.AntennaRepository;
@@ -28,6 +30,8 @@ public class AntennaService {
 
     @PersistenceContext
     private EntityManager entityManager;
+    @Autowired private ActorService actorService;
+    @Autowired private MaintenanceRequestService maintenanceRequestService;
 
 
     public Antenna create(final Antenna submittedAntenna)
@@ -88,9 +92,17 @@ public class AntennaService {
 
     public Antenna getByIdForShow(final int id)
     {
-        CheckUtils.checkPrincipalAuthority(Authority.USER);
+        CheckUtils.checkPrincipalAuthority(Authority.USER, Authority.HANDYWORKER);
+
         final Antenna antenna = this.getById(id);
-        CheckUtils.checkIsPrincipal(antenna.getUser());
+
+        Actor principal = actorService.getPrincipal();
+        if (principal instanceof Handyworker) {
+            CheckUtils.checkTrue(maintenanceRequestService.hasPendingRequest((Handyworker) principal, antenna));
+        } else {
+            CheckUtils.checkIsPrincipal(antenna.getUser());
+        }
+
         return antenna;
     }
 

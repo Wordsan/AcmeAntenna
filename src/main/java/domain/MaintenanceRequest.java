@@ -12,10 +12,17 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import validators.CustomValidator;
+import validators.HasCustomValidators;
+import validators.NullOrNotBlank;
+import validators.PastOrPresent;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@HasCustomValidators
 public class MaintenanceRequest extends DomainEntity {
 
     private User user;
@@ -50,7 +57,7 @@ public class MaintenanceRequest extends DomainEntity {
         this.handyworker = handyworker;
     }
 
-    //@NotBlank
+    @NotBlank
     @CreditCardNumber
     public String getCreditCard()
     {
@@ -63,8 +70,9 @@ public class MaintenanceRequest extends DomainEntity {
     }
 
     @NotNull
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @PastOrPresent
     public Date getCreationTime()
     {
         return this.creationTime;
@@ -98,8 +106,8 @@ public class MaintenanceRequest extends DomainEntity {
         this.antenna = antenna;
     }
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     public Date getDoneTime()
     {
         return this.doneTime;
@@ -110,14 +118,24 @@ public class MaintenanceRequest extends DomainEntity {
         this.doneTime = doneTime;
     }
 
+    @NullOrNotBlank
     public String getResultsDescription()
     {
         return this.resultsDescription;
     }
-
     public void setResultsDescription(final String resultsDescription)
     {
         this.resultsDescription = resultsDescription;
     }
 
+    @Transient
+    @CustomValidator(applyOn = "resultsDescription", message = "{org.hibernate.validator.constraints.NotBlank.message}")
+    public boolean isValid()
+    {
+        if (getDoneTime() != null) {
+            if (getResultsDescription() == null) return false;
+        }
+
+        return true;
+    }
 }

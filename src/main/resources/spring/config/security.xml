@@ -70,7 +70,7 @@
 		<security:intercept-url pattern="/administrators/**" access="hasRole('ADMINISTRATOR')" />
 
 		<security:intercept-url pattern="/antennas/index.do" access="hasRole('USER')" />
-		<security:intercept-url pattern="/antennas/show.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/antennas/show.do" access="hasRole('USER') || hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/antennas/new.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/antennas/create.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/antennas/edit.do" access="hasRole('USER')" />

@@ -15,9 +15,12 @@ import java.util.List;
 import javax.validation.Valid;
 
 import domain.Antenna;
+import domain.Handyworker;
+import domain.MaintenanceRequest;
 import domain.User;
 import security.Authority;
 import services.AntennaService;
+import services.MaintenanceRequestService;
 import services.SatelliteService;
 import utilities.ApplicationConfig;
 import utilities.CheckUtils;
@@ -27,6 +30,7 @@ import utilities.ControllerUtils;
 @RequestMapping("/antennas")
 public class AntennaController extends AbstractController {
     @Autowired private AntennaService antennaService;
+    @Autowired private MaintenanceRequestService maintenanceRequestService;
     @Autowired private SatelliteService satelliteService;
 
     @RequestMapping("/index")
@@ -43,7 +47,7 @@ public class AntennaController extends AbstractController {
     @RequestMapping("/show")
     public ModelAndView show(int id)
     {
-        CheckUtils.checkPrincipalAuthority(Authority.USER);
+        CheckUtils.checkPrincipalAuthority(Authority.USER, Authority.HANDYWORKER);
 
         Antenna antenna = antennaService.getByIdForShow(id);
         ModelAndView result = new ModelAndView("antennas/show");

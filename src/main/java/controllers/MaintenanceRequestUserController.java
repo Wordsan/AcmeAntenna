@@ -71,7 +71,7 @@ public class MaintenanceRequestUserController extends AbstractController {
     }
 
     @RequestMapping("/create")
-    public ModelAndView create(@CookieValue(required = false) final String creditCard)
+    public ModelAndView create(@CookieValue(required = false, value="creditCard") final String creditCard)
     {
         ModelAndView result;
         MaintenanceRequest maintenanceRequest;
@@ -104,7 +104,9 @@ public class MaintenanceRequestUserController extends AbstractController {
         result.addObject("handyworkers", handyworkers);
         result.addObject("antennas", antennas);
 
-        result.addObject("message", message);
+        if (message != null && !message.isEmpty()) {
+            result.addObject("globalErrorMessage", message);
+        }
 
         return result;
     }

@@ -13,8 +13,11 @@ import javax.validation.Valid;
 
 import domain.Handyworker;
 import domain.MaintenanceRequest;
+import security.Authority;
 import services.HandyworkerService;
 import services.MaintenanceRequestService;
+import utilities.CheckUtils;
+import utilities.ControllerUtils;
 
 @Controller
 @RequestMapping("/maintenanceRequests/handyworker")
@@ -34,6 +37,8 @@ public class MaintenanceRequestHandyworkerController extends AbstractController 
     @RequestMapping("/listNotServiced")
     public ModelAndView listNotServiced()
     {
+        CheckUtils.checkPrincipalAuthority(Authority.HANDYWORKER);
+
         ModelAndView result;
         final Handyworker handyworker = this.handyworkerService.findPrincipal();
 
@@ -51,6 +56,8 @@ public class MaintenanceRequestHandyworkerController extends AbstractController 
     @RequestMapping("/listServiced")
     public ModelAndView listServiced()
     {
+        CheckUtils.checkPrincipalAuthority(Authority.HANDYWORKER);
+
         ModelAndView result;
         final Handyworker handyworker = this.handyworkerService.findPrincipal();
 
@@ -68,6 +75,8 @@ public class MaintenanceRequestHandyworkerController extends AbstractController 
     @RequestMapping(value = "/service", method = RequestMethod.GET)
     public ModelAndView service(final int maintenanceRequestId)
     {
+        CheckUtils.checkPrincipalAuthority(Authority.HANDYWORKER);
+
         ModelAndView result;
         final MaintenanceRequest m = this.maintenanceRequestService.findOne(maintenanceRequestId);
         result = this.createEditModelAndView(m);
@@ -79,36 +88,32 @@ public class MaintenanceRequestHandyworkerController extends AbstractController 
     {
         ModelAndView result;
 
-        result = this.createEditModelAndView(m, null);
+        result = this.createEditModelAndView(m, null, null);
 
         return result;
     }
 
-    protected ModelAndView createEditModelAndView(final MaintenanceRequest maintenanceRequest, final String message)
+    protected ModelAndView createEditModelAndView(final MaintenanceRequest maintenanceRequest, BindingResult binding, final String message)
     {
-        ModelAndView result;
-
-        result = new ModelAndView("maintenanceRequests/service");
-        result.addObject("maintenanceRequest", maintenanceRequest);
-        result.addObject("message", message);
-
-        return result;
+        return ControllerUtils.createViewWithBinding("maintenanceRequests/service", "maintenanceRequest", maintenanceRequest, binding, message);
     }
 
     @RequestMapping(value = "/service", method = RequestMethod.POST, params = "save")
-    public ModelAndView save(@Valid final MaintenanceRequest maintenanceRequest, final BindingResult binding)
+    public ModelAndView save(MaintenanceRequest maintenanceRequest, final BindingResult binding)
     {
+        CheckUtils.checkPrincipalAuthority(Authority.HANDYWORKER);
+
         ModelAndView result;
 
+        maintenanceRequest = maintenanceRequestService.bindForService(maintenanceRequest, binding);
         if (binding.hasErrors()) {
-            System.out.println(binding.getAllErrors());
-            result = this.createEditModelAndView(maintenanceRequest);
+            result = this.createEditModelAndView(maintenanceRequest, binding, null);
         } else {
             try {
                 this.maintenanceRequestService.service(maintenanceRequest);
                 result = new ModelAndView("redirect:listNotServiced.do");
             } catch (final Throwable oops) {
-                result = this.createEditModelAndView(maintenanceRequest, "maintenanceRequest.commit.error");
+                result = this.createEditModelAndView(maintenanceRequest, binding, "maintenanceRequest.commit.error");
             }
         }
 

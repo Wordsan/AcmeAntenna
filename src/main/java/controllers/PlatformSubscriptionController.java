@@ -90,10 +90,11 @@ public class PlatformSubscriptionController extends AbstractController {
 
         String globalErrorMessage = null;
         if (!binding.hasErrors()) {
-            response.addCookie(new Cookie("creditCard", platformSubscription.getCreditCard()));
+
             try {
                 platformSubscription = this.service.create(platformSubscription);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
+                response.addCookie(new Cookie("creditCard", platformSubscription.getCreditCard()));
                 return ControllerUtils.redirectToReturnAction();
             } catch (OverlappingPlatformSubscriptionException ex) {
                 globalErrorMessage = "platform_subscription.error.overlapping";

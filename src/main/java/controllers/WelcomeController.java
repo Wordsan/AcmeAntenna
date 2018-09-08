@@ -27,9 +27,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import domain.Actor;
+import domain.User;
 import security.LoginService;
 import services.ActorService;
 import services.BannerService;
+import utilities.ControllerUtils;
+import utilities.UserAccountUtils;
 
 @Controller
 @RequestMapping("/welcome")
@@ -38,5 +41,21 @@ public class WelcomeController extends AbstractController {
     public ModelAndView index() throws LoginException
     {
         return new ModelAndView("welcome/index");
+    }
+
+    @RequestMapping(value = "/blocked")
+    public ModelAndView blocked()
+    {
+        Actor principal = findPrincipal();
+        if (principal.isBanned()) {
+            ModelAndView result = new ModelAndView("welcome/blocked");
+
+            // Log user out.
+            UserAccountUtils.setSessionAccount(null);
+            return result;
+        }
+
+        // If not actually blocked, redirect to index.
+        return ControllerUtils.redirect("/welcome/index.do");
     }
 }

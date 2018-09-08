@@ -3,10 +3,14 @@ package services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import domain.Antenna;
@@ -14,6 +18,8 @@ import domain.Handyworker;
 import domain.MaintenanceRequest;
 import domain.User;
 import repositories.MaintenanceRequestRepository;
+import security.Authority;
+import utilities.CheckUtils;
 
 @Service
 @Transactional
@@ -25,6 +31,8 @@ public class MaintenanceRequestService {
     private UserService userService;
     @Autowired
     private HandyworkerService handyworkerService;
+    @PersistenceContext private EntityManager entityManager;
+    @Autowired private Validator validator;
 
 
     public MaintenanceRequest create()
@@ -53,6 +61,10 @@ public class MaintenanceRequestService {
 
     public MaintenanceRequest save(final MaintenanceRequest maintenanceRequest)
     {
+        CheckUtils.checkPrincipalAuthority(Authority.USER);
+        CheckUtils.checkIsPrincipal(maintenanceRequest.getUser());
+        CheckUtils.checkIsPrincipal(maintenanceRequest.getAntenna().getUser());
+
         Assert.notNull(maintenanceRequest);
         Assert.notNull(maintenanceRequest.getUser());
         Assert.notNull(maintenanceRequest.getDescription());
@@ -69,7 +81,6 @@ public class MaintenanceRequestService {
         h.getRequests().add(res);
         u.getRequests().add(res);
         a.getRequests().add(res);
-        u.setCreditCardCookie(res.getCreditCard());
 
         Assert.isTrue(u.getRequests().contains(res));
         Assert.isTrue(h.getRequests().contains(res));
@@ -80,6 +91,8 @@ public class MaintenanceRequestService {
 
     public MaintenanceRequest service(final MaintenanceRequest maintenanceRequest)
     {
+        CheckUtils.checkPrincipalAuthority(Authority.HANDYWORKER);
+
         Assert.notNull(maintenanceRequest);
         final Handyworker worker = this.handyworkerService.findByPrincipal();
         Assert.isTrue(worker.equals(maintenanceRequest.getHandyworker()));
@@ -99,4 +112,20 @@ public class MaintenanceRequestService {
         this.maintenanceRequestRepository.delete(maintenanceRequest);
     }
 
+    public MaintenanceRequest bindForService(MaintenanceRequest maintenanceRequest, BindingResult binding)
+    {
+        entityManager.detach(maintenanceRequest);
+        MaintenanceRequest oldMaintenanceRequest = maintenanceRequestRepository.findOne(maintenanceRequest.getId());
+        Assert.notNull(oldMaintenanceRequest);
+        oldMaintenanceRequest.setResultsDescription(maintenanceRequest.getResultsDescription());
+        oldMaintenanceRequest.setDoneTime(new Date());
+        validator.validate(oldMaintenanceRequest, binding);
+        if (binding.hasErrors()) entityManager.detach(oldMaintenanceRequest);
+        return oldMaintenanceRequest;
+    }
+
+    public boolean hasPendingRequest(Handyworker principal, Antenna antenna)
+    {
+        return !maintenanceRequestRepository.findPendingRequests(principal, antenna).isEmpty();
+    }
 }

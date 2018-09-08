@@ -18,8 +18,6 @@ public class User extends Actor {
     private List<Tutorial> tutorials = new ArrayList<>();
     private List<PlatformSubscription> platformSubscriptions = new ArrayList<>();
     private Collection<MaintenanceRequest> requests = new ArrayList<>();
-    private String creditCardCookie;
-
 
     @Valid
     @OneToMany(mappedBy = "user")
@@ -77,13 +75,4 @@ public class User extends Actor {
         this.requests = requests;
     }
 
-    public String getCreditCardCookie()
-    {
-        return this.creditCardCookie;
-    }
-
-    public void setCreditCardCookie(final String creditCardCookie)
-    {
-        this.creditCardCookie = creditCardCookie;
-    }
 }

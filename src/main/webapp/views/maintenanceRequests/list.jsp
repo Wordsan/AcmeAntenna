@@ -13,7 +13,7 @@
 
 <display:table name="maintenanceRequests" id="maintenanceRequest" requestURI="${currentRequestUri}" pagesize="${displayTagPageSize}" sort="list">
 	<spring:message code="maintenanceRequest.creationTime" var="creationTimeHeader" />
-	<display:column property="creationTime" title="${creationTimeHeader}" sortable="true" />
+	<display:column property="creationTime" title="${creationTimeHeader}" format="{0,date,dd/MM/yyyy HH:mm:ss}" sortable="true" />
 
 	<spring:message code="maintenanceRequest.creditCard" var="creditCardHeader" />
 	<display:column property="creditCard" title="${creditCardHeader}" sortable="true" />
@@ -22,8 +22,17 @@
 	<spring:message code="maintenanceRequest.description" var="descriptionHeader" />
 	<display:column property="description" title="${descriptionHeader}" sortable="true" />
 
-	<spring:message code="maintenanceRequest.antenna" var="antennaHeader" />
-	<display:column property="antenna.serialNumber" title="${antennaHeader}" sortable="false" />
+    <security:authorize access="hasRole('USER')">
+        <display:column property="antenna.serialNumber" titleKey="maintenanceRequest.antenna" sortable="false" href="antennas/show.do" paramId="id" paramProperty="antenna.id" />
+    </security:authorize>
+    <security:authorize access="hasRole('HANDYWORKER')">
+        <c:if test="${check}">
+            <display:column property="antenna.serialNumber" titleKey="maintenanceRequest.antenna" sortable="false" href="antennas/show.do" paramId="id" paramProperty="antenna.id" />
+        </c:if>
+        <c:if test="${done}">
+            <display:column property="antenna.serialNumber" titleKey="maintenanceRequest.antenna" sortable="false" />
+        </c:if>
+	</security:authorize>
 	
 	<security:authorize access="hasRole('USER')">
 		<spring:message code="maintenanceRequest.handyworker" var="handyworkerHeader" />
@@ -37,7 +46,7 @@
 	
 	<c:if test="${done }">
 		<spring:message code="maintenanceRequest.doneTime" var="doneTimeHeader" />
-		<display:column property="doneTime" title="${doneTimeHeader}" sortable="true" />
+		<display:column property="doneTime" title="${doneTimeHeader}" format="{0,date,dd/MM/yyyy HH:mm:ss}" sortable="true" />
 	
 		<spring:message code="maintenanceRequest.resultsDescription" var="resultsDescriptionHeader" />
 		<display:column property="resultsDescription" title="${resultsDescriptionHeader}" sortable="true" />
