@@ -16,32 +16,32 @@
 	<display:column property="creationTime" title="${creationTimeHeader}" format="{0,date,dd/MM/yyyy HH:mm:ss}" sortable="true" />
 
 	<spring:message code="maintenanceRequest.creditCard" var="creditCardHeader" />
-	<display:column property="creditCard" title="${creditCardHeader}" sortable="true" />
+	<display:column property="creditCard" title="${creditCardHeader}" sortable="true" escapeXml="true" />
 
 
 	<spring:message code="maintenanceRequest.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}" sortable="true" />
+	<display:column property="description" title="${descriptionHeader}" sortable="true" escapeXml="true" />
 
     <security:authorize access="hasRole('USER')">
-        <display:column property="antenna.serialNumber" titleKey="maintenanceRequest.antenna" sortable="false" href="antennas/show.do" paramId="id" paramProperty="antenna.id" />
+        <display:column property="antenna.serialNumber" titleKey="maintenanceRequest.antenna" sortable="false" href="antennas/show.do" paramId="id" paramProperty="antenna.id" escapeXml="true" />
     </security:authorize>
     <security:authorize access="hasRole('HANDYWORKER')">
         <c:if test="${check}">
-            <display:column property="antenna.serialNumber" titleKey="maintenanceRequest.antenna" sortable="false" href="antennas/show.do" paramId="id" paramProperty="antenna.id" />
+            <display:column property="antenna.serialNumber" titleKey="maintenanceRequest.antenna" sortable="false" href="antennas/show.do" paramId="id" paramProperty="antenna.id" escapeXml="true" />
         </c:if>
         <c:if test="${done}">
-            <display:column property="antenna.serialNumber" titleKey="maintenanceRequest.antenna" sortable="false" />
+            <display:column property="antenna.serialNumber" titleKey="maintenanceRequest.antenna" sortable="false" escapeXml="true" />
         </c:if>
 	</security:authorize>
 	
 	<security:authorize access="hasRole('USER')">
 		<spring:message code="maintenanceRequest.handyworker" var="handyworkerHeader" />
-		<display:column property="handyworker.name" title="${handyworkerHeader}" sortable="true" />
+		<display:column property="handyworker.name" title="${handyworkerHeader}" sortable="true" escapeXml="true" />
 	</security:authorize>
 	
 	<security:authorize access="hasRole('HANDYWORKER')">
 		<spring:message code="maintenanceRequest.user" var="userHeader" />
-		<display:column property="user.name" title="${userHeader}" sortable="true" />
+		<display:column property="user.name" title="${userHeader}" sortable="true" escapeXml="true" />
 	</security:authorize>
 	
 	<c:if test="${done }">
@@ -49,7 +49,7 @@
 		<display:column property="doneTime" title="${doneTimeHeader}" format="{0,date,dd/MM/yyyy HH:mm:ss}" sortable="true" />
 	
 		<spring:message code="maintenanceRequest.resultsDescription" var="resultsDescriptionHeader" />
-		<display:column property="resultsDescription" title="${resultsDescriptionHeader}" sortable="true" />
+		<display:column property="resultsDescription" title="${resultsDescriptionHeader}" sortable="true" escapeXml="true" />
 	</c:if>
 
 	<security:authorize access="hasRole('HANDYWORKER')">

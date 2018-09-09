@@ -12,10 +12,10 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <display:table name="actors" id="actor" requestURI="${currentRequestUri}" pagesize="${displayTagPageSize}" sort="list" >
-	<display:column property="name" titleKey="actors.name" sortable="true" />
-	<display:column property="surname" titleKey="actors.surname" sortable="true" />
-	<display:column property="email" titleKey="actors.email" sortable="true" />
-	<display:column property="phoneNumber" titleKey="actors.phoneNumber" sortable="true" />
+	<display:column property="name" titleKey="actors.name" sortable="true" escapeXml="true" />
+	<display:column property="surname" titleKey="actors.surname" sortable="true" escapeXml="true" />
+	<display:column property="email" titleKey="actors.email" sortable="true" escapeXml="true" />
+	<display:column property="phoneNumber" titleKey="actors.phoneNumber" sortable="true" escapeXml="true" />
 
 	<security:authorize access="hasRole('ADMINISTRATOR')">
 		<display:column titleKey="misc.actions">

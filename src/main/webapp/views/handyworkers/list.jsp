@@ -12,8 +12,8 @@
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
 <display:table name="handyworkers" id="handyworker" requestURI="${currentRequestUri}" pagesize="${displayTagPageSize}" sort="list">
-	<display:column property="name" titleKey="handyworker.name" sortable="true" />
-	<display:column property="surname" titleKey="handyworker.surname" sortable="true" />
-	<display:column property="email" titleKey="handyworker.email" sortable="true" />
-	<display:column property="phoneNumber" titleKey="handyworker.phoneNumber" sortable="true" />
+	<display:column property="name" titleKey="handyworker.name" sortable="true" escapeXml="true" />
+	<display:column property="surname" titleKey="handyworker.surname" sortable="true" escapeXml="true" />
+	<display:column property="email" titleKey="handyworker.email" sortable="true" escapeXml="true" />
+	<display:column property="phoneNumber" titleKey="handyworker.phoneNumber" sortable="true" escapeXml="true" />
 </display:table>
