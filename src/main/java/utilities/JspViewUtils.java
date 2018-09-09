@@ -57,7 +57,7 @@ public class JspViewUtils {
             }
         }
 
-        if (paramValue != null) {
+        if (paramValue != null && paramValue.isEmpty()) {
             if (first) {
                 first = false;
                 result.append("?");
