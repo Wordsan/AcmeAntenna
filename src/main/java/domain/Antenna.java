@@ -78,7 +78,9 @@ public class Antenna extends DomainEntity {
     @Transient
     public String getPositionForDisplay()
     {
-        return String.format("%.4f°%s %.4f°%s", Math.abs(this.getPositionLatitude()), this.getPositionLatitude() > 0 ? "N" : "S", Math.abs(this.getPositionLongitude()), this.getPositionLongitude() > 0 ? "E" : "W");
+        // \u00B0 is the degree sign. There seems to be something wrong with the java source file encoding,
+        // which is supposedly set to utf8, but I can't find the problem.
+        return String.format("%.4f\u00B0%s %.4f\u00B0%s", Math.abs(this.getPositionLatitude()), this.getPositionLatitude() > 0 ? "N" : "S", Math.abs(this.getPositionLongitude()), this.getPositionLongitude() > 0 ? "E" : "W");
     }
 
     /**
