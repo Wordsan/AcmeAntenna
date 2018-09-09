@@ -69,7 +69,7 @@ public class UserController extends AbstractController {
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
                 return ControllerUtils.redirect("/welcome/index.do");
             } catch (ResourceNotUniqueException ex) {
-                binding.rejectValue("username", "misc.error.usernameNotUnique");
+                binding.rejectValue("user.userAccount.username", "misc.error.usernameNotUnique");
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
