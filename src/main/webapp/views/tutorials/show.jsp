@@ -99,7 +99,7 @@
                         </div>
                     </c:if>
                     <security:authorize access="hasRole('ADMINISTRATOR')">
-                        <app:delete-button code="misc.actions.delete" action="tutorials/delete_comment.do?id=${comment.id}" />
+                        <app:delete-button code="misc.actions.delete" action="tutorials/delete_comment.do?id=${comment.id}&returnAction=${appfn:escapeUrlParam(appfn:withUrlParam(currentRequestUriAndParams, 'page', 0))}" />
                     </security:authorize>
                 </div>
             </div>
