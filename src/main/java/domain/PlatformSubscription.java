@@ -84,6 +84,7 @@ public class PlatformSubscription
 
     @NotBlank
     @CreditCardNumber
+    @Pattern(regexp = "^[0-9 ]+$", message = "{org.hibernate.validator.constraints.CreditCardNumber.message}")
     public String getCreditCard()
     {
         return creditCard;
