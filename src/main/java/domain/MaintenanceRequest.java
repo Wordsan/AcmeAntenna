@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import validators.CustomValidator;
 import validators.HasCustomValidators;
@@ -59,6 +60,7 @@ public class MaintenanceRequest extends DomainEntity {
 
     @NotBlank
     @CreditCardNumber
+    @Pattern(regexp = "^[0-9 ]+$", message = "{org.hibernate.validator.constraints.CreditCardNumber.message}")
     public String getCreditCard()
     {
         return this.creditCard;
