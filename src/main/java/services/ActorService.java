@@ -31,7 +31,8 @@ public class ActorService {
     @Autowired private UserAccountService userAccountService;
     @Autowired private Validator validator;
     @PersistenceContext private EntityManager entityManager;
-
+    @Autowired private UserService userService;
+    @Autowired private AdministratorService administratorService;
 
     public Actor findPrincipal()
     {
@@ -44,7 +45,18 @@ public class ActorService {
             return null;
         }
 
-        return this.repository.findByUserAccount(userAccount);
+        // This is faster than using ActorRepository because the SQL Hibernate creates to query
+        // classes with subclasses is not very optimized.
+
+        // Doing this this way drops the response time from 2000 to 20 at 200 simultaneous users.
+        String authority = userAccount.getAuthorities().iterator().next().getAuthority();
+        if (authority.equals(Authority.ADMINISTRATOR)) {
+            return administratorService.findPrincipal();
+        } else if (authority.equals(Authority.USER)) {
+            return userService.findPrincipal();
+        }
+
+        return repository.findByUserAccount(userAccount);
     }
 
     public Actor getPrincipal()

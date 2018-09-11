@@ -14,6 +14,8 @@ import domain.Administrator;
 import domain.User;
 import repositories.AdministratorRepository;
 import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import utilities.CheckUtils;
 
 @Service
@@ -28,18 +30,19 @@ public class AdministratorService {
 
     public Administrator findPrincipal()
     {
-        final Actor principal = this.actorService.findPrincipal();
-        if (principal instanceof Administrator) {
-            return (Administrator) principal;
-        }
-        return null;
+        if (!LoginService.isAuthenticated()) return null;
+
+        UserAccount userAccount = LoginService.getPrincipal();
+        if (userAccount == null) return null;
+
+        return repository.findByUserAccount(userAccount);
     }
 
     public Administrator getPrincipal()
     {
-        final Actor principal = this.actorService.findPrincipal();
-        Assert.isTrue(principal instanceof Administrator);
-        return (Administrator) principal;
+        Administrator principal = findPrincipal();
+        Assert.isTrue(principal != null);
+        return principal;
     }
 
     public double findAvgAntennaCountPerUser()

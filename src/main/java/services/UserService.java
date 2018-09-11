@@ -14,6 +14,8 @@ import domain.User;
 import exceptions.ResourceNotUniqueException;
 import repositories.UserRepository;
 import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import security.UserAccountService;
 import utilities.CheckUtils;
 
@@ -32,18 +34,19 @@ public class UserService {
 
     public User findPrincipal()
     {
-        final Actor principal = this.actorService.findPrincipal();
-        if (principal instanceof User) {
-            return (User) principal;
-        }
-        return null;
+        if (!LoginService.isAuthenticated()) return null;
+
+        UserAccount userAccount = LoginService.getPrincipal();
+        if (userAccount == null) return null;
+
+        return repository.findByUserAccount(userAccount);
     }
 
     public User getPrincipal()
     {
-        final Actor principal = this.actorService.findPrincipal();
-        Assert.isTrue(principal instanceof User);
-        return (User) principal;
+        User principal = findPrincipal();
+        Assert.isTrue(principal != null);
+        return principal;
     }
 
     public User createAsNewUser(final User user) throws ResourceNotUniqueException
