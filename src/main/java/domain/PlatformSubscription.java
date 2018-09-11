@@ -39,7 +39,6 @@ public class PlatformSubscription
     private String creditCard;
     private String keyCode;
 
-    @Valid
     @ManyToOne(optional = false)
     @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public User getUser()
@@ -47,7 +46,6 @@ public class PlatformSubscription
         return user;
     }
 
-    @Valid
     @ManyToOne(optional = false)
     @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public Platform getPlatform()

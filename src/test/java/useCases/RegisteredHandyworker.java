@@ -3,6 +3,7 @@ package useCases;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -46,7 +47,7 @@ public class RegisteredHandyworker extends AbstractTest {
     public void testListRequests()
     {
         this.unauthenticate();
-        this.authenticate("handy1");
+        this.authenticate("handyworker1");
         Assert.isTrue(!this.handyworkerService.findServedMainteinanceRequest(this.handyworkerService.findByPrincipal()).isEmpty());
         Assert.isTrue(!this.handyworkerService.findNotServedMainteinanceRequest(this.handyworkerService.findByPrincipal()).isEmpty());
 
@@ -57,13 +58,13 @@ public class RegisteredHandyworker extends AbstractTest {
     {
 
         this.unauthenticate();
-        this.authenticate("handy1");
+        this.authenticate("handyworker1");
 
         this.maintenanceRequestService.service(null);
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AccessDeniedException.class)
     public void testServiceAsAnUser() throws IllegalArgumentException
     {
 

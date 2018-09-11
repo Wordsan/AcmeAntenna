@@ -3,6 +3,7 @@ package useCases;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -105,6 +106,7 @@ public class UserManagingRequests extends AbstractTest {
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setUser(this.userService.findPrincipal());
         request.setDescription("This is a description");
+        request.setCreditCard("4111111111111111");
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Handyworker> workers = new ArrayList<Handyworker>(this.handyworkerService.findAll());
         final List<Antenna> antennas = new ArrayList<Antenna>(this.antennaService.findAll());
@@ -121,13 +123,14 @@ public class UserManagingRequests extends AbstractTest {
 
     //Make a request for maintenance to a handyworker.
     //Making the request without being authenticated
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AccessDeniedException.class)
     public void testCreateRequestUnauthenticated() throws IllegalArgumentException
     {
         this.unauthenticate();
 
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setDescription("This is a description");
+        request.setCreditCard("4111111111111111");
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Handyworker> workers = new ArrayList<Handyworker>(this.handyworkerService.findAll());
         final List<Antenna> antennas = new ArrayList<Antenna>(this.antennaService.findAll());
@@ -147,6 +150,7 @@ public class UserManagingRequests extends AbstractTest {
         this.authenticate("user1");
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setUser(this.userService.findPrincipal());
+        request.setCreditCard("4111111111111111");
 
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Handyworker> workers = new ArrayList<Handyworker>(this.handyworkerService.findAll());
@@ -160,7 +164,7 @@ public class UserManagingRequests extends AbstractTest {
 
     //Make a request for maintenance to a handyworker.
     //Making the request without any antenna selected
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = Exception.class)
     public void testCreateRequestWithoutAntenna() throws IllegalArgumentException
     {
         this.unauthenticate();
@@ -168,6 +172,7 @@ public class UserManagingRequests extends AbstractTest {
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setUser(this.userService.findPrincipal());
         request.setDescription("This is a description");
+        request.setCreditCard("4111111111111111");
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Handyworker> workers = new ArrayList<Handyworker>(this.handyworkerService.findAll());
         request.setHandyworker(workers.get(0));
@@ -186,6 +191,7 @@ public class UserManagingRequests extends AbstractTest {
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setUser(this.userService.findPrincipal());
         request.setDescription("This is a description");
+        request.setCreditCard("4111111111111111");
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Antenna> antennas = new ArrayList<Antenna>(this.antennaService.findAll());
         request.setAntenna(antennas.get(0));
@@ -196,7 +202,7 @@ public class UserManagingRequests extends AbstractTest {
 
     //Make a request for maintenance to a handyworker.
     //Making the request as an admin
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AccessDeniedException.class)
     public void testCreateARequestBeingAdmin() throws IllegalArgumentException
     {
         this.unauthenticate();
@@ -207,6 +213,7 @@ public class UserManagingRequests extends AbstractTest {
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setUser(this.userService.findPrincipal());
         request.setDescription("This is a description");
+        request.setCreditCard("4111111111111111");
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Handyworker> workers = new ArrayList<Handyworker>(this.handyworkerService.findAll());
         final List<Antenna> antennas = new ArrayList<Antenna>(this.antennaService.findAll());

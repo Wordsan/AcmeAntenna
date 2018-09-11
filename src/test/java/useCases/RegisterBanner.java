@@ -3,6 +3,7 @@ package useCases;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -57,7 +58,7 @@ public class RegisterBanner extends AbstractTest {
 
     //Register a banner to the system.
     //Registering without being an agent
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AccessDeniedException.class)
     public void RegisterBannerBeingAnUser() throws IllegalArgumentException
     {
         this.unauthenticate();
@@ -75,7 +76,7 @@ public class RegisterBanner extends AbstractTest {
 
     //Register a banner to the system.
     //Registering a null banner
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AccessDeniedException.class)
     public void RegisterBannerWithoutCreditCard() throws IllegalArgumentException
     {
         final Banner saved = this.bannerService.create(null);

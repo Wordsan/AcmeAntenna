@@ -80,10 +80,8 @@ public class Actor extends DomainEntity {
         return this.postalAddress;
     }
 
-    @Valid
     @OneToOne(optional = false)
-    @NotNull
-    // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     @Cascade(CascadeType.DELETE)
     public UserAccount getUserAccount()
     {

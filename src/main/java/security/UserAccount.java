@@ -93,7 +93,6 @@ public class UserAccount extends DomainEntity implements UserDetails {
     }
 
     @NotEmpty
-    @Valid
     @ElementCollection
     @Override
     public Collection<Authority> getAuthorities()

@@ -3,11 +3,12 @@ package useCases;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import java.nio.file.AccessDeniedException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,7 +103,7 @@ public class AdminUseCases extends AbstractTest {
 
     //Admin: Remove banners that he or she thinks are inappropriate.
     //Remove a banner being an user
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AccessDeniedException.class)
     public void RemoveBannerBeingUser() throws IllegalArgumentException
     {
         this.unauthenticate();
@@ -116,7 +117,7 @@ public class AdminUseCases extends AbstractTest {
 
     //Admin: Remove banners that he or she thinks are inappropriate.
     //Remove a non existing banner
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AccessDeniedException.class)
     public void RemoveANullBanner() throws IllegalArgumentException
     {
         this.unauthenticate();

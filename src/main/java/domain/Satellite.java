@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -42,7 +43,7 @@ public class Satellite
         return description;
     }
 
-    @Valid
+    @NotNull
     @ManyToMany
     public List<Platform> getPlatforms()
     {

@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -20,6 +21,7 @@ public class Agent extends Actor {
         super();
     }
 
+    @NotNull
     @OneToMany(mappedBy = "agent")
     public Collection<Banner> getBanners()
     {

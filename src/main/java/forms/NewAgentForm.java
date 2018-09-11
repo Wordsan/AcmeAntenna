@@ -26,7 +26,6 @@ public class NewAgentForm {
         this.agent.setUserAccount(new UserAccount("", "", Authority.AGENT));
     }
 
-    @Valid
     @NotNull
     public Agent getAgent()
     {

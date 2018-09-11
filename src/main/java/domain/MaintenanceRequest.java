@@ -35,7 +35,7 @@ public class MaintenanceRequest extends DomainEntity {
     private Date doneTime;
     private String resultsDescription;
 
-
+    @NotNull
     @ManyToOne(optional = false)
     public User getUser()
     {
@@ -47,6 +47,7 @@ public class MaintenanceRequest extends DomainEntity {
         this.user = user;
     }
 
+    @NotNull
     @ManyToOne(optional = false)
     public Handyworker getHandyworker()
     {

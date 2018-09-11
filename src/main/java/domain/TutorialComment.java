@@ -35,7 +35,6 @@ public class TutorialComment
     private Date creationTime;
     private List<String> pictureUrls = new ArrayList<>();
 
-    @Valid
     @ManyToOne(optional = false)
     @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public User getUser()
@@ -43,7 +42,6 @@ public class TutorialComment
         return user;
     }
 
-    @Valid
     @ManyToOne(optional = false)
     @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public Tutorial getTutorial()
@@ -73,6 +71,7 @@ public class TutorialComment
         return creationTime;
     }
 
+    @Valid
     @NotNull
     @EachNotNull
     @EachNotBlank

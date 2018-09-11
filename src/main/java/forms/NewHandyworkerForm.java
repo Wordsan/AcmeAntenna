@@ -26,7 +26,6 @@ public class NewHandyworkerForm {
         this.handyworker.setUserAccount(new UserAccount("", "", Authority.HANDYWORKER));
     }
 
-    @Valid
     @NotNull
     public Handyworker getHandyworker()
     {

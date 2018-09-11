@@ -9,6 +9,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -19,7 +20,7 @@ public class User extends Actor {
     private List<PlatformSubscription> platformSubscriptions = new ArrayList<>();
     private Collection<MaintenanceRequest> requests = new ArrayList<>();
 
-    @Valid
+    @NotNull
     @OneToMany(mappedBy = "user")
     public List<Antenna> getAntennas()
     {
@@ -34,7 +35,7 @@ public class User extends Actor {
         this.antennas = antennas;
     }
 
-    @Valid
+    @NotNull
     @OneToMany(mappedBy = "user")
     public List<Tutorial> getTutorials()
     {
@@ -49,7 +50,7 @@ public class User extends Actor {
         this.tutorials = tutorials;
     }
 
-    @Valid
+    @NotNull
     @OneToMany(mappedBy = "user")
     public List<PlatformSubscription> getPlatformSubscriptions()
     {
@@ -64,6 +65,7 @@ public class User extends Actor {
         this.platformSubscriptions = platformSubscriptions;
     }
 
+    @NotNull
     @OneToMany(mappedBy = "user")
     public Collection<MaintenanceRequest> getRequests()
     {

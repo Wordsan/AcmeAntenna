@@ -8,6 +8,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -50,6 +52,7 @@ public class Banner extends DomainEntity {
 
     @NotBlank
     @CreditCardNumber
+    @Pattern(regexp = "^[0-9 ]+$", message = "{org.hibernate.validator.constraints.CreditCardNumber.message}")
     public String getCreditCard()
     {
         return this.creditCard;
@@ -60,6 +63,7 @@ public class Banner extends DomainEntity {
         this.creditCard = creditCard;
     }
 
+    @NotNull
     @ManyToOne(optional = false)
     public Agent getAgent()
     {

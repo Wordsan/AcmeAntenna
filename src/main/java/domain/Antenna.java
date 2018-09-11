@@ -5,6 +5,7 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Access;
@@ -29,13 +30,10 @@ public class Antenna extends DomainEntity {
     private double rotationElevation;
     private double signalQuality;
     private Satellite satellite;
-    private Collection<MaintenanceRequest> requests;
+    private Collection<MaintenanceRequest> requests = new ArrayList<>();
 
-
-    @Valid
     @ManyToOne(optional = false)
-    @NotNull
-    // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public User getUser()
     {
         return this.user;
@@ -107,10 +105,8 @@ public class Antenna extends DomainEntity {
         return this.signalQuality;
     }
 
-    @Valid
     @ManyToOne(optional = false)
-    @NotNull
-    // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
+    @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public Satellite getSatellite()
     {
         return this.satellite;
@@ -161,6 +157,7 @@ public class Antenna extends DomainEntity {
         this.satellite = satellite;
     }
 
+    @NotNull
     @OneToMany(mappedBy = "antenna")
     @Cascade(CascadeType.DELETE)
     public Collection<MaintenanceRequest> getRequests()

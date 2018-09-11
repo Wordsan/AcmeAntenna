@@ -38,7 +38,6 @@ public class Tutorial
     private List<String> pictureUrls = new ArrayList<>();
     private List<TutorialComment> tutorialComments = new ArrayList<>();
 
-    @Valid
     @ManyToOne(optional = false)
     @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     public User getUser()
@@ -68,6 +67,7 @@ public class Tutorial
         return text;
     }
 
+    @Valid
     @NotNull
     @EachNotNull
     @EachNotBlank
@@ -78,7 +78,7 @@ public class Tutorial
         return pictureUrls;
     }
 
-    @Valid
+    @NotNull
     @OneToMany(mappedBy = "tutorial")
     @Cascade(CascadeType.DELETE)
     public List<TutorialComment> getTutorialComments()
