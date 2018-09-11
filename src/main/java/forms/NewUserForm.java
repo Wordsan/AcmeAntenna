@@ -25,7 +25,6 @@ public class NewUserForm {
         user.setUserAccount(new UserAccount("", "", Authority.USER));
     }
 
-    @Valid
     @NotNull
     public User getUser()
     {

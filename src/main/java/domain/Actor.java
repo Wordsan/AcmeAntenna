@@ -59,7 +59,6 @@ public class Actor
     @NullOrNotBlank
     public String getPostalAddress() { return postalAddress; }
 
-    @Valid
     @OneToOne(optional = false)
     @NotNull // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
     @Cascade(CascadeType.DELETE)

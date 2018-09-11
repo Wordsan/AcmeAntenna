@@ -25,8 +25,6 @@ public class Antenna extends DomainEntity {
     private double signalQuality;
     private Satellite satellite;
 
-
-    @Valid
     @ManyToOne(optional = false)
     @NotNull
     // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.
@@ -101,7 +99,6 @@ public class Antenna extends DomainEntity {
         return this.signalQuality;
     }
 
-    @Valid
     @ManyToOne(optional = false)
     @NotNull
     // Do not delete, this is NOT useless! This gives us a nice validation error instead of a MySQL constraint violation exception.

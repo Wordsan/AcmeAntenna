@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Indexed(interceptor = Platform.PlatformIndexingInterceptor.class)
@@ -42,7 +43,7 @@ public class Platform
         return description;
     }
 
-    @Valid
+    @NotNull
     @ManyToMany(mappedBy = "platforms")
     public List<Satellite> getSatellites()
     {
