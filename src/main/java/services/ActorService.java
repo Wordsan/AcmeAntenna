@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import domain.Actor;
 import exceptions.OldPasswordDoesntMatchException;
 import repositories.ActorRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
@@ -20,6 +21,8 @@ import utilities.ValidationUtils;
 public class ActorService {
     @Autowired private ActorRepository repository;
     @Autowired private UserAccountService userAccountService;
+    @Autowired private UserService userService;
+    @Autowired private AdministratorService administratorService;
 
     public Actor findPrincipal()
     {
@@ -27,6 +30,17 @@ public class ActorService {
 
         UserAccount userAccount = LoginService.getPrincipal();
         if (userAccount == null) return null;
+
+        // This is faster than using ActorRepository because the SQL Hibernate creates to query
+        // classes with subclasses is not very optimized.
+
+        // Doing this this way drops the response time from 2000 to 20 at 200 simultaneous users.
+        String authority = userAccount.getAuthorities().iterator().next().getAuthority();
+        if (authority.equals(Authority.ADMINISTRATOR)) {
+            return administratorService.findPrincipal();
+        } else if (authority.equals(Authority.USER)) {
+            return userService.findPrincipal();
+        }
 
         return repository.findByUserAccount(userAccount);
     }
