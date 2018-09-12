@@ -94,7 +94,7 @@ public class MaintenanceRequestService {
         CheckUtils.checkPrincipalAuthority(Authority.HANDYWORKER);
 
         Assert.notNull(maintenanceRequest);
-        final Handyworker worker = this.handyworkerService.findByPrincipal();
+        final Handyworker worker = this.handyworkerService.getPrincipal();
         Assert.isTrue(worker.equals(maintenanceRequest.getHandyworker()));
         final MaintenanceRequest res = this.maintenanceRequestRepository.save(maintenanceRequest);
         Assert.notNull(res);

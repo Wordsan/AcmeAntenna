@@ -33,6 +33,8 @@ public class ActorService {
     @PersistenceContext private EntityManager entityManager;
     @Autowired private UserService userService;
     @Autowired private AdministratorService administratorService;
+    @Autowired private AgentService agentService;
+    @Autowired private HandyworkerService handyworkerService;
 
     public Actor findPrincipal()
     {
@@ -54,6 +56,10 @@ public class ActorService {
             return administratorService.findPrincipal();
         } else if (authority.equals(Authority.USER)) {
             return userService.findPrincipal();
+        } else if (authority.equals(Authority.AGENT)) {
+            return agentService.findPrincipal();
+        } else if (authority.equals(Authority.HANDYWORKER)) {
+            return handyworkerService.findPrincipal();
         }
 
         return repository.findByUserAccount(userAccount);

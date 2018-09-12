@@ -5,11 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Agent;
+import security.UserAccount;
 
 @Repository
 public interface AgentRepository extends JpaRepository<Agent, Integer> {
-
-    @Query("select a from Agent a where a.userAccount.id=?1")
-    Agent findByUserAccount(int userAccount);
-
+    Agent findByUserAccount(UserAccount userAccount);
 }

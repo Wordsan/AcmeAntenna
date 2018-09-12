@@ -48,8 +48,8 @@ public class RegisteredHandyworker extends AbstractTest {
     {
         this.unauthenticate();
         this.authenticate("handyworker1");
-        Assert.isTrue(!this.handyworkerService.findServedMainteinanceRequest(this.handyworkerService.findByPrincipal()).isEmpty());
-        Assert.isTrue(!this.handyworkerService.findNotServedMainteinanceRequest(this.handyworkerService.findByPrincipal()).isEmpty());
+        Assert.isTrue(!this.handyworkerService.findServedMainteinanceRequest(this.handyworkerService.getPrincipal()).isEmpty());
+        Assert.isTrue(!this.handyworkerService.findNotServedMainteinanceRequest(this.handyworkerService.getPrincipal()).isEmpty());
 
     }
 

@@ -10,9 +10,12 @@ import javax.transaction.Transactional;
 
 import domain.Actor;
 import domain.Agent;
+import domain.Handyworker;
 import exceptions.ResourceNotUniqueException;
 import repositories.AgentRepository;
 import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import security.UserAccountService;
 import utilities.CheckUtils;
 
@@ -35,11 +38,12 @@ public class AgentService {
 
     public Agent findPrincipal()
     {
-        final Actor principal = this.actorService.findPrincipal();
-        if (principal instanceof Agent) {
-            return (Agent) principal;
-        }
-        return null;
+        if (!LoginService.isAuthenticated()) return null;
+
+        UserAccount userAccount = LoginService.getPrincipal();
+        if (userAccount == null) return null;
+
+        return agentRepository.findByUserAccount(userAccount);
     }
 
     public Agent getPrincipal()

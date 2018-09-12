@@ -39,11 +39,12 @@ public class HandyworkerService {
 
     public Handyworker findPrincipal()
     {
-        final Actor principal = this.actorService.findPrincipal();
-        if (principal instanceof Handyworker) {
-            return (Handyworker) principal;
-        }
-        return null;
+        if (!LoginService.isAuthenticated()) return null;
+
+        UserAccount userAccount = LoginService.getPrincipal();
+        if (userAccount == null) return null;
+
+        return repository.findByUserAccount(userAccount);
     }
 
     public Handyworker create()
@@ -58,22 +59,12 @@ public class HandyworkerService {
         return res;
     }
 
-    public Handyworker findByPrincipal()
+    public Handyworker getPrincipal()
     {
-        final UserAccount userAccount = LoginService.getPrincipal();
-        Assert.notNull(userAccount);
-        final Handyworker res = this.findByUserAccount(userAccount);
-        Assert.notNull(res);
-        return res;
-    }
-
-    public Handyworker findByUserAccount(final UserAccount userAccount)
-    {
-        Assert.notNull(userAccount);
-
-        final Handyworker res = this.repository.findByUserAccount(userAccount.getId());
-
-        return res;
+        CheckUtils.checkPrincipalAuthority(Authority.HANDYWORKER);
+        Handyworker principal = findPrincipal();
+        Assert.notNull(principal);
+        return principal;
     }
 
     public Handyworker save(final Handyworker handyworker)
