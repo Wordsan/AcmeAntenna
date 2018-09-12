@@ -12,14 +12,20 @@ import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
 @Indexed(interceptor = Satellite.SatelliteIndexingInterceptor.class)
+@Table(indexes = {
+        @Index(columnList = "deleted, name") // SatelliteRepository.findAllForIndex
+})
+
 public class Satellite
         extends DomainEntity
 {

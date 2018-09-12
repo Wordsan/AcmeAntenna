@@ -12,14 +12,19 @@ import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Indexed(interceptor = Platform.PlatformIndexingInterceptor.class)
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+        @Index(columnList = "deleted, name") // PlatformRepository.findAllForIndex
+})
 public class Platform
         extends DomainEntity
 {
