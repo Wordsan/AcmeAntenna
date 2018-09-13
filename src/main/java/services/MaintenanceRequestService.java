@@ -94,12 +94,14 @@ public class MaintenanceRequestService {
         CheckUtils.checkPrincipalAuthority(Authority.HANDYWORKER);
 
         Assert.notNull(maintenanceRequest);
+        Assert.isNull(maintenanceRequest.getDoneTime());
         final Handyworker worker = this.handyworkerService.getPrincipal();
         Assert.isTrue(worker.equals(maintenanceRequest.getHandyworker()));
+        final Date now = new Date();
+        maintenanceRequest.setDoneTime(now);
         final MaintenanceRequest res = this.maintenanceRequestRepository.save(maintenanceRequest);
         Assert.notNull(res);
-        final Date now = new Date();
-        res.setDoneTime(now);
+
 
         return res;
     }

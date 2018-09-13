@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.ManyToOne;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -35,7 +37,7 @@ public class MaintenanceRequest extends DomainEntity {
 
     private User user;
     private Handyworker handyworker;
-    private String creditCard;
+    private CreditCard creditCard;
     private Date creationTime;
     private String description;
     private Antenna antenna;
@@ -66,15 +68,15 @@ public class MaintenanceRequest extends DomainEntity {
         this.handyworker = handyworker;
     }
 
-    @NotBlank
-    @CreditCardNumber
-    @Pattern(regexp = "^[0-9 ]+$", message = "{org.hibernate.validator.constraints.CreditCardNumber.message}")
-    public String getCreditCard()
+    @Valid
+    @NotNull
+    @Embedded
+    public CreditCard getCreditCard()
     {
         return this.creditCard;
     }
 
-    public void setCreditCard(final String creditCard)
+    public void setCreditCard(final CreditCard creditCard)
     {
         this.creditCard = creditCard;
     }

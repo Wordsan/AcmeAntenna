@@ -1,5 +1,4 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@tag language="java" body-content="empty" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -12,16 +11,18 @@
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="appfn" uri="/WEB-INF/appfn.tld" %>
 
-<form:form action="banners/create.do" modelAttribute="banner">
-    <app:preserve-return-action />
-    <app:entity-editor />
+<%@ attribute name="path" required="false" %>
 
-	<form:hidden path="agent" />
+<c:if test="${path != null}">
+	<c:set var="path" value="${path}." />
+</c:if>
+<c:if test="${path == null}">
+	<c:set var="path" value="" />
+</c:if>
 
-	<app:textbox path="pictureUrl" code="banners.picture" />
-	<app:textbox path="targetPage" code="banners.targetPage" />
-	<app:credit-card-editor path="creditCard" />
-
-	<app:submit name="save" code="banners.save" />
-	<app:cancel-button action="banners/index.do"/>
-</form:form>
+<app:textbox path="${path}holderName" code="credit_cards.holderName" />
+<app:textbox path="${path}brandName" code="credit_cards.brandName" />
+<app:textbox path="${path}number" code="credit_cards.number" />
+<app:textbox path="${path}expirationMonth" code="credit_cards.expirationMonth" />
+<app:textbox path="${path}expirationYear" code="credit_cards.expirationYear" />
+<app:textbox path="${path}cvv" code="credit_cards.cvv" />

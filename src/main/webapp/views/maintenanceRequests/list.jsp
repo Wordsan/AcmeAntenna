@@ -16,7 +16,7 @@
 	<display:column property="creationTime" title="${creationTimeHeader}" format="{0,date,dd/MM/yyyy HH:mm:ss}" sortable="true" />
 
 	<spring:message code="maintenanceRequest.creditCard" var="creditCardHeader" />
-	<display:column property="creditCard" title="${creditCardHeader}" sortable="true" escapeXml="true" />
+	<display:column property="creditCard.obscuredNumber" title="${creditCardHeader}" sortable="true" escapeXml="true" />
 
 
 	<spring:message code="maintenanceRequest.description" var="descriptionHeader" />

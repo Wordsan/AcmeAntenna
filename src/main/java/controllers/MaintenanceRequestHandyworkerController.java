@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collection;
 
@@ -99,7 +100,7 @@ public class MaintenanceRequestHandyworkerController extends AbstractController 
     }
 
     @RequestMapping(value = "/service", method = RequestMethod.POST, params = "save")
-    public ModelAndView save(MaintenanceRequest maintenanceRequest, final BindingResult binding)
+    public ModelAndView save(MaintenanceRequest maintenanceRequest, final BindingResult binding, RedirectAttributes redir)
     {
         CheckUtils.checkPrincipalAuthority(Authority.HANDYWORKER);
 
@@ -111,6 +112,7 @@ public class MaintenanceRequestHandyworkerController extends AbstractController 
         } else {
             try {
                 this.maintenanceRequestService.service(maintenanceRequest);
+                redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
                 result = new ModelAndView("redirect:listNotServiced.do");
             } catch (final Throwable oops) {
                 result = this.createEditModelAndView(maintenanceRequest, binding, "maintenanceRequest.commit.error");

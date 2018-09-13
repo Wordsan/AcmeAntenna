@@ -10,27 +10,13 @@
 
 package controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.security.auth.login.LoginException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import domain.Actor;
-import domain.User;
-import security.LoginService;
-import services.ActorService;
-import services.BannerService;
 import utilities.ControllerUtils;
 import utilities.UserAccountUtils;
 
@@ -47,7 +33,7 @@ public class WelcomeController extends AbstractController {
     public ModelAndView blocked()
     {
         Actor principal = findPrincipal();
-        if (principal != null && principal.isBanned()) {
+        if (principal != null && principal.getBanned()) {
             ModelAndView result = new ModelAndView("welcome/blocked");
 
             // Log user out.

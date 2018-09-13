@@ -18,6 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import domain.CreditCard;
 import domain.PlatformSubscription;
 import domain.User;
 import exceptions.OverlappingPlatformSubscriptionException;
@@ -48,7 +49,7 @@ public class PlatformSubscriptionController extends AbstractController {
     }
 
     @RequestMapping("/new")
-    public ModelAndView new_(@RequestParam(value = "platformId", required = false) final Integer platformId, @CookieValue(value = "creditCard", required = false) final String creditCard)
+    public ModelAndView new_(@RequestParam(value = "platformId", required = false) final Integer platformId, @CookieValue(value = "creditCard", required = false) final String creditCardCookieString)
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
 
@@ -59,8 +60,8 @@ public class PlatformSubscriptionController extends AbstractController {
         }
 
         platformSubscription.setKeyCode(StringUtils.repeat(PlatformSubscription.KEYCODE_ALPHABET.charAt(0), PlatformSubscription.KEYCODE_LENGTH));
-        if (creditCard != null) {
-            platformSubscription.setCreditCard(creditCard);
+        if (creditCardCookieString != null) {
+            platformSubscription.setCreditCard(CreditCard.fromCookieString(creditCardCookieString));
         }
 
         return this.createEditModelAndView("platform_subscriptions/new", "platform_subscriptions/create.do", null, null, platformSubscription);
@@ -90,11 +91,12 @@ public class PlatformSubscriptionController extends AbstractController {
 
         String globalErrorMessage = null;
         if (!binding.hasErrors()) {
-
             try {
                 platformSubscription = this.service.create(platformSubscription);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-                response.addCookie(new Cookie("creditCard", platformSubscription.getCreditCard()));
+                Cookie cookie = new Cookie("creditCard", CreditCard.toCookieString(platformSubscription.getCreditCard()));
+                cookie.setPath("/");
+                response.addCookie(cookie);
                 return ControllerUtils.redirectToReturnAction();
             } catch (OverlappingPlatformSubscriptionException ex) {
                 globalErrorMessage = "platform_subscription.error.overlapping";

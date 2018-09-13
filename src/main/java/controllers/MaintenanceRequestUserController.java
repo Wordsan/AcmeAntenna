@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import domain.Antenna;
+import domain.CreditCard;
 import domain.Handyworker;
 import domain.MaintenanceRequest;
 import domain.User;
@@ -71,13 +72,15 @@ public class MaintenanceRequestUserController extends AbstractController {
     }
 
     @RequestMapping("/create")
-    public ModelAndView create(@CookieValue(required = false, value="creditCard") final String creditCard)
+    public ModelAndView create(@CookieValue(required = false, value = "creditCard") final String creditCardCookieString)
     {
         ModelAndView result;
         MaintenanceRequest maintenanceRequest;
 
         maintenanceRequest = this.maintenanceRequestService.create();
-        maintenanceRequest.setCreditCard(creditCard);
+        if (creditCardCookieString != null) {
+            maintenanceRequest.setCreditCard(CreditCard.fromCookieString(creditCardCookieString));
+        }
         result = this.createEditModelAndView(maintenanceRequest);
 
         return result;
@@ -123,7 +126,9 @@ public class MaintenanceRequestUserController extends AbstractController {
             try {
                 this.maintenanceRequestService.save(maintenanceRequest);
                 result = new ModelAndView("redirect:listNotServiced.do");
-                response.addCookie(new Cookie("creditCard", maintenanceRequest.getCreditCard()));
+                Cookie cookie = new Cookie("creditCard", CreditCard.toCookieString(maintenanceRequest.getCreditCard()));
+                cookie.setPath("/");
+                response.addCookie(cookie);
             } catch (final Throwable oops) {
                 result = this.createEditModelAndView(maintenanceRequest, "maintenanceRequest.commit.error");
             }

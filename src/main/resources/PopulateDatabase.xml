@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    
+    <bean class="domain.Satellite" id="satellite_1">
+        <property name="name" value="METEOSAT"/>
+        <property name="description" value="This is satellite 1"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_1"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_2">
+        <property name="name" value="RUS-SAT"/>
+        <property name="description" value="This is satellite 2"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_1"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_3">
+        <property name="name" value="EUROSAT"/>
+        <property name="description" value="This is satellite 3"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_3"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_4">
+        <property name="name" value="ENGLAND-SAT"/>
+        <property name="description" value="This is satellite 4"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_4"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_5">
+        <property name="name" value="AMERICA-SAT1"/>
+        <property name="description" value="This is satellite 5"/>
+        <property name="platforms">
+            <list>
+                <ref bean="platform_5"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Satellite" id="satellite_6">
+        <property name="name" value="DELETED-SAT"/>
+        <property name="description" value="This is satellite 6"/>
+        <property name="platforms">
+            <list/>
+        </property>
+        <property name="deleted" value="true"/>
+    </bean>
     <bean class="security.UserAccount" id="userAccount_admin">
         <property name="username" value="admin"/>
         <property name="password" value="21232f297a57a5a743894a0e4a801fc3"/>
@@ -67,7 +124,7 @@
             </list>
         </property>
     </bean>
-    <bean class="security.UserAccount" id="userAccount_handy1">
+    <bean class="security.UserAccount" id="userAccount_handyworker1">
         <property name="username" value="handyworker1"/>
         <property name="password" value="3d0e201c52a6e13f27d22b6777711541"/>
         <property name="authorities">
@@ -78,7 +135,7 @@
             </list>
         </property>
     </bean>
-     <bean class="security.UserAccount" id="userAccount_handy2">
+    <bean class="security.UserAccount" id="userAccount_handyworker2">
         <property name="username" value="handyworker2"/>
         <property name="password" value="549dbd77d30ecab6ca4c047cd795333f"/>
         <property name="authorities">
@@ -111,7 +168,7 @@
             </list>
         </property>
     </bean>
-     <bean class="security.UserAccount" id="userAccount_agent3">
+    <bean class="security.UserAccount" id="userAccount_agent3">
         <property name="username" value="agent3"/>
         <property name="password" value="6f097a447415dd5030d579a9051165f0"/>
         <property name="authorities">
@@ -133,65 +190,156 @@
             </list>
         </property>
     </bean>
-    <bean class="domain.Satellite" id="satellite_1">
-        <property name="name" value="METEOSAT"/>
-        <property name="description" value="This is satellite 1"/>
-        <property name="platforms">
+    <bean class="domain.Platform" id="platform_1">
+        <property name="name" value="CNN"/>
+        <property name="description" value="This is platform 1"/>
+        <property name="satellites">
             <list>
-                <ref bean="platform_1"/>
+                <ref bean="satellite_1"/>
+                <ref bean="satellite_2"/>
             </list>
         </property>
         <property name="deleted" value="false"/>
     </bean>
-    <bean class="domain.Satellite" id="satellite_2">
-        <property name="name" value="RUS-SAT"/>
-        <property name="description" value="This is satellite 2"/>
-        <property name="platforms">
+    <bean class="domain.Platform" id="platform_2">
+        <property name="name" value="C-SPAN"/>
+        <property name="description" value="This is platform 2"/>
+        <property name="satellites">
+            <list/>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_3">
+        <property name="name" value="Mediaset"/>
+        <property name="description" value="This is platform 3"/>
+        <property name="satellites">
             <list>
-                <ref bean="platform_1"/>
+                <ref bean="satellite_3"/>
             </list>
         </property>
         <property name="deleted" value="false"/>
     </bean>
-    <bean class="domain.Satellite" id="satellite_3">
-        <property name="name" value="EUROSAT"/>
-        <property name="description" value="This is satellite 3"/>
-        <property name="platforms">
+    <bean class="domain.Platform" id="platform_4">
+        <property name="name" value="Atresmedia"/>
+        <property name="description" value="This is platform 4"/>
+        <property name="satellites">
             <list>
-                <ref bean="platform_3"/>
+                <ref bean="satellite_4"/>
             </list>
         </property>
         <property name="deleted" value="false"/>
     </bean>
-    <bean class="domain.Satellite" id="satellite_4">
-        <property name="name" value="ENGLAND-SAT"/>
-        <property name="description" value="This is satellite 4"/>
-        <property name="platforms">
+    <bean class="domain.Platform" id="platform_5">
+        <property name="name" value="Cartoon Network"/>
+        <property name="description" value="This is platform 5"/>
+        <property name="satellites">
             <list>
-                <ref bean="platform_4"/>
+                <ref bean="satellite_5"/>
             </list>
         </property>
         <property name="deleted" value="false"/>
     </bean>
-    <bean class="domain.Satellite" id="satellite_5">
-        <property name="name" value="AMERICA-SAT1"/>
-        <property name="description" value="This is satellite 5"/>
-        <property name="platforms">
-            <list>
-                <ref bean="platform_5"/>
-            </list>
+    <bean class="domain.Platform" id="platform_6">
+        <property name="name" value="Discovery Channel Network"/>
+        <property name="description" value="This is platform 6"/>
+        <property name="satellites">
+            <list/>
         </property>
         <property name="deleted" value="false"/>
     </bean>
-    <bean class="domain.Satellite" id="satellite_6">
-        <property name="name" value="DELETED-SAT"/>
-        <property name="description" value="This is satellite 6"/>
-        <property name="platforms">
+    <bean class="domain.Platform" id="platform_7">
+        <property name="name" value="DELETED-PLATFORM"/>
+        <property name="description" value="Deleted platform description"/>
+        <property name="satellites">
             <list/>
         </property>
         <property name="deleted" value="true"/>
     </bean>
-    
+    <bean class="domain.Agent" id="agent_agent1">
+        <property name="banners">
+            <list>
+                <ref bean="banner_1"/>
+                <ref bean="banner_2"/>
+                <ref bean="banner_3"/>
+            </list>
+        </property>
+        <property name="name" value="Agent 1"/>
+        <property name="surname" value="Agent1Surname"/>
+        <property name="email" value="agent1@agent.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+11682374679"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_agent1"/>
+        </property>
+        <property name="banned" value="false"/>
+    </bean>
+    <bean class="domain.Agent" id="agent_agent2">
+        <property name="banners">
+            <list>
+                <ref bean="banner_4"/>
+                <ref bean="banner_5"/>
+            </list>
+        </property>
+        <property name="name" value="Agent 2"/>
+        <property name="surname" value="Agent2Surname"/>
+        <property name="email" value="agent2@agent.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+11682371234"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_agent2"/>
+        </property>
+        <property name="banned" value="false"/>
+    </bean>
+    <bean class="domain.Agent" id="agent_agent3">
+        <property name="banners">
+            <list>
+                <ref bean="banner_6"/>
+            </list>
+        </property>
+        <property name="name" value="Agent 3"/>
+        <property name="surname" value="Agent3Surname"/>
+        <property name="email" value="agent3@agent.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+11660974679"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_agent3"/>
+        </property>
+        <property name="banned" value="false"/>
+    </bean>
+    <bean class="domain.Agent" id="agent_agent4">
+        <property name="banners">
+            <list/>
+        </property>
+        <property name="name" value="Agent 4"/>
+        <property name="surname" value="Agent4Surname"/>
+        <property name="email" value="agent4@agent.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+11674974679"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_agent4"/>
+        </property>
+        <property name="banned" value="false"/>
+    </bean>
     <bean class="domain.User" id="user_user1">
         <property name="antennas">
             <list>
@@ -214,6 +362,14 @@
                 <ref bean="platformSubscription_1"/>
             </list>
         </property>
+        <property name="requests">
+            <list>
+                <ref bean="maintenanceRequest_1"/>
+                <ref bean="maintenanceRequest_2"/>
+                <ref bean="maintenanceRequest_5"/>
+                <ref bean="maintenanceRequest_6"/>
+            </list>
+        </property>
         <property name="name" value="User 1"/>
         <property name="surname" value="SurnameUser1"/>
         <property name="email" value="user@users.com"/>
@@ -227,17 +383,8 @@
         <property name="userAccount">
             <ref bean="userAccount_user1"/>
         </property>
-        <property name="requests">
-        	<list>
-        		<ref bean="maintenanceRequest_1"/>
-        		<ref bean="maintenanceRequest_2"/>
-        		<ref bean="maintenanceRequest_5"/>
-        		<ref bean="maintenanceRequest_6"/>
-        	</list>
-        </property>
         <property name="banned" value="false"/>
     </bean>
-    
     <bean class="domain.User" id="user_user2">
         <property name="antennas">
             <list>
@@ -256,6 +403,12 @@
                 <ref bean="platformSubscription_2"/>
             </list>
         </property>
+        <property name="requests">
+            <list>
+                <ref bean="maintenanceRequest_3"/>
+                <ref bean="maintenanceRequest_4"/>
+            </list>
+        </property>
         <property name="name" value="User 2"/>
         <property name="surname" value="SurnameUser2"/>
         <property name="email" value="user2@users.com"/>
@@ -268,12 +421,6 @@
         </property>
         <property name="userAccount">
             <ref bean="userAccount_user2"/>
-        </property>
-        <property name="requests">
-        	<list>
-        		<ref bean="maintenanceRequest_3"/>
-        		<ref bean="maintenanceRequest_4"/>
-        	</list>
         </property>
         <property name="banned" value="false"/>
     </bean>
@@ -293,6 +440,9 @@
         <property name="platformSubscriptions">
             <list/>
         </property>
+        <property name="requests">
+            <list/>
+        </property>
         <property name="name" value="User 3"/>
         <property name="surname" value="SurnameUser3"/>
         <property name="email" value="user3@users.com"/>
@@ -307,6 +457,108 @@
             <ref bean="userAccount_user3"/>
         </property>
         <property name="banned" value="true"/>
+    </bean>
+    <bean class="domain.Banner" id="banner_1">
+        <property name="pictureUrl" value="https://institucional.telecom.com.ar/antenas/images/header_antenas.jpg"/>
+        <property name="targetPage" value="http://www.google.es"/>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="3566002020360505"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="agent">
+            <ref bean="agent_agent1"/>
+        </property>
+    </bean>
+    <bean class="domain.Banner" id="banner_2">
+        <property name="pictureUrl" value="https://www.winncom.com/images/WinncomProductsBanner.jpg"/>
+        <property name="targetPage" value="http://www.elcorteingles.es"/>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="3566002020360505"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="agent">
+            <ref bean="agent_agent1"/>
+        </property>
+    </bean>
+    <bean class="domain.Banner" id="banner_3">
+        <property name="pictureUrl" value="https://reparacion-instalacion.es/wp-content/uploads/2016/01/banner.png"/>
+        <property name="targetPage" value="http://www.instagram.es"/>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="3566002020360505"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="agent">
+            <ref bean="agent_agent1"/>
+        </property>
+    </bean>
+    <bean class="domain.Banner" id="banner_4">
+        <property name="pictureUrl" value="https://static.miweb.padigital.es/var/m_7/72/722/14898/272703-banner.jpg"/>
+        <property name="targetPage" value="http://www.mediamarkt.es"/>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="3566002020360505"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="agent">
+            <ref bean="agent_agent2"/>
+        </property>
+    </bean>
+    <bean class="domain.Banner" id="banner_5">
+        <property name="pictureUrl" value="http://satelec.esy.es/wp-content/uploads/2015/10/banner-antenas.jpg"/>
+        <property name="targetPage" value="http://www.worten.es"/>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="3566002020360505"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="agent">
+            <ref bean="agent_agent2"/>
+        </property>
+    </bean>
+    <bean class="domain.Banner" id="banner_6">
+        <property name="pictureUrl" value="https://static.miweb.padigital.es/var/m_9/94/94b/15922/287772-banner.jpg"/>
+        <property name="targetPage" value="http://www.nike.com"/>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="3566002020360505"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="agent">
+            <ref bean="agent_agent3"/>
+        </property>
     </bean>
     <bean class="domain.Administrator" id="administrator_admin">
         <property name="name" value="Admin 1"/>
@@ -355,6 +607,107 @@
             <ref bean="userAccount_admin3"/>
         </property>
         <property name="banned" value="true"/>
+    </bean>
+    <bean class="domain.Handyworker" id="handyworker_handyworker1">
+        <property name="antennaModels">
+            <list value-type="java.lang.String">
+                <value>Model 1</value>
+                <value>Model 4</value>
+            </list>
+        </property>
+        <property name="requests">
+            <list>
+                <ref bean="maintenanceRequest_1"/>
+                <ref bean="maintenanceRequest_2"/>
+                <ref bean="maintenanceRequest_5"/>
+                <ref bean="maintenanceRequest_6"/>
+            </list>
+        </property>
+        <property name="name" value="Handyworker 1"/>
+        <property name="surname" value="Handyworker1Surname"/>
+        <property name="email" value="handyworker1@handy.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+11686845679"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_handyworker1"/>
+        </property>
+        <property name="banned" value="false"/>
+    </bean>
+    <bean class="domain.Handyworker" id="handyworker_handyworker2">
+        <property name="antennaModels">
+            <list value-type="java.lang.String">
+                <value>Model 1</value>
+                <value>Model 3</value>
+                <value>Model 2</value>
+            </list>
+        </property>
+        <property name="requests">
+            <list>
+                <ref bean="maintenanceRequest_3"/>
+                <ref bean="maintenanceRequest_4"/>
+            </list>
+        </property>
+        <property name="name" value="Handyworker 2"/>
+        <property name="surname" value="Handyworker2Surname"/>
+        <property name="email" value="handyworker2@handy.com"/>
+        <property name="pictureUrl">
+            <null/>
+        </property>
+        <property name="phoneNumber" value="+11686845678"/>
+        <property name="postalAddress">
+            <null/>
+        </property>
+        <property name="userAccount">
+            <ref bean="userAccount_handyworker2"/>
+        </property>
+        <property name="banned" value="false"/>
+    </bean>
+    <bean class="domain.PlatformSubscription" id="platformSubscription_1">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="platform">
+            <ref bean="platform_1"/>
+        </property>
+        <property name="startDate" value="2018/07/18"/>
+        <property name="endDate" value="2018/07/19"/>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="3566002020360505"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="keyCode" value="12345678901234567890123456789012"/>
+    </bean>
+    <bean class="domain.PlatformSubscription" id="platformSubscription_2">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="platform">
+            <ref bean="platform_3"/>
+        </property>
+        <property name="startDate" value="2018/07/18"/>
+        <property name="endDate" value="2018/07/19"/>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="5105105105105100"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="keyCode" value="22345678901234567890123456789012"/>
     </bean>
     <bean class="domain.Tutorial" id="tutorial_1">
         <property name="user">
@@ -472,94 +825,362 @@
             <list/>
         </property>
     </bean>
-    <bean class="domain.Platform" id="platform_1">
-        <property name="name" value="CNN"/>
-        <property name="description" value="This is platform 1"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_1"/>
-                <ref bean="satellite_2"/>
-            </list>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_2">
-        <property name="name" value="C-SPAN"/>
-        <property name="description" value="This is platform 2"/>
-        <property name="satellites">
-            <list/>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_3">
-        <property name="name" value="Mediaset"/>
-        <property name="description" value="This is platform 3"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_3"/>
-            </list>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_4">
-        <property name="name" value="Atresmedia"/>
-        <property name="description" value="This is platform 4"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_4"/>
-            </list>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_5">
-        <property name="name" value="Cartoon Network"/>
-        <property name="description" value="This is platform 5"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_5"/>
-            </list>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_6">
-        <property name="name" value="Discovery Channel Network"/>
-        <property name="description" value="This is platform 6"/>
-        <property name="satellites">
-            <list/>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_7">
-        <property name="name" value="DELETED-PLATFORM"/>
-        <property name="description" value="Deleted platform description"/>
-        <property name="satellites">
-            <list/>
-        </property>
-        <property name="deleted" value="true"/>
-    </bean>
-    <bean class="domain.PlatformSubscription" id="platformSubscription_1">
+    <bean class="domain.Antenna" id="antenna_1">
         <property name="user">
             <ref bean="user_user1"/>
         </property>
-        <property name="platform">
-            <ref bean="platform_1"/>
+        <property name="serialNumber" value="A001"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="153.0"/>
+        <property name="positionLatitude" value="40.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="33.0"/>
+        <property name="satellite">
+            <ref bean="satellite_1"/>
         </property>
-        <property name="startDate" value="2018/07/18"/>
-        <property name="endDate" value="2018/07/19"/>
-        <property name="creditCard" value="3566002020360505"/>
-        <property name="keyCode" value="12345678901234567890123456789012"/>
+        <property name="requests">
+            <list>
+                <ref bean="maintenanceRequest_1"/>
+            </list>
+        </property>
     </bean>
-    <bean class="domain.PlatformSubscription" id="platformSubscription_2">
+    <bean class="domain.Antenna" id="antenna_2">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="serialNumber" value="A002"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="23.0"/>
+        <property name="positionLatitude" value="-43.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="77.0"/>
+        <property name="satellite">
+            <ref bean="satellite_2"/>
+        </property>
+        <property name="requests">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_3">
         <property name="user">
             <ref bean="user_user2"/>
         </property>
-        <property name="platform">
-            <ref bean="platform_3"/>
+        <property name="serialNumber" value="A005"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="87.0"/>
+        <property name="satellite">
+            <ref bean="satellite_3"/>
         </property>
-        <property name="startDate" value="2018/07/18"/>
-        <property name="endDate" value="2018/07/19"/>
-        <property name="creditCard" value="5105105105105100"/>
-        <property name="keyCode" value="22345678901234567890123456789012"/>
+        <property name="requests">
+            <list>
+                <ref bean="maintenanceRequest_5"/>
+                <ref bean="maintenanceRequest_3"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_4">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="serialNumber" value="A006"/>
+        <property name="model" value="Model 2"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="1.0"/>
+        <property name="satellite">
+            <ref bean="satellite_4"/>
+        </property>
+        <property name="requests">
+            <list>
+                <ref bean="maintenanceRequest_4"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_5">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="serialNumber" value="A007"/>
+        <property name="model" value="Model 2"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="45.0"/>
+        <property name="satellite">
+            <ref bean="satellite_5"/>
+        </property>
+        <property name="requests">
+            <list>
+                <ref bean="maintenanceRequest_6"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_6">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="serialNumber" value="A008"/>
+        <property name="model" value="Model 3"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="24.0"/>
+        <property name="satellite">
+            <ref bean="satellite_6"/>
+        </property>
+        <property name="requests">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_7">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="serialNumber" value="D001"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="-12.0"/>
+        <property name="positionLatitude" value="-90.0"/>
+        <property name="rotationAzimuth" value="157.0"/>
+        <property name="rotationElevation" value="16.0"/>
+        <property name="signalQuality" value="83.0"/>
+        <property name="satellite">
+            <ref bean="satellite_6"/>
+        </property>
+        <property name="requests">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_8">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="serialNumber" value="A004"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="-125.0"/>
+        <property name="positionLatitude" value="64.0"/>
+        <property name="rotationAzimuth" value="289.0"/>
+        <property name="rotationElevation" value="45.0"/>
+        <property name="signalQuality" value="43.0"/>
+        <property name="satellite">
+            <ref bean="satellite_3"/>
+        </property>
+        <property name="requests">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_9">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="serialNumber" value="A009"/>
+        <property name="model" value="Model 2"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="1.0"/>
+        <property name="satellite">
+            <ref bean="satellite_4"/>
+        </property>
+        <property name="requests">
+            <list/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_10">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="serialNumber" value="X001"/>
+        <property name="model" value="Model 4"/>
+        <property name="positionLongitude" value="0.0"/>
+        <property name="positionLatitude" value="0.0"/>
+        <property name="rotationAzimuth" value="0.0"/>
+        <property name="rotationElevation" value="0.0"/>
+        <property name="signalQuality" value="100.0"/>
+        <property name="satellite">
+            <ref bean="satellite_2"/>
+        </property>
+        <property name="requests">
+            <list>
+                <ref bean="maintenanceRequest_2"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_1">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="handyworker">
+            <ref bean="handyworker_handyworker1"/>
+        </property>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="3566002020360505"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="creationTime" value="2018/07/24 00:00:00"/>
+        <property name="description" value="This is the description of request 1"/>
+        <property name="antenna">
+            <ref bean="antenna_1"/>
+        </property>
+        <property name="doneTime" value="2017/07/26 00:00:00"/>
+        <property name="resultsDescription" value="This is the description of       the results of request 1"/>
+    </bean>
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_2">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="handyworker">
+            <ref bean="handyworker_handyworker1"/>
+        </property>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="3566002020360505"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="creationTime" value="2018/07/26 00:00:00"/>
+        <property name="description" value="This is the description of request 2"/>
+        <property name="antenna">
+            <ref bean="antenna_10"/>
+        </property>
+        <property name="doneTime">
+            <null/>
+        </property>
+        <property name="resultsDescription">
+            <null/>
+        </property>
+    </bean>
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_3">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="handyworker">
+            <ref bean="handyworker_handyworker2"/>
+        </property>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="5105105105105100"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="creationTime" value="2018/07/25 00:00:00"/>
+        <property name="description" value="This is the description of request 3"/>
+        <property name="antenna">
+            <ref bean="antenna_3"/>
+        </property>
+        <property name="doneTime">
+            <null/>
+        </property>
+        <property name="resultsDescription">
+            <null/>
+        </property>
+    </bean>
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_4">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="handyworker">
+            <ref bean="handyworker_handyworker2"/>
+        </property>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="5105105105105100"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="creationTime" value="2018/07/28 00:00:00"/>
+        <property name="description" value="This is the description of request 4"/>
+        <property name="antenna">
+            <ref bean="antenna_4"/>
+        </property>
+        <property name="doneTime" value="2017/07/29 00:00:00"/>
+        <property name="resultsDescription" value="This is the description of       the results of request 4"/>
+    </bean>
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_5">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="handyworker">
+            <ref bean="handyworker_handyworker1"/>
+        </property>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="5105105105105100"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="creationTime" value="2018/07/28 00:00:00"/>
+        <property name="description" value="This is the description of request 5"/>
+        <property name="antenna">
+            <ref bean="antenna_3"/>
+        </property>
+        <property name="doneTime">
+            <null/>
+        </property>
+        <property name="resultsDescription">
+            <null/>
+        </property>
+    </bean>
+    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_6">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="handyworker">
+            <ref bean="handyworker_handyworker1"/>
+        </property>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="5105105105105100"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="creationTime" value="2018/07/28 00:00:00"/>
+        <property name="description" value="This is the description of request 6"/>
+        <property name="antenna">
+            <ref bean="antenna_5"/>
+        </property>
+        <property name="doneTime">
+            <null/>
+        </property>
+        <property name="resultsDescription">
+            <null/>
+        </property>
     </bean>
     <bean class="domain.TutorialComment" id="tutorialComment_1">
         <property name="user">
@@ -937,425 +1558,4 @@
             <list/>
         </property>
     </bean>
-    <bean class="domain.Antenna" id="antenna_1">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="serialNumber" value="A001"/>
-        <property name="model" value="Model 1"/>
-        <property name="positionLongitude" value="153.0"/>
-        <property name="positionLatitude" value="40.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="33.0"/>
-        <property name="satellite">
-            <ref bean="satellite_1"/>
-        </property>
-        <property name="requests">
-        	<list>
-        		<ref bean="maintenanceRequest_1"/>
-        	</list>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_2">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="serialNumber" value="A002"/>
-        <property name="model" value="Model 1"/>
-        <property name="positionLongitude" value="23.0"/>
-        <property name="positionLatitude" value="-43.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="77.0"/>
-        <property name="satellite">
-            <ref bean="satellite_2"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_3">
-        <property name="user">
-            <ref bean="user_user2"/>
-        </property>
-        <property name="serialNumber" value="A005"/>
-        <property name="model" value="Model 1"/>
-        <property name="positionLongitude" value="1.0"/>
-        <property name="positionLatitude" value="1.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="87.0"/>
-        <property name="satellite">
-            <ref bean="satellite_3"/>
-        </property>
-        <property name="requests">
-        	<list>
-        		<ref bean="maintenanceRequest_3"/>
-        	</list>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_4">
-        <property name="user">
-            <ref bean="user_user2"/>
-        </property>
-        <property name="serialNumber" value="A006"/>
-        <property name="model" value="Model 2"/>
-        <property name="positionLongitude" value="1.0"/>
-        <property name="positionLatitude" value="1.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="1.0"/>
-        <property name="satellite">
-            <ref bean="satellite_4"/>
-        </property>
-        <property name="requests">
-        	<list>
-        		<ref bean="maintenanceRequest_4"/>
-        	</list>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_5">
-        <property name="user">
-            <ref bean="user_user3"/>
-        </property>
-        <property name="serialNumber" value="A007"/>
-        <property name="model" value="Model 2"/>
-        <property name="positionLongitude" value="1.0"/>
-        <property name="positionLatitude" value="1.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="45.0"/>
-        <property name="satellite">
-            <ref bean="satellite_5"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_6">
-        <property name="user">
-            <ref bean="user_user3"/>
-        </property>
-        <property name="serialNumber" value="A008"/>
-        <property name="model" value="Model 3"/>
-        <property name="positionLongitude" value="1.0"/>
-        <property name="positionLatitude" value="1.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="24.0"/>
-        <property name="satellite">
-            <ref bean="satellite_6"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_7">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="serialNumber" value="D001"/>
-        <property name="model" value="Model 1"/>
-        <property name="positionLongitude" value="-12.0"/>
-        <property name="positionLatitude" value="-90.0"/>
-        <property name="rotationAzimuth" value="157.0"/>
-        <property name="rotationElevation" value="16.0"/>
-        <property name="signalQuality" value="83.0"/>
-        <property name="satellite">
-            <ref bean="satellite_6"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_8">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="serialNumber" value="A004"/>
-        <property name="model" value="Model 1"/>
-        <property name="positionLongitude" value="-125.0"/>
-        <property name="positionLatitude" value="64.0"/>
-        <property name="rotationAzimuth" value="289.0"/>
-        <property name="rotationElevation" value="45.0"/>
-        <property name="signalQuality" value="43.0"/>
-        <property name="satellite">
-            <ref bean="satellite_3"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_9">
-        <property name="user">
-            <ref bean="user_user3"/>
-        </property>
-        <property name="serialNumber" value="A009"/>
-        <property name="model" value="Model 2"/>
-        <property name="positionLongitude" value="1.0"/>
-        <property name="positionLatitude" value="1.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="1.0"/>
-        <property name="satellite">
-            <ref bean="satellite_4"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_10">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="serialNumber" value="X001"/>
-        <property name="model" value="Model 4"/>
-        <property name="positionLongitude" value="0.0"/>
-        <property name="positionLatitude" value="0.0"/>
-        <property name="rotationAzimuth" value="0.0"/>
-        <property name="rotationElevation" value="0.0"/>
-        <property name="signalQuality" value="100.0"/>
-        <property name="satellite">
-            <ref bean="satellite_2"/>
-        </property>
-        <property name="requests">
-        	<list>
-        		<ref bean="maintenanceRequest_2"/>
-        	</list>
-        </property>
-    </bean>
-    
-    <!-- Handyworkers -->
-    
-    <bean class="domain.Handyworker" id="handyworker_handy1">
-    	<property name="name" value="Handyworker 1"/>
-    	<property name="surname" value="Handyworker1Surname"/>
-    	<property name="email" value="handyworker1@handy.com"/>
-    	<property name="pictureUrl">
-            <null/>
-        </property>
-    	<property name="phoneNumber" value="+11686845679"/>
-    	<property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount" ref="userAccount_handy1"/>
-    	<property name="antennaModels">
-    		<list value-type="java.lang.String">
-    			<value>Model 1</value>
-    			<value>Model 4</value>
-    		</list>
-    	</property>
-    	<property name="requests">
-    		<list>
-    			<ref bean="maintenanceRequest_1"/>
-    			<ref bean="maintenanceRequest_2"/>
-    			<ref bean="maintenanceRequest_5"/>
-    			<ref bean="maintenanceRequest_6"/>
-    		</list>
-    	</property>
-    	<property name="banned" value="false"/>
-    </bean>
-    
-    <bean class="domain.Handyworker" id="handyworker_handy2">
-    	<property name="name" value="Handyworker 2"/>
-    	<property name="surname" value="Handyworker2Surname"/>
-    	<property name="email" value="handyworker2@handy.com"/>
-    	<property name="pictureUrl">
-            <null/>
-        </property>
-    	<property name="phoneNumber" value="+11686845678"/>
-    	<property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount" ref="userAccount_handy2"/>
-    	<property name="antennaModels">
-    		<list value-type="java.lang.String">
-    			<value>Model 1</value>
-    			<value>Model 3</value>
-    			<value>Model 2</value>
-    		</list>
-    	</property>
-    	<property name="requests">
-    		<list>
-    			<ref bean="maintenanceRequest_3"/>
-    			<ref bean="maintenanceRequest_4"/>
-    		</list>
-    	</property>
-    	<property name="banned" value="false"/>
-    </bean>
-    
-    <!-- Maintenance requests -->
-    
-    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_1">
-    	<property name="user" ref="user_user1"/>
-    	<property name="handyworker" ref="handyworker_handy1"/>
-    	<property name="creditCard" value="3566002020360505"/>
-    	<property name="creationTime" value="2018/07/24"/>
-    	<property name="description" value="This is the description of request 1"/>
-    	<property name="antenna" ref="antenna_1"/>
-    	<property name="doneTime" value="2017/07/26"/>
-    	<property name="resultsDescription" value="This is the description of 
-    	the results of request 1"/>
-    </bean>
-    
-    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_2">
-    	<property name="user" ref="user_user1"/>
-    	<property name="handyworker" ref="handyworker_handy1"/>
-    	<property name="creditCard" value="3566002020360505"/>
-    	<property name="creationTime" value="2018/07/26"/>
-    	<property name="description" value="This is the description of request 2"/>
-    	<property name="antenna" ref="antenna_10"/>
-    </bean>
-    
-    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_3">
-    	<property name="user" ref="user_user2"/>
-    	<property name="handyworker" ref="handyworker_handy2"/>
-    	<property name="creditCard" value="5105105105105100"/>
-    	<property name="creationTime" value="2018/07/25"/>
-    	<property name="description" value="This is the description of request 3"/>
-    	<property name="antenna" ref="antenna_3"/>
-    </bean>
-    
-    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_4">
-    	<property name="user" ref="user_user2"/>
-    	<property name="handyworker" ref="handyworker_handy2"/>
-    	<property name="creditCard" value="5105105105105100"/>
-    	<property name="creationTime" value="2018/07/28"/>
-    	<property name="description" value="This is the description of request 4"/>
-    	<property name="antenna" ref="antenna_4"/>
-    	<property name="doneTime" value="2017/07/29"/>
-    	<property name="resultsDescription" value="This is the description of 
-    	the results of request 4"/>
-    </bean>
-    
-    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_5">
-    	<property name="user" ref="user_user1"/>
-    	<property name="handyworker" ref="handyworker_handy1"/>
-    	<property name="creditCard" value="5105105105105100"/>
-    	<property name="creationTime" value="2018/07/28"/>
-    	<property name="description" value="This is the description of request 5"/>
-    	<property name="antenna" ref="antenna_3"/>
-    </bean>
-    
-    <bean class="domain.MaintenanceRequest" id="maintenanceRequest_6">
-    	<property name="user" ref="user_user1"/>
-    	<property name="handyworker" ref="handyworker_handy1"/>
-    	<property name="creditCard" value="5105105105105100"/>
-    	<property name="creationTime" value="2018/07/28"/>
-    	<property name="description" value="This is the description of request 6"/>
-    	<property name="antenna" ref="antenna_5"/>
-    </bean>
-    
-    <!-- Agents -->
-    
-    <bean class="domain.Agent" id="agent_agent1">
-    	<property name="name" value="Agent 1"/>
-    	<property name="surname" value="Agent1Surname"/>
-    	<property name="email" value="agent1@agent.com"/>
-    	<property name="pictureUrl">
-            <null/>
-        </property>
-    	<property name="phoneNumber" value="+11682374679"/>
-    	<property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount" ref="userAccount_agent1"/>
-    	<property name="banned" value="false"/>
-    	<property name="banners">
-    		<list>
-    			<ref bean="banner_1"/>
-    			<ref bean="banner_2"/>
-    			<ref bean="banner_3"/>
-    		</list>
-    	</property>
-    </bean>
-    
-    <bean class="domain.Agent" id="agent_agent2">
-    	<property name="name" value="Agent 2"/>
-    	<property name="surname" value="Agent2Surname"/>
-    	<property name="email" value="agent2@agent.com"/>
-    	<property name="pictureUrl">
-            <null/>
-        </property>
-    	<property name="phoneNumber" value="+11682371234"/>
-    	<property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount" ref="userAccount_agent2"/>
-    	<property name="banned" value="false"/>
-    	<property name="banners">
-    		<list>
-    			<ref bean="banner_4"/>
-    			<ref bean="banner_5"/>
-    		</list>
-    	</property>
-    </bean>
-    
-    <bean class="domain.Agent" id="agent_agent3">
-    	<property name="name" value="Agent 3"/>
-    	<property name="surname" value="Agent3Surname"/>
-    	<property name="email" value="agent3@agent.com"/>
-    	<property name="pictureUrl">
-            <null/>
-        </property>
-    	<property name="phoneNumber" value="+11660974679"/>
-    	<property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount" ref="userAccount_agent3"/>
-    	<property name="banned" value="false"/>
-    	<property name="banners">
-    		<list>
-    			<ref bean="banner_6"/>
-    		</list>
-    	</property>
-    </bean>
-    
-    <bean class="domain.Agent" id="agent_agent4">
-    	<property name="name" value="Agent 4"/>
-    	<property name="surname" value="Agent4Surname"/>
-    	<property name="email" value="agent4@agent.com"/>
-    	<property name="pictureUrl">
-            <null/>
-        </property>
-    	<property name="phoneNumber" value="+11674974679"/>
-    	<property name="postalAddress">
-            <null/>
-        </property>
-        <property name="userAccount" ref="userAccount_agent4"/>
-    	<property name="banned" value="false"/>
-    	<property name="banners">
-    		<list>
-    			
-    		</list>
-    	</property>
-    </bean>
-    
-    <!-- Banners -->
-    
-    <bean class="domain.Banner" id="banner_1">
-    	<property name="pictureUrl" value="https://institucional.telecom.com.ar/antenas/images/header_antenas.jpg"/>
-    	<property name="targetPage" value="http://www.google.es"/>
-    	<property name="creditCard" value="3566002020360505"/>
-    	<property name="agent" ref="agent_agent1"/>
-    </bean>
-    
-    <bean class="domain.Banner" id="banner_2">
-    	<property name="pictureUrl" value="https://www.winncom.com/images/WinncomProductsBanner.jpg"/>
-    	<property name="targetPage" value="http://www.elcorteingles.es"/>
-    	<property name="creditCard" value="3566002020360505"/>
-    	<property name="agent" ref="agent_agent1"/>
-    </bean>
-    
-    <bean class="domain.Banner" id="banner_3">
-    	<property name="pictureUrl" value="https://reparacion-instalacion.es/wp-content/uploads/2016/01/banner.png"/>
-    	<property name="targetPage" value="http://www.instagram.es"/>
-    	<property name="creditCard" value="3566002020360505"/>
-    	<property name="agent" ref="agent_agent1"/>
-    </bean>
-    
-    <bean class="domain.Banner" id="banner_4">
-    	<property name="pictureUrl" value="https://static.miweb.padigital.es/var/m_7/72/722/14898/272703-banner.jpg"/>
-    	<property name="targetPage" value="http://www.mediamarkt.es"/>
-    	<property name="creditCard" value="3566002020360505"/>
-    	<property name="agent" ref="agent_agent2"/>
-    </bean>
-    
-    <bean class="domain.Banner" id="banner_5">
-    	<property name="pictureUrl" value="http://satelec.esy.es/wp-content/uploads/2015/10/banner-antenas.jpg"/>
-    	<property name="targetPage" value="http://www.worten.es"/>
-    	<property name="creditCard" value="3566002020360505"/>
-    	<property name="agent" ref="agent_agent2"/>
-    </bean>
-    
-    <bean class="domain.Banner" id="banner_6">
-    	<property name="pictureUrl" value="https://static.miweb.padigital.es/var/m_9/94/94b/15922/287772-banner.jpg"/>
-    	<property name="targetPage" value="http://www.nike.com"/>
-    	<property name="creditCard" value="3566002020360505"/>
-    	<property name="agent" ref="agent_agent3"/>
-    </bean>
-    
 </beans>

@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 import javax.transaction.Transactional;
 
 import domain.Banner;
+import domain.CreditCard;
 import services.AgentService;
 import services.BannerService;
 import services.HandyworkerService;
@@ -49,7 +50,7 @@ public class RegisterBanner extends AbstractTest {
         banner.setAgent(this.agentService.findPrincipal());
         banner.setPictureUrl("https://i.imgur.com/S4LGdiI.jpg");
         banner.setTargetPage("http://nike.com");
-        banner.setCreditCard("4559960410324422");
+        banner.setCreditCard(CreditCard.visaTestCard());
         final Banner saved = this.bannerService.create(banner);
 
         Assert.isTrue(this.bannerService.findAll().contains(saved));
@@ -67,7 +68,7 @@ public class RegisterBanner extends AbstractTest {
         banner.setAgent(this.agentService.findPrincipal());
         banner.setPictureUrl("https://i.imgur.com/S4LGdiI.jpg");
         banner.setTargetPage("http://nike.com");
-        banner.setCreditCard("4559960410324422");
+        banner.setCreditCard(CreditCard.visaTestCard());
         final Banner saved = this.bannerService.create(banner);
 
         Assert.isTrue(this.bannerService.findAll().contains(saved));

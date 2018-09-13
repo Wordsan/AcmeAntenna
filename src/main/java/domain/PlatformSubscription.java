@@ -11,6 +11,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.ManyToOne;
@@ -42,7 +43,7 @@ public class PlatformSubscription
     private Platform platform;
     private Date startDate;
     private Date endDate;
-    private String creditCard;
+    private CreditCard creditCard;
     private String keyCode;
 
     @ManyToOne(optional = false)
@@ -85,24 +86,17 @@ public class PlatformSubscription
         return tmpStart.before(tmpEnd) || tmpStart.equals(tmpEnd);
     }
 
-
-    @NotBlank
-    @CreditCardNumber
-    @Pattern(regexp = "^[0-9 ]+$", message = "{org.hibernate.validator.constraints.CreditCardNumber.message}")
-    public String getCreditCard()
+    @NotNull
+    @Valid
+    @Embedded
+    public CreditCard getCreditCard()
     {
         return creditCard;
     }
 
-    @Transient
-    public String getObscuredCreditCard()
+    public void setCreditCard(CreditCard creditCard)
     {
-        String tmp = creditCard.replaceAll("[^0-9]", "");
-        if (tmp.length() > 4) {
-            return StringUtils.repeat("*", tmp.length() - 4) + tmp.substring(tmp.length() - 4);
-        } else {
-            return StringUtils.repeat("*", tmp.length());
-        }
+        this.creditCard = creditCard;
     }
 
     @NotBlank
@@ -130,11 +124,6 @@ public class PlatformSubscription
     public void setEndDate(Date endDate)
     {
         this.endDate = endDate;
-    }
-
-    public void setCreditCard(String creditCard)
-    {
-        this.creditCard = creditCard;
     }
 
     public void setKeyCode(String keyCode)

@@ -9,7 +9,6 @@ import java.util.List;
 import domain.Antenna;
 import domain.Handyworker;
 import domain.MaintenanceRequest;
-import sun.applet.Main;
 
 @Repository
 public interface MaintenanceRequestRepository extends JpaRepository<MaintenanceRequest, Integer> {

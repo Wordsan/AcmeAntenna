@@ -6,8 +6,10 @@ import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -17,7 +19,7 @@ public class Banner extends DomainEntity {
 
     private String pictureUrl;
     private String targetPage;
-    private String creditCard;
+    private CreditCard creditCard;
     private Agent agent;
 
 
@@ -50,15 +52,15 @@ public class Banner extends DomainEntity {
         this.targetPage = targetPage;
     }
 
-    @NotBlank
-    @CreditCardNumber
-    @Pattern(regexp = "^[0-9 ]+$", message = "{org.hibernate.validator.constraints.CreditCardNumber.message}")
-    public String getCreditCard()
+    @Valid
+    @NotNull
+    @Embedded
+    public CreditCard getCreditCard()
     {
         return this.creditCard;
     }
 
-    public void setCreditCard(final String creditCard)
+    public void setCreditCard(final CreditCard creditCard)
     {
         this.creditCard = creditCard;
     }

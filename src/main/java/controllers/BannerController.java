@@ -3,6 +3,7 @@ package controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,13 +13,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import domain.Actor;
 import domain.Administrator;
 import domain.Agent;
 import domain.Banner;
-import domain.Satellite;
+import domain.CreditCard;
 import security.Authority;
 import services.BannerService;
 import utilities.ApplicationConfig;
@@ -58,11 +61,13 @@ public class BannerController extends AbstractController {
     }
 
     @RequestMapping("/new")
-    public ModelAndView new_()
+    public ModelAndView new_(@CookieValue(value = "creditCard", required = false) String creditCardCookieString)
     {
         CheckUtils.checkPrincipalAuthority(Authority.AGENT);
 
         Banner banner = new Banner();
+        banner.setAgent((Agent) findPrincipal());
+        if (creditCardCookieString != null) banner.setCreditCard(CreditCard.fromCookieString(creditCardCookieString));
         return createEditModelAndView("banners/new", "banners/create.do", null, null, banner);
     }
 
@@ -85,7 +90,8 @@ public class BannerController extends AbstractController {
     public ModelAndView create(
             @ModelAttribute("banner") @Valid Banner banner,
             BindingResult binding,
-            RedirectAttributes redir
+            RedirectAttributes redir,
+            HttpServletResponse response
     )
     {
         CheckUtils.checkPrincipalAuthority(Authority.AGENT);
@@ -95,7 +101,9 @@ public class BannerController extends AbstractController {
             try {
                 banner = bannerService.create(banner);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
-
+                Cookie cookie = new Cookie("creditCard", CreditCard.toCookieString(banner.getCreditCard()));
+                cookie.setPath("/");
+                response.addCookie(cookie);
                 return ControllerUtils.redirect("/banners/index.do");
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();

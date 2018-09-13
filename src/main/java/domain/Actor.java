@@ -123,7 +123,7 @@ public class Actor extends DomainEntity {
         this.postalAddress = postalAddress;
     }
 
-    public boolean isBanned()
+    public boolean getBanned()
     {
         return this.banned;
     }

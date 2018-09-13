@@ -22,14 +22,6 @@
     <app:preserve-return-action />
     <app:entity-editor />
 
-	<form:hidden path="user"/>
-	<form:hidden path="creationTime"/>
-	<form:hidden path="creditCard"/>
-	<form:hidden path="handyworker"/>
-	<form:hidden path="description"/>
-	<form:hidden path="antenna"/>
-	<form:hidden path="doneTime"/>
-
 	<app:textarea path="resultsDescription" code="maintenanceRequest.resultsDescription" />
 
 	<app:submit name="save" code="maintenanceRequest.service" />

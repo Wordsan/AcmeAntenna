@@ -15,7 +15,7 @@
     <display:table name="banners" id="banner" requestURI="${currentRequestUri}" pagesize="${displayTagPageSize}" sort="list">
         <display:column property="targetPage" titleKey="banners.targetPage" sortable="true" escapeXml="true" />
         <display:column property="pictureUrl" titleKey="banners.picture" sortable="true" escapeXml="true" />
-        <display:column property="creditCard" titleKey="banners.creditCard" sortable="true" escapeXml="true" />
+        <display:column property="creditCard.obscuredNumber" titleKey="banners.creditCard" sortable="true" escapeXml="true" />
         <security:authorize access="hasRole('ADMINISTRATOR')">
             <display:column property="agent.name" titleKey="banners.agent" sortable="false" escapeXml="true" />
         </security:authorize>

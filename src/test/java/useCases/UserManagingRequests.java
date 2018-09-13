@@ -15,6 +15,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import domain.Antenna;
+import domain.CreditCard;
 import domain.Handyworker;
 import domain.MaintenanceRequest;
 import services.AntennaService;
@@ -106,7 +107,7 @@ public class UserManagingRequests extends AbstractTest {
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setUser(this.userService.findPrincipal());
         request.setDescription("This is a description");
-        request.setCreditCard("4111111111111111");
+        request.setCreditCard(CreditCard.visaTestCard());
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Handyworker> workers = new ArrayList<Handyworker>(this.handyworkerService.findAll());
         final List<Antenna> antennas = new ArrayList<Antenna>(this.antennaService.findAll());
@@ -130,7 +131,7 @@ public class UserManagingRequests extends AbstractTest {
 
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setDescription("This is a description");
-        request.setCreditCard("4111111111111111");
+        request.setCreditCard(CreditCard.visaTestCard());
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Handyworker> workers = new ArrayList<Handyworker>(this.handyworkerService.findAll());
         final List<Antenna> antennas = new ArrayList<Antenna>(this.antennaService.findAll());
@@ -150,7 +151,7 @@ public class UserManagingRequests extends AbstractTest {
         this.authenticate("user1");
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setUser(this.userService.findPrincipal());
-        request.setCreditCard("4111111111111111");
+        request.setCreditCard(CreditCard.visaTestCard());
 
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Handyworker> workers = new ArrayList<Handyworker>(this.handyworkerService.findAll());
@@ -172,7 +173,7 @@ public class UserManagingRequests extends AbstractTest {
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setUser(this.userService.findPrincipal());
         request.setDescription("This is a description");
-        request.setCreditCard("4111111111111111");
+        request.setCreditCard(CreditCard.visaTestCard());
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Handyworker> workers = new ArrayList<Handyworker>(this.handyworkerService.findAll());
         request.setHandyworker(workers.get(0));
@@ -191,7 +192,7 @@ public class UserManagingRequests extends AbstractTest {
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setUser(this.userService.findPrincipal());
         request.setDescription("This is a description");
-        request.setCreditCard("4111111111111111");
+        request.setCreditCard(CreditCard.visaTestCard());
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Antenna> antennas = new ArrayList<Antenna>(this.antennaService.findAll());
         request.setAntenna(antennas.get(0));
@@ -213,7 +214,7 @@ public class UserManagingRequests extends AbstractTest {
         final MaintenanceRequest request = this.maintenanceRequestService.create();
         request.setUser(this.userService.findPrincipal());
         request.setDescription("This is a description");
-        request.setCreditCard("4111111111111111");
+        request.setCreditCard(CreditCard.visaTestCard());
         //Declaration of handyworkers and antennas, needed for the creation of the request
         final List<Handyworker> workers = new ArrayList<Handyworker>(this.handyworkerService.findAll());
         final List<Antenna> antennas = new ArrayList<Antenna>(this.antennaService.findAll());

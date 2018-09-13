@@ -21,7 +21,7 @@
 	<form:hidden path="resultsDescription"/>
 	
 	<app:textbox path="description" code="maintenanceRequest.description" />
-	<app:textbox path="creditCard" code="maintenanceRequest.creditCard" />
+	<app:credit-card-editor path="creditCard" />
 	<app:select path="handyworker" items="${handyworkers}" itemLabel="name" code="maintenanceRequest.handyworker" />
 	<app:select path="antenna" items="${antennas}" itemLabel="serialNumber" code="maintenanceRequest.antenna" />
 

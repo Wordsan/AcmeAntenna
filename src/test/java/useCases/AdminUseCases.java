@@ -60,7 +60,7 @@ public class AdminUseCases extends AbstractTest {
         //A random actor is banned
         this.actorService.setBanned(actors.get(4).getId(), true);
         //Checking if that actor that we select previously is now banned
-        Assert.isTrue(this.actorService.findById(actors.get(4).getId()).isBanned());
+        Assert.isTrue(this.actorService.findById(actors.get(4).getId()).getBanned());
 
     }
 
