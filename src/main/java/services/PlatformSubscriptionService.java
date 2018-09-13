@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 
 import domain.Platform;
 import domain.PlatformSubscription;
+import exceptions.CreditCardExpiredException;
 import exceptions.OverlappingPlatformSubscriptionException;
 import repositories.PlatformSubscriptionRepository;
 import security.Authority;
@@ -36,11 +37,13 @@ public class PlatformSubscriptionService {
         return repository.findAllByUserAndPlatformOrderByStartDateDesc(userService.getPrincipal(), platform);
     }
 
-    public PlatformSubscription create(PlatformSubscription platformSubscription) throws OverlappingPlatformSubscriptionException
+    public PlatformSubscription create(PlatformSubscription platformSubscription) throws OverlappingPlatformSubscriptionException, CreditCardExpiredException
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
         CheckUtils.checkIsPrincipal(platformSubscription.getUser());
         CheckUtils.checkNotExists(platformSubscription);
+
+        if (platformSubscription.getCreditCard().isExpired()) throw new CreditCardExpiredException();
 
         // Check for overlapping subscriptions.
         List<PlatformSubscription> overlapping = repository.findOverlapping(platformSubscription.getUser(), platformSubscription.getPlatform(), platformSubscription.getStartDate(), platformSubscription.getEndDate());
