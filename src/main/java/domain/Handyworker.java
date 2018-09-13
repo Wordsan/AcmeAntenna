@@ -15,25 +15,12 @@ import javax.validation.constraints.NotNull;
 @Access(AccessType.PROPERTY)
 public class Handyworker extends Actor {
 
-    private Collection<String> antennaModels = new ArrayList<>();
     private Collection<MaintenanceRequest> requests = new ArrayList<>();
 
 
     public Handyworker()
     {
         super();
-    }
-
-    @Valid
-    @ElementCollection
-    public Collection<String> getAntennaModels()
-    {
-        return this.antennaModels;
-    }
-
-    public void setAntennaModels(final Collection<String> antennaModels)
-    {
-        this.antennaModels = antennaModels;
     }
 
     @NotNull

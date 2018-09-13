@@ -118,6 +118,7 @@ public class MaintenanceRequest extends DomainEntity {
         this.antenna = antenna;
     }
 
+    @PastOrPresent
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     public Date getDoneTime()
