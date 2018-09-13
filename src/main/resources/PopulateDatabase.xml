@@ -1,5 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="domain.Platform" id="platform_1">
+        <property name="name" value="CNN"/>
+        <property name="description" value="This is platform 1"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_1"/>
+                <ref bean="satellite_2"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_2">
+        <property name="name" value="C-SPAN"/>
+        <property name="description" value="This is platform 2"/>
+        <property name="satellites">
+            <list/>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_3">
+        <property name="name" value="Mediaset"/>
+        <property name="description" value="This is platform 3"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_3"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_4">
+        <property name="name" value="Atresmedia"/>
+        <property name="description" value="This is platform 4"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_4"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_5">
+        <property name="name" value="Cartoon Network"/>
+        <property name="description" value="This is platform 5"/>
+        <property name="satellites">
+            <list>
+                <ref bean="satellite_5"/>
+            </list>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_6">
+        <property name="name" value="Discovery Channel Network"/>
+        <property name="description" value="This is platform 6"/>
+        <property name="satellites">
+            <list/>
+        </property>
+        <property name="deleted" value="false"/>
+    </bean>
+    <bean class="domain.Platform" id="platform_7">
+        <property name="name" value="DELETED-PLATFORM"/>
+        <property name="description" value="Deleted platform description"/>
+        <property name="satellites">
+            <list/>
+        </property>
+        <property name="deleted" value="true"/>
+    </bean>
     <bean class="security.UserAccount" id="userAccount_admin">
         <property name="username" value="admin"/>
         <property name="password" value="21232f297a57a5a743894a0e4a801fc3"/>
@@ -267,6 +332,198 @@
             <ref bean="userAccount_admin3"/>
         </property>
     </bean>
+    <bean class="domain.PlatformSubscription" id="platformSubscription_1">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="platform">
+            <ref bean="platform_1"/>
+        </property>
+        <property name="startDate" value="2018/07/18"/>
+        <property name="endDate" value="2018/07/19"/>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="3566002020360505"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="keyCode" value="12345678901234567890123456789012"/>
+    </bean>
+    <bean class="domain.PlatformSubscription" id="platformSubscription_2">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="platform">
+            <ref bean="platform_3"/>
+        </property>
+        <property name="startDate" value="2018/07/18"/>
+        <property name="endDate" value="2018/07/19"/>
+        <property name="creditCard">
+            <bean class="domain.CreditCard">
+                <property name="holderName" value="VISA TEST HOLDER"/>
+                <property name="brandName" value="VISA"/>
+                <property name="number" value="5105105105105100"/>
+                <property name="expirationMonth" value="12"/>
+                <property name="expirationYear" value="2999"/>
+                <property name="cvv" value="123"/>
+            </bean>
+        </property>
+        <property name="keyCode" value="22345678901234567890123456789012"/>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_1">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="serialNumber" value="A001"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="153.0"/>
+        <property name="positionLatitude" value="40.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="33.0"/>
+        <property name="satellite">
+            <ref bean="satellite_1"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_2">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="serialNumber" value="A002"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="23.0"/>
+        <property name="positionLatitude" value="-43.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="77.0"/>
+        <property name="satellite">
+            <ref bean="satellite_2"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_3">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="serialNumber" value="A005"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="87.0"/>
+        <property name="satellite">
+            <ref bean="satellite_3"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_4">
+        <property name="user">
+            <ref bean="user_user2"/>
+        </property>
+        <property name="serialNumber" value="A006"/>
+        <property name="model" value="Model 2"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="1.0"/>
+        <property name="satellite">
+            <ref bean="satellite_4"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_5">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="serialNumber" value="A007"/>
+        <property name="model" value="Model 2"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="45.0"/>
+        <property name="satellite">
+            <ref bean="satellite_5"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_6">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="serialNumber" value="A008"/>
+        <property name="model" value="Model 3"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="24.0"/>
+        <property name="satellite">
+            <ref bean="satellite_6"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_7">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="serialNumber" value="D001"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="-12.0"/>
+        <property name="positionLatitude" value="-90.0"/>
+        <property name="rotationAzimuth" value="157.0"/>
+        <property name="rotationElevation" value="16.0"/>
+        <property name="signalQuality" value="83.0"/>
+        <property name="satellite">
+            <ref bean="satellite_6"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_8">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="serialNumber" value="A004"/>
+        <property name="model" value="Model 1"/>
+        <property name="positionLongitude" value="-125.0"/>
+        <property name="positionLatitude" value="64.0"/>
+        <property name="rotationAzimuth" value="289.0"/>
+        <property name="rotationElevation" value="45.0"/>
+        <property name="signalQuality" value="43.0"/>
+        <property name="satellite">
+            <ref bean="satellite_3"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_9">
+        <property name="user">
+            <ref bean="user_user3"/>
+        </property>
+        <property name="serialNumber" value="A009"/>
+        <property name="model" value="Model 2"/>
+        <property name="positionLongitude" value="1.0"/>
+        <property name="positionLatitude" value="1.0"/>
+        <property name="rotationAzimuth" value="1.0"/>
+        <property name="rotationElevation" value="1.0"/>
+        <property name="signalQuality" value="1.0"/>
+        <property name="satellite">
+            <ref bean="satellite_4"/>
+        </property>
+    </bean>
+    <bean class="domain.Antenna" id="antenna_10">
+        <property name="user">
+            <ref bean="user_user1"/>
+        </property>
+        <property name="serialNumber" value="X001"/>
+        <property name="model" value="Model 4"/>
+        <property name="positionLongitude" value="0.0"/>
+        <property name="positionLatitude" value="0.0"/>
+        <property name="rotationAzimuth" value="0.0"/>
+        <property name="rotationElevation" value="0.0"/>
+        <property name="signalQuality" value="100.0"/>
+        <property name="satellite">
+            <ref bean="satellite_2"/>
+        </property>
+    </bean>
     <bean class="domain.Tutorial" id="tutorial_1">
         <property name="user">
             <ref bean="user_user1"/>
@@ -382,95 +639,6 @@
         <property name="tutorialComments">
             <list/>
         </property>
-    </bean>
-    <bean class="domain.Platform" id="platform_1">
-        <property name="name" value="CNN"/>
-        <property name="description" value="This is platform 1"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_1"/>
-                <ref bean="satellite_2"/>
-            </list>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_2">
-        <property name="name" value="C-SPAN"/>
-        <property name="description" value="This is platform 2"/>
-        <property name="satellites">
-            <list/>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_3">
-        <property name="name" value="Mediaset"/>
-        <property name="description" value="This is platform 3"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_3"/>
-            </list>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_4">
-        <property name="name" value="Atresmedia"/>
-        <property name="description" value="This is platform 4"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_4"/>
-            </list>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_5">
-        <property name="name" value="Cartoon Network"/>
-        <property name="description" value="This is platform 5"/>
-        <property name="satellites">
-            <list>
-                <ref bean="satellite_5"/>
-            </list>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_6">
-        <property name="name" value="Discovery Channel Network"/>
-        <property name="description" value="This is platform 6"/>
-        <property name="satellites">
-            <list/>
-        </property>
-        <property name="deleted" value="false"/>
-    </bean>
-    <bean class="domain.Platform" id="platform_7">
-        <property name="name" value="DELETED-PLATFORM"/>
-        <property name="description" value="Deleted platform description"/>
-        <property name="satellites">
-            <list/>
-        </property>
-        <property name="deleted" value="true"/>
-    </bean>
-    <bean class="domain.PlatformSubscription" id="platformSubscription_1">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="platform">
-            <ref bean="platform_1"/>
-        </property>
-        <property name="startDate" value="2018/07/18"/>
-        <property name="endDate" value="2018/07/19"/>
-        <property name="creditCard" value="3566002020360505"/>
-        <property name="keyCode" value="12345678901234567890123456789012"/>
-    </bean>
-    <bean class="domain.PlatformSubscription" id="platformSubscription_2">
-        <property name="user">
-            <ref bean="user_user2"/>
-        </property>
-        <property name="platform">
-            <ref bean="platform_3"/>
-        </property>
-        <property name="startDate" value="2018/07/18"/>
-        <property name="endDate" value="2018/07/19"/>
-        <property name="creditCard" value="5105105105105100"/>
-        <property name="keyCode" value="22345678901234567890123456789012"/>
     </bean>
     <bean class="domain.TutorialComment" id="tutorialComment_1">
         <property name="user">
@@ -846,156 +1014,6 @@
         <property name="creationTime" value="2018/07/20 14:41:39"/>
         <property name="pictureUrls">
             <list/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_1">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="serialNumber" value="A001"/>
-        <property name="model" value="Model 1"/>
-        <property name="positionLongitude" value="153.0"/>
-        <property name="positionLatitude" value="40.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="33.0"/>
-        <property name="satellite">
-            <ref bean="satellite_1"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_2">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="serialNumber" value="A002"/>
-        <property name="model" value="Model 1"/>
-        <property name="positionLongitude" value="23.0"/>
-        <property name="positionLatitude" value="-43.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="77.0"/>
-        <property name="satellite">
-            <ref bean="satellite_2"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_3">
-        <property name="user">
-            <ref bean="user_user2"/>
-        </property>
-        <property name="serialNumber" value="A005"/>
-        <property name="model" value="Model 1"/>
-        <property name="positionLongitude" value="1.0"/>
-        <property name="positionLatitude" value="1.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="87.0"/>
-        <property name="satellite">
-            <ref bean="satellite_3"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_4">
-        <property name="user">
-            <ref bean="user_user2"/>
-        </property>
-        <property name="serialNumber" value="A006"/>
-        <property name="model" value="Model 2"/>
-        <property name="positionLongitude" value="1.0"/>
-        <property name="positionLatitude" value="1.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="1.0"/>
-        <property name="satellite">
-            <ref bean="satellite_4"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_5">
-        <property name="user">
-            <ref bean="user_user3"/>
-        </property>
-        <property name="serialNumber" value="A007"/>
-        <property name="model" value="Model 2"/>
-        <property name="positionLongitude" value="1.0"/>
-        <property name="positionLatitude" value="1.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="45.0"/>
-        <property name="satellite">
-            <ref bean="satellite_5"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_6">
-        <property name="user">
-            <ref bean="user_user3"/>
-        </property>
-        <property name="serialNumber" value="A008"/>
-        <property name="model" value="Model 3"/>
-        <property name="positionLongitude" value="1.0"/>
-        <property name="positionLatitude" value="1.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="24.0"/>
-        <property name="satellite">
-            <ref bean="satellite_6"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_7">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="serialNumber" value="D001"/>
-        <property name="model" value="Model 1"/>
-        <property name="positionLongitude" value="-12.0"/>
-        <property name="positionLatitude" value="-90.0"/>
-        <property name="rotationAzimuth" value="157.0"/>
-        <property name="rotationElevation" value="16.0"/>
-        <property name="signalQuality" value="83.0"/>
-        <property name="satellite">
-            <ref bean="satellite_6"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_8">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="serialNumber" value="A004"/>
-        <property name="model" value="Model 1"/>
-        <property name="positionLongitude" value="-125.0"/>
-        <property name="positionLatitude" value="64.0"/>
-        <property name="rotationAzimuth" value="289.0"/>
-        <property name="rotationElevation" value="45.0"/>
-        <property name="signalQuality" value="43.0"/>
-        <property name="satellite">
-            <ref bean="satellite_3"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_9">
-        <property name="user">
-            <ref bean="user_user3"/>
-        </property>
-        <property name="serialNumber" value="A009"/>
-        <property name="model" value="Model 2"/>
-        <property name="positionLongitude" value="1.0"/>
-        <property name="positionLatitude" value="1.0"/>
-        <property name="rotationAzimuth" value="1.0"/>
-        <property name="rotationElevation" value="1.0"/>
-        <property name="signalQuality" value="1.0"/>
-        <property name="satellite">
-            <ref bean="satellite_4"/>
-        </property>
-    </bean>
-    <bean class="domain.Antenna" id="antenna_10">
-        <property name="user">
-            <ref bean="user_user1"/>
-        </property>
-        <property name="serialNumber" value="X001"/>
-        <property name="model" value="Model 4"/>
-        <property name="positionLongitude" value="0.0"/>
-        <property name="positionLatitude" value="0.0"/>
-        <property name="rotationAzimuth" value="0.0"/>
-        <property name="rotationElevation" value="0.0"/>
-        <property name="signalQuality" value="100.0"/>
-        <property name="satellite">
-            <ref bean="satellite_2"/>
         </property>
     </bean>
 </beans>

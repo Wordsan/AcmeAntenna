@@ -56,7 +56,7 @@
 
         <display:column property="startDate" titleKey="platform_subscriptions.startDate" sortable="true" format="{0,date,dd/MM/yyyy}" />
         <display:column property="endDate" titleKey="platform_subscriptions.endDate" sortable="true" format="{0,date,dd/MM/yyyy}" />
-        <display:column property="obscuredCreditCard" titleKey="platform_subscriptions.creditCard" escapeXml="true" sortable="true" />
+        <display:column property="creditCard.obscuredNumber" titleKey="platform_subscriptions.creditCard" escapeXml="true" sortable="true" />
         <display:column property="keyCode" titleKey="platform_subscriptions.keyCode" escapeXml="true" sortable="true" />
     </display:table>
 </security:authorize>

@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
+import domain.CreditCard;
 import domain.PlatformSubscription;
 import domain.User;
 import exceptions.OverlappingPlatformSubscriptionException;
@@ -49,7 +50,7 @@ public class PlatformSubscriptionServiceTest extends AbstractTest {
         platformSubscription.setPlatform(platformRepository.findByName("Atresmedia"));
         platformSubscription.setStartDate(DATE_FORMAT.parse("01/07/2018"));
         platformSubscription.setEndDate(DATE_FORMAT.parse("31/07/2018"));
-        platformSubscription.setCreditCard("4111111111111111");
+        platformSubscription.setCreditCard(CreditCard.visaTestCard());
         platformSubscription.setKeyCode("");
         platformSubscription = platformSubscriptionService.create(platformSubscription);
 
@@ -78,7 +79,7 @@ public class PlatformSubscriptionServiceTest extends AbstractTest {
         platformSubscription.setPlatform(platformRepository.findByName("Atresmedia"));
         platformSubscription.setStartDate(DATE_FORMAT.parse("31/07/2018"));
         platformSubscription.setEndDate(DATE_FORMAT.parse("01/07/2018"));
-        platformSubscription.setCreditCard("4111111111111111");
+        platformSubscription.setCreditCard(CreditCard.visaTestCard());
         platformSubscription.setKeyCode("");
         platformSubscriptionService.create(platformSubscription);
 
@@ -100,7 +101,7 @@ public class PlatformSubscriptionServiceTest extends AbstractTest {
         platformSubscription.setPlatform(platformRepository.findByName("Atresmedia"));
         platformSubscription.setStartDate(DATE_FORMAT.parse("01/07/2018"));
         platformSubscription.setEndDate(DATE_FORMAT.parse("31/07/2018"));
-        platformSubscription.setCreditCard("4111111111111111");
+        platformSubscription.setCreditCard(CreditCard.visaTestCard());
         platformSubscription.setKeyCode("");
         platformSubscriptionService.create(platformSubscription);
 
@@ -121,7 +122,7 @@ public class PlatformSubscriptionServiceTest extends AbstractTest {
         platformSubscription.setPlatform(platformRepository.findByName("CNN"));
         platformSubscription.setStartDate(DATE_FORMAT.parse("01/07/2018"));
         platformSubscription.setEndDate(DATE_FORMAT.parse("31/07/2018"));
-        platformSubscription.setCreditCard("4111111111111111");
+        platformSubscription.setCreditCard(CreditCard.visaTestCard());
         platformSubscription.setKeyCode("");
         platformSubscriptionService.create(platformSubscription);
 

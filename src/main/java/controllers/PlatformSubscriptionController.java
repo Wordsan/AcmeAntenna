@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import domain.CreditCard;
 import domain.PlatformSubscription;
 import domain.User;
 import exceptions.OverlappingPlatformSubscriptionException;

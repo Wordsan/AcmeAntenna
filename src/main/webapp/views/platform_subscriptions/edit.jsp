@@ -19,7 +19,7 @@
     <app:select path="platform" items="${platforms}" itemLabel="name" code="platform_subscriptions.platform" />
     <app:datepicker path="startDate" code="platform_subscriptions.startDate" />
     <app:datepicker path="endDate" code="platform_subscriptions.endDate" />
-    <app:textbox path="creditCard" code="platform_subscriptions.creditCard" />
+    <app:credit-card-editor path="creditCard" />
 
     <div>
         <app:submit entity="${platformSubscription}" />

@@ -10,6 +10,7 @@
 
 	<util:list id="messages">
 		<value>/views/actors/messages</value>
+		<value>/views/credit_cards/messages</value>
 		<value>/views/antennas/messages</value>
 		<value>/views/users/messages</value>
 		<value>/views/legal/messages</value>
