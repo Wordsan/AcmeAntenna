@@ -15,6 +15,7 @@ import domain.Agent;
 import domain.Banner;
 import domain.Platform;
 import domain.Satellite;
+import exceptions.CreditCardExpiredException;
 import repositories.BannerRepository;
 import security.Authority;
 import utilities.CheckUtils;
@@ -36,12 +37,14 @@ public class BannerService {
         return findAll();
     }
 
-    public Banner create(Banner banner)
+    public Banner create(Banner banner) throws CreditCardExpiredException
     {
         CheckUtils.checkPrincipalAuthority(Authority.AGENT);
         CheckUtils.checkNotExists(banner);
 
         banner.setAgent(agentService.getPrincipal());
+
+        if (banner.getCreditCard().isExpired()) throw new CreditCardExpiredException();
 
         return repository.save(banner);
     }

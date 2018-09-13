@@ -22,6 +22,7 @@ import domain.Administrator;
 import domain.Agent;
 import domain.Banner;
 import domain.CreditCard;
+import exceptions.CreditCardExpiredException;
 import security.Authority;
 import services.BannerService;
 import utilities.ApplicationConfig;
@@ -105,6 +106,9 @@ public class BannerController extends AbstractController {
                 cookie.setPath("/");
                 response.addCookie(cookie);
                 return ControllerUtils.redirect("/banners/index.do");
+            } catch (CreditCardExpiredException ex) {
+                binding.rejectValue("creditCard.expirationMonth", "credit_cards.error.expired");
+                binding.rejectValue("creditCard.expirationYear", "credit_cards.error.expired");
             } catch (Throwable oops) {
                 if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";

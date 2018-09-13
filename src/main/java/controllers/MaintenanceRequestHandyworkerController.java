@@ -115,7 +115,7 @@ public class MaintenanceRequestHandyworkerController extends AbstractController 
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
                 result = new ModelAndView("redirect:listNotServiced.do");
             } catch (final Throwable oops) {
-                result = this.createEditModelAndView(maintenanceRequest, binding, "maintenanceRequest.commit.error");
+                result = this.createEditModelAndView(maintenanceRequest, binding, "misc.commit.error");
             }
         }
 

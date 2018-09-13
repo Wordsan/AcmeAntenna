@@ -19,6 +19,7 @@ import domain.CreditCard;
 import domain.Handyworker;
 import domain.MaintenanceRequest;
 import domain.User;
+import exceptions.CreditCardExpiredException;
 import services.HandyworkerService;
 import services.MaintenanceRequestService;
 import services.UserService;
@@ -129,8 +130,12 @@ public class MaintenanceRequestUserController extends AbstractController {
                 Cookie cookie = new Cookie("creditCard", CreditCard.toCookieString(maintenanceRequest.getCreditCard()));
                 cookie.setPath("/");
                 response.addCookie(cookie);
+            } catch (CreditCardExpiredException ex) {
+                binding.rejectValue("creditCard.expirationMonth", "credit_cards.error.expired");
+                binding.rejectValue("creditCard.expirationYear", "credit_cards.error.expired");
+                result = this.createEditModelAndView(maintenanceRequest);
             } catch (final Throwable oops) {
-                result = this.createEditModelAndView(maintenanceRequest, "maintenanceRequest.commit.error");
+                result = this.createEditModelAndView(maintenanceRequest, "misc.commit.error");
             }
         }
 
@@ -146,7 +151,7 @@ public class MaintenanceRequestUserController extends AbstractController {
             this.maintenanceRequestService.delete(maintenanceRequest);
             result = new ModelAndView("redirect:list.do");
         } catch (final Throwable oops) {
-            result = this.createEditModelAndView(maintenanceRequest, "maintenanceRequest.commit.error");
+            result = this.createEditModelAndView(maintenanceRequest, "misc.commit.error");
         }
 
         return result;

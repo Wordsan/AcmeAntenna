@@ -5,6 +5,9 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
@@ -98,6 +101,22 @@ public class CreditCard {
     public void setCvv(int cvv)
     {
         this.cvv = cvv;
+    }
+
+    @Transient
+    public boolean isExpired()
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        int month = 1 + cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+        if (expirationYear < year) {
+            return true;
+        } else if (expirationYear > year) {
+            return false;
+        }
+        if (expirationMonth < month) return true;
+        return false;
     }
 
     @Transient

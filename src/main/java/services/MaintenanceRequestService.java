@@ -17,6 +17,7 @@ import domain.Antenna;
 import domain.Handyworker;
 import domain.MaintenanceRequest;
 import domain.User;
+import exceptions.CreditCardExpiredException;
 import repositories.MaintenanceRequestRepository;
 import security.Authority;
 import utilities.CheckUtils;
@@ -59,11 +60,13 @@ public class MaintenanceRequestService {
         return res;
     }
 
-    public MaintenanceRequest save(final MaintenanceRequest maintenanceRequest)
+    public MaintenanceRequest save(final MaintenanceRequest maintenanceRequest) throws CreditCardExpiredException
     {
         CheckUtils.checkPrincipalAuthority(Authority.USER);
         CheckUtils.checkIsPrincipal(maintenanceRequest.getUser());
         CheckUtils.checkIsPrincipal(maintenanceRequest.getAntenna().getUser());
+
+        if (maintenanceRequest.getCreditCard().isExpired()) throw new CreditCardExpiredException();
 
         Assert.notNull(maintenanceRequest);
         Assert.notNull(maintenanceRequest.getUser());
@@ -94,7 +97,6 @@ public class MaintenanceRequestService {
         CheckUtils.checkPrincipalAuthority(Authority.HANDYWORKER);
 
         Assert.notNull(maintenanceRequest);
-        Assert.isNull(maintenanceRequest.getDoneTime());
         final Handyworker worker = this.handyworkerService.getPrincipal();
         Assert.isTrue(worker.equals(maintenanceRequest.getHandyworker()));
         final Date now = new Date();
@@ -120,6 +122,7 @@ public class MaintenanceRequestService {
         MaintenanceRequest oldMaintenanceRequest = maintenanceRequestRepository.findOne(maintenanceRequest.getId());
         Assert.notNull(oldMaintenanceRequest);
         oldMaintenanceRequest.setResultsDescription(maintenanceRequest.getResultsDescription());
+        Assert.isNull(oldMaintenanceRequest.getDoneTime());
         oldMaintenanceRequest.setDoneTime(new Date());
         validator.validate(oldMaintenanceRequest, binding);
         if (binding.hasErrors()) entityManager.detach(oldMaintenanceRequest);

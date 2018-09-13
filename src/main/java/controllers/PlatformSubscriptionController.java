@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import domain.CreditCard;
 import domain.PlatformSubscription;
 import domain.User;
+import exceptions.CreditCardExpiredException;
 import exceptions.OverlappingPlatformSubscriptionException;
 import security.Authority;
 import services.PlatformService;
@@ -100,10 +101,11 @@ public class PlatformSubscriptionController extends AbstractController {
                 return ControllerUtils.redirectToReturnAction();
             } catch (OverlappingPlatformSubscriptionException ex) {
                 globalErrorMessage = "platform_subscription.error.overlapping";
-            } catch (final Throwable oops) {
-                if (ApplicationConfig.DEBUG) {
-                    oops.printStackTrace();
-                }
+            } catch (CreditCardExpiredException ex) {
+                binding.rejectValue("creditCard.expirationMonth", "credit_cards.error.expired");
+                binding.rejectValue("creditCard.expirationYear", "credit_cards.error.expired");
+            } catch (Throwable oops) {
+                if (ApplicationConfig.DEBUG) oops.printStackTrace();
                 globalErrorMessage = "misc.commit.error";
             }
 

@@ -18,6 +18,7 @@ import domain.Antenna;
 import domain.CreditCard;
 import domain.Handyworker;
 import domain.MaintenanceRequest;
+import exceptions.CreditCardExpiredException;
 import services.AntennaService;
 import services.HandyworkerService;
 import services.MaintenanceRequestService;
@@ -97,7 +98,7 @@ public class UserManagingRequests extends AbstractTest {
 
     //Make a request for maintenance to a handyworker.
     @Test
-    public void testCreateARequest()
+    public void testCreateARequest() throws CreditCardExpiredException
     {
         this.unauthenticate();
         //auth as an user
@@ -125,7 +126,7 @@ public class UserManagingRequests extends AbstractTest {
     //Make a request for maintenance to a handyworker.
     //Making the request without being authenticated
     @Test(expected = AccessDeniedException.class)
-    public void testCreateRequestUnauthenticated() throws IllegalArgumentException
+    public void testCreateRequestUnauthenticated() throws IllegalArgumentException, CreditCardExpiredException
     {
         this.unauthenticate();
 
@@ -145,7 +146,7 @@ public class UserManagingRequests extends AbstractTest {
     //Make a request for maintenance to a handyworker.
     //Making the request providing no description
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateRequestWithoutDescription() throws IllegalArgumentException
+    public void testCreateRequestWithoutDescription() throws IllegalArgumentException, CreditCardExpiredException
     {
         this.unauthenticate();
         this.authenticate("user1");
@@ -166,7 +167,7 @@ public class UserManagingRequests extends AbstractTest {
     //Make a request for maintenance to a handyworker.
     //Making the request without any antenna selected
     @Test(expected = Exception.class)
-    public void testCreateRequestWithoutAntenna() throws IllegalArgumentException
+    public void testCreateRequestWithoutAntenna() throws IllegalArgumentException, CreditCardExpiredException
     {
         this.unauthenticate();
         this.authenticate("user1");
@@ -185,7 +186,7 @@ public class UserManagingRequests extends AbstractTest {
     //Make a request for maintenance to a handyworker.
     //Making the request without worker
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateRequestWithoutWorker() throws IllegalArgumentException
+    public void testCreateRequestWithoutWorker() throws IllegalArgumentException, CreditCardExpiredException
     {
         this.unauthenticate();
         this.authenticate("user1");
@@ -204,7 +205,7 @@ public class UserManagingRequests extends AbstractTest {
     //Make a request for maintenance to a handyworker.
     //Making the request as an admin
     @Test(expected = AccessDeniedException.class)
-    public void testCreateARequestBeingAdmin() throws IllegalArgumentException
+    public void testCreateARequestBeingAdmin() throws IllegalArgumentException, CreditCardExpiredException
     {
         this.unauthenticate();
         //auth as an user

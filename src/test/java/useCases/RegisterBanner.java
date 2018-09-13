@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 
 import domain.Banner;
 import domain.CreditCard;
+import exceptions.CreditCardExpiredException;
 import services.AgentService;
 import services.BannerService;
 import services.HandyworkerService;
@@ -42,7 +43,7 @@ public class RegisterBanner extends AbstractTest {
 
     //Register a banner to the system.
     @Test
-    public void RegisterBannerBeingAgent()
+    public void RegisterBannerBeingAgent() throws CreditCardExpiredException
     {
         this.unauthenticate();
         final Banner banner = new Banner();
@@ -60,7 +61,7 @@ public class RegisterBanner extends AbstractTest {
     //Register a banner to the system.
     //Registering without being an agent
     @Test(expected = AccessDeniedException.class)
-    public void RegisterBannerBeingAnUser() throws IllegalArgumentException
+    public void RegisterBannerBeingAnUser() throws IllegalArgumentException, CreditCardExpiredException
     {
         this.unauthenticate();
         final Banner banner = new Banner();
@@ -78,7 +79,7 @@ public class RegisterBanner extends AbstractTest {
     //Register a banner to the system.
     //Registering a null banner
     @Test(expected = AccessDeniedException.class)
-    public void RegisterBannerWithoutCreditCard() throws IllegalArgumentException
+    public void RegisterBannerWithoutCreditCard() throws IllegalArgumentException, CreditCardExpiredException
     {
         final Banner saved = this.bannerService.create(null);
 
