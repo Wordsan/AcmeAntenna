@@ -32,7 +32,7 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -42,7 +42,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-          <stringProp name="HTTPSampler.path">/antena/</stringProp>
+          <stringProp name="HTTPSampler.path">/</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -76,7 +76,7 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/security/login.do</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/security/login.do</stringProp>
               </elementProp>
               <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
                 <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>
@@ -86,7 +86,7 @@
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/images/arrow_down.png" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/security/login.do" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -96,7 +96,126 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/images/arrow_down.png</stringProp>
+          <stringProp name="HTTPSampler.path">/security/login.do</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="Referer" elementType="Header">
+                <stringProp name="Header.name">Referer</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
+              </elementProp>
+              <elementProp name="Accept-Language" elementType="Header">
+                <stringProp name="Header.name">Accept-Language</stringProp>
+                <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+              </elementProp>
+              <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
+                <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>
+                <stringProp name="Header.value">1</stringProp>
+              </elementProp>
+              <elementProp name="Accept-Encoding" elementType="Header">
+                <stringProp name="Header.name">Accept-Encoding</stringProp>
+                <stringProp name="Header.value">gzip, deflate</stringProp>
+              </elementProp>
+              <elementProp name="User-Agent" elementType="Header">
+                <stringProp name="Header.name">User-Agent</stringProp>
+                <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
+              </elementProp>
+              <elementProp name="Accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/j_spring_security_check" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="username" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.name">username</stringProp>
+                <stringProp name="Argument.value">user1</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+              <elementProp name="password" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.name">password</stringProp>
+                <stringProp name="Argument.value">user1</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">www.acme.com</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/j_spring_security_check</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="Referer" elementType="Header">
+                <stringProp name="Header.name">Referer</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/security/login.do</stringProp>
+              </elementProp>
+              <elementProp name="Accept-Language" elementType="Header">
+                <stringProp name="Header.name">Accept-Language</stringProp>
+                <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+              </elementProp>
+              <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
+                <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>
+                <stringProp name="Header.value">1</stringProp>
+              </elementProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+              </elementProp>
+              <elementProp name="Accept-Encoding" elementType="Header">
+                <stringProp name="Header.name">Accept-Encoding</stringProp>
+                <stringProp name="Header.value">gzip, deflate</stringProp>
+              </elementProp>
+              <elementProp name="User-Agent" elementType="Header">
+                <stringProp name="Header.name">User-Agent</stringProp>
+                <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
+              </elementProp>
+              <elementProp name="Accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">www.acme.com</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -110,29 +229,29 @@
             <collectionProp name="HeaderManager.headers">
               <elementProp name="Accept-Language" elementType="Header">
                 <stringProp name="Header.name">Accept-Language</stringProp>
-                <stringProp name="Header.value">es-ES,es;q=0.8,en;q=0.6</stringProp>
+                <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
               </elementProp>
-              <elementProp name="Accept" elementType="Header">
-                <stringProp name="Header.name">Accept</stringProp>
-                <stringProp name="Header.value">image/webp,image/*,*/*;q=0.8</stringProp>
-              </elementProp>
-              <elementProp name="User-Agent" elementType="Header">
-                <stringProp name="Header.name">User-Agent</stringProp>
-                <stringProp name="Header.value">Mozilla/5.0 (Windows NT 5.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36</stringProp>
+              <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
+                <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>
+                <stringProp name="Header.value">1</stringProp>
               </elementProp>
               <elementProp name="Accept-Encoding" elementType="Header">
                 <stringProp name="Header.name">Accept-Encoding</stringProp>
-                <stringProp name="Header.value">gzip, deflate, sdch</stringProp>
+                <stringProp name="Header.value">gzip, deflate</stringProp>
               </elementProp>
-              <elementProp name="Referer" elementType="Header">
-                <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/styles/jmenu.css</stringProp>
+              <elementProp name="User-Agent" elementType="Header">
+                <stringProp name="Header.name">User-Agent</stringProp>
+                <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
+              </elementProp>
+              <elementProp name="Accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/maintenanceRequests/user/listNotServiced.do" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/maintenanceRequests/user/listNotServiced.do" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -142,7 +261,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/maintenanceRequests/user/listNotServiced.do</stringProp>
+          <stringProp name="HTTPSampler.path">/maintenanceRequests/user/listNotServiced.do</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -172,7 +291,7 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
               <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
                 <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>
@@ -182,7 +301,7 @@
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/maintenanceRequests/user/create.do" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/maintenanceRequests/user/create.do" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -192,7 +311,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/maintenanceRequests/user/create.do</stringProp>
+          <stringProp name="HTTPSampler.path">/maintenanceRequests/user/create.do</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -222,7 +341,7 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/maintenanceRequests/user/listNotServiced.do</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/maintenanceRequests/user/listNotServiced.do</stringProp>
               </elementProp>
               <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
                 <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>
@@ -237,9 +356,16 @@
           </GaussianRandomTimer>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/maintenanceRequests/user/create.do" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/maintenanceRequests/user/create.do" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments">
+              <elementProp name="returnAction" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.name">returnAction</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
               <elementProp name="id" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.name">id</stringProp>
@@ -257,14 +383,14 @@
               <elementProp name="user" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.name">user</stringProp>
-                <stringProp name="Argument.value">2</stringProp>
+                <stringProp name="Argument.value">112</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
               </elementProp>
               <elementProp name="creationTime" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
                 <stringProp name="Argument.name">creationTime</stringProp>
-                <stringProp name="Argument.value">01/09/2018</stringProp>
+                <stringProp name="Argument.value">13/09/2018 17:12:57</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
               </elementProp>
@@ -273,41 +399,82 @@
                 <stringProp name="Argument.name">doneTime</stringProp>
                 <stringProp name="Argument.value"></stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
               </elementProp>
               <elementProp name="resultsDescription" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.name">resultsDescription</stringProp>
                 <stringProp name="Argument.value"></stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
               </elementProp>
               <elementProp name="description" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.name">description</stringProp>
-                <stringProp name="Argument.value">description</stringProp>
+                <stringProp name="Argument.value">desc</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
               </elementProp>
-              <elementProp name="creditCard" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.name">creditCard</stringProp>
-                <stringProp name="Argument.value">4331613622101626</stringProp>
+              <elementProp name="creditCard.holderName" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                <stringProp name="Argument.name">creditCard.holderName</stringProp>
+                <stringProp name="Argument.value">Holder Name</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+              <elementProp name="creditCard.brandName" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                <stringProp name="Argument.name">creditCard.brandName</stringProp>
+                <stringProp name="Argument.value">Brand Name</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+              <elementProp name="creditCard.number" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.name">creditCard.number</stringProp>
+                <stringProp name="Argument.value">4111111111111111</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+              <elementProp name="creditCard.expirationMonth" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.name">creditCard.expirationMonth</stringProp>
+                <stringProp name="Argument.value">12</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+              <elementProp name="creditCard.expirationYear" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.name">creditCard.expirationYear</stringProp>
+                <stringProp name="Argument.value">2999</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+              <elementProp name="creditCard.cvv" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.name">creditCard.cvv</stringProp>
+                <stringProp name="Argument.value">123</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
               </elementProp>
               <elementProp name="handyworker" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.name">handyworker</stringProp>
-                <stringProp name="Argument.value">4</stringProp>
+                <stringProp name="Argument.value">169</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
               </elementProp>
               <elementProp name="antenna" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.name">antenna</stringProp>
-                <stringProp name="Argument.value">7</stringProp>
+                <stringProp name="Argument.value">159</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
               </elementProp>
               <elementProp name="save" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.name">save</stringProp>
-                <stringProp name="Argument.value">Make</stringProp>
+                <stringProp name="Argument.value"></stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -318,7 +485,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-          <stringProp name="HTTPSampler.path">/antena/maintenanceRequests/user/create.do</stringProp>
+          <stringProp name="HTTPSampler.path">/maintenanceRequests/user/create.do</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -330,41 +497,83 @@
         <hashTree>
           <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
-              <elementProp name="Content-Type" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+              <elementProp name="Referer" elementType="Header">
+                <stringProp name="Header.name">Referer</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/maintenanceRequests/user/create.do</stringProp>
               </elementProp>
               <elementProp name="Accept-Language" elementType="Header">
                 <stringProp name="Header.name">Accept-Language</stringProp>
-                <stringProp name="Header.value">es-ES,es;q=0.8,en;q=0.6</stringProp>
-              </elementProp>
-              <elementProp name="Accept" elementType="Header">
-                <stringProp name="Header.name">Accept</stringProp>
-                <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</stringProp>
-              </elementProp>
-              <elementProp name="Origin" elementType="Header">
-                <stringProp name="Header.name">Origin</stringProp>
-                <stringProp name="Header.value">http://www.acme.com</stringProp>
-              </elementProp>
-              <elementProp name="User-Agent" elementType="Header">
-                <stringProp name="Header.name">User-Agent</stringProp>
-                <stringProp name="Header.value">Mozilla/5.0 (Windows NT 5.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36</stringProp>
+                <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
               </elementProp>
               <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
                 <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>
                 <stringProp name="Header.value">1</stringProp>
               </elementProp>
-              <elementProp name="Cache-Control" elementType="Header">
-                <stringProp name="Header.name">Cache-Control</stringProp>
-                <stringProp name="Header.value">max-age=0</stringProp>
-              </elementProp>
-              <elementProp name="Referer" elementType="Header">
-                <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/maintenanceRequests/user/create.do</stringProp>
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
               </elementProp>
               <elementProp name="Accept-Encoding" elementType="Header">
                 <stringProp name="Header.name">Accept-Encoding</stringProp>
                 <stringProp name="Header.value">gzip, deflate</stringProp>
+              </elementProp>
+              <elementProp name="User-Agent" elementType="Header">
+                <stringProp name="Header.name">User-Agent</stringProp>
+                <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
+              </elementProp>
+              <elementProp name="Accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/maintenanceRequests/user/listNotServiced.do" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">www.acme.com</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+          <stringProp name="HTTPSampler.path">/maintenanceRequests/user/listNotServiced.do</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="Referer" elementType="Header">
+                <stringProp name="Header.name">Referer</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/maintenanceRequests/user/create.do</stringProp>
+              </elementProp>
+              <elementProp name="Accept-Language" elementType="Header">
+                <stringProp name="Header.name">Accept-Language</stringProp>
+                <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+              </elementProp>
+              <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
+                <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>
+                <stringProp name="Header.value">1</stringProp>
+              </elementProp>
+              <elementProp name="Accept-Encoding" elementType="Header">
+                <stringProp name="Header.name">Accept-Encoding</stringProp>
+                <stringProp name="Header.value">gzip, deflate</stringProp>
+              </elementProp>
+              <elementProp name="User-Agent" elementType="Header">
+                <stringProp name="Header.name">User-Agent</stringProp>
+                <stringProp name="Header.value">Mozilla/5.0 (X11; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
+              </elementProp>
+              <elementProp name="Accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>

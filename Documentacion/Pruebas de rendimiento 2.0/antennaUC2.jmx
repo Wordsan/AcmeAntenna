@@ -32,7 +32,7 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -42,7 +42,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/</stringProp>
+          <stringProp name="HTTPSampler.path">/</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -82,7 +82,7 @@
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/scripts/jquery.js" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/scripts/jquery.js" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -92,7 +92,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/scripts/jquery.js</stringProp>
+          <stringProp name="HTTPSampler.path">/scripts/jquery.js</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -126,13 +126,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/scripts/jquery-ui.js" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/scripts/jquery-ui.js" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -142,7 +142,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/scripts/jquery-ui.js</stringProp>
+          <stringProp name="HTTPSampler.path">/scripts/jquery-ui.js</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -176,13 +176,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/scripts/pallete.js" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/scripts/pallete.js" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -192,7 +192,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/scripts/pallete.js</stringProp>
+          <stringProp name="HTTPSampler.path">/scripts/pallete.js</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -226,13 +226,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/scripts/stringlist.js" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/scripts/stringlist.js" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -242,7 +242,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/scripts/stringlist.js</stringProp>
+          <stringProp name="HTTPSampler.path">/scripts/stringlist.js</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -276,13 +276,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/scripts/jmenu.js" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/scripts/jmenu.js" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -292,7 +292,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/scripts/jmenu.js</stringProp>
+          <stringProp name="HTTPSampler.path">/scripts/jmenu.js</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -326,13 +326,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/styles/jquery-ui.css" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/styles/jquery-ui.css" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -342,7 +342,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/styles/jquery-ui.css</stringProp>
+          <stringProp name="HTTPSampler.path">/styles/jquery-ui.css</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -376,13 +376,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/scripts/jquery-redirect.js" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/scripts/jquery-redirect.js" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -392,7 +392,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/scripts/jquery-redirect.js</stringProp>
+          <stringProp name="HTTPSampler.path">/scripts/jquery-redirect.js</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -426,13 +426,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/styles/multiple-select.css" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/styles/multiple-select.css" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -442,7 +442,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/styles/multiple-select.css</stringProp>
+          <stringProp name="HTTPSampler.path">/styles/multiple-select.css</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -476,13 +476,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/images/logo.png" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/images/logo.png" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -492,7 +492,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/images/logo.png</stringProp>
+          <stringProp name="HTTPSampler.path">/images/logo.png</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -526,13 +526,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/styles/jmenu.css" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/styles/jmenu.css" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -542,7 +542,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/styles/jmenu.css</stringProp>
+          <stringProp name="HTTPSampler.path">/styles/jmenu.css</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -576,13 +576,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/styles/displaytag.css" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/styles/displaytag.css" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -592,7 +592,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/styles/displaytag.css</stringProp>
+          <stringProp name="HTTPSampler.path">/styles/displaytag.css</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -626,13 +626,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/styles/common.css" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/styles/common.css" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -642,7 +642,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/styles/common.css</stringProp>
+          <stringProp name="HTTPSampler.path">/styles/common.css</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -676,13 +676,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/scripts/functions.js" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/scripts/functions.js" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -692,7 +692,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/scripts/functions.js</stringProp>
+          <stringProp name="HTTPSampler.path">/scripts/functions.js</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -726,13 +726,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/scripts/multiple-select.js" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/scripts/multiple-select.js" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -742,7 +742,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/scripts/multiple-select.js</stringProp>
+          <stringProp name="HTTPSampler.path">/scripts/multiple-select.js</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -776,13 +776,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/scripts/datepicker-en.js" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/scripts/datepicker-en.js" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -792,7 +792,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/scripts/datepicker-en.js</stringProp>
+          <stringProp name="HTTPSampler.path">/scripts/datepicker-en.js</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -826,13 +826,13 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/antena/handyworkers/list.do" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/handyworkers/list.do" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -842,7 +842,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/antena/handyworkers/list.do</stringProp>
+          <stringProp name="HTTPSampler.path">/handyworkers/list.do</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -872,7 +872,7 @@
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://www.acme.com/antena/</stringProp>
+                <stringProp name="Header.value">http://www.acme.com/</stringProp>
               </elementProp>
               <elementProp name="Upgrade-Insecure-Requests" elementType="Header">
                 <stringProp name="Header.name">Upgrade-Insecure-Requests</stringProp>

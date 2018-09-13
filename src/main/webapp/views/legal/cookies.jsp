@@ -40,6 +40,7 @@
 		<p><spring:message code="legal.cookies.usedcookies.cookie1" /></p>
 		<p><spring:message code="legal.cookies.usedcookies.cookie2" /></p>
 		<p><spring:message code="legal.cookies.usedcookies.cookie3" /></p>
+		<p><spring:message code="legal.cookies.usedcookies.cookie4" /></p>
 	</div>
 	<div>
 		<h2><spring:message code="legal.cookies.modify.title" /></h2>
