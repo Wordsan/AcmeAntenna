@@ -34,7 +34,7 @@ public class ActorServiceTest extends AbstractTest {
         // Change principal's name.
         Actor principal = getPrincipal();
         principal.setName("TEST-testActorCanUpdateOwnProfile");
-        actorService.updateOwnProfile(principal);
+        actorService.updateOwnProfile(principal, null);
 
         // Flush changes.
         flushTransaction();
@@ -56,7 +56,7 @@ public class ActorServiceTest extends AbstractTest {
         // Change other user's profile.
         Actor user = getActor("user2");
         user.setName("TEST-testActorCanUpdateOwnProfile");
-        actorService.updateOwnProfile(user);
+        actorService.updateOwnProfile(user, null);
 
         // Shouldn't reach this point.
     }

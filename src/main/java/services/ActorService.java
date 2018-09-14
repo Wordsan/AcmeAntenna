@@ -3,8 +3,16 @@ package services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
+import java.util.HashSet;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import domain.Actor;
 import exceptions.OldPasswordDoesntMatchException;
@@ -23,6 +31,8 @@ public class ActorService {
     @Autowired private UserAccountService userAccountService;
     @Autowired private UserService userService;
     @Autowired private AdministratorService administratorService;
+    @PersistenceContext private EntityManager entityManager;
+    @Autowired private Validator validator;
 
     public Actor findPrincipal()
     {
@@ -65,9 +75,12 @@ public class ActorService {
         return actor;
     }
 
-    public Actor updateOwnProfile(Actor submittedActor)
+    public Actor updateOwnProfile(Actor submittedActor, BindingResult binding)
     {
         CheckUtils.checkAuthenticated();
+
+        entityManager.detach(submittedActor);
+
         Actor currentActor = getPrincipal();
         CheckUtils.checkEquals(currentActor, submittedActor);
         CheckUtils.checkSameVersion(submittedActor, currentActor);
@@ -78,6 +91,14 @@ public class ActorService {
         currentActor.setPhoneNumber(submittedActor.getPhoneNumber());
         currentActor.setPostalAddress(submittedActor.getPostalAddress());
         currentActor.setPictureUrl(submittedActor.getPictureUrl());
+
+        if (binding != null) {
+            validator.validate(currentActor, binding);
+            if (binding.hasErrors()) {
+                entityManager.detach(currentActor);
+                throw new ConstraintViolationException(new HashSet<ConstraintViolation<?>>());
+            }
+        }
 
         return repository.save(currentActor);
     }

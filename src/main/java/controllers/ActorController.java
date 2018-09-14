@@ -3,13 +3,13 @@ package controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import domain.Actor;
@@ -49,7 +49,7 @@ public class ActorController extends AbstractController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(@ModelAttribute("actor") @Valid Actor actor, final BindingResult binding, final RedirectAttributes redir)
+    public ModelAndView update(@ModelAttribute("actor") Actor actor, final BindingResult binding, final RedirectAttributes redir)
     {
         CheckUtils.checkAuthenticated();
 
@@ -57,10 +57,12 @@ public class ActorController extends AbstractController {
 
         if (!binding.hasErrors()) {
             try {
-                actor = this.actorService.updateOwnProfile(actor);
+                actor = this.actorService.updateOwnProfile(actor, binding);
                 redir.addFlashAttribute("globalSuccessMessage", "misc.operationCompletedSuccessfully");
 
                 return ControllerUtils.redirectToReturnAction();
+            } catch (ConstraintViolationException ex) {
+                // Error is in binding.
             } catch (final Throwable oops) {
                 if (ApplicationConfig.DEBUG) {
                     oops.printStackTrace();
