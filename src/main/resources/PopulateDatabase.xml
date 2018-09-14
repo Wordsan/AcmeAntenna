@@ -1140,12 +1140,6 @@
             <null/>
         </property>
         <property name="userAccount" ref="userAccount_handy1"/>
-    	<property name="antennaModels">
-    		<list value-type="java.lang.String">
-    			<value>Model 1</value>
-    			<value>Model 4</value>
-    		</list>
-    	</property>
     	<property name="requests">
     		<list>
     			<ref bean="maintenanceRequest_1"/>
@@ -1169,13 +1163,6 @@
             <null/>
         </property>
         <property name="userAccount" ref="userAccount_handy2"/>
-    	<property name="antennaModels">
-    		<list value-type="java.lang.String">
-    			<value>Model 1</value>
-    			<value>Model 3</value>
-    			<value>Model 2</value>
-    		</list>
-    	</property>
     	<property name="requests">
     		<list>
     			<ref bean="maintenanceRequest_3"/>
